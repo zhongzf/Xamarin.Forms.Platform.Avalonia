@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Xamarin.Forms.Platform.Avalonia\Xamarin.Forms.Platform.Avalonia.csproj" />
+    <ProjectReference Include="..\Xamarin.Forms.Sample\Xamarin.Forms.Sample.csproj" />
+  </ItemGroup>
+</Project>
