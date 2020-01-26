@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
@@ -19,7 +22,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             //MessagingCenter.Send(this, WPFDeviceInfo.BWPorientationChangedName, this.ToDeviceOrientation());
             this.LayoutUpdated += FormsApplicationPage_LayoutUpdated;
 
-            this.ContentLoader = new FormsContentLoader();
+			this.ContentLoader = new FormsContentLoader();
         }
 
         private void FormsApplicationPage_LayoutUpdated(object sender, EventArgs e)
@@ -39,8 +42,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         void ApplicationOnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "MainPage" && IsInitialized)
-                SetMainPage();
+			if (args.PropertyName == "MainPage" && IsInitialized)
+			{
+				SetMainPage();
+			}
         }
 
         void SetMainPage()

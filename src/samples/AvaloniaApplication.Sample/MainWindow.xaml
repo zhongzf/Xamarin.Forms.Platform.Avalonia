@@ -179,6 +179,39 @@
     <Style Selector="controls|FormsCheckBox:disabled /template/ Border#border">
       <Setter Property="Opacity" Value="{DynamicResource ThemeDisabledOpacity}"/>
     </Style>
+
+    <Style Selector="controls|FormsContentControl">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    
+    <Style Selector="controls|FormsContentPage">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+        </ControlTemplate>
+      </Setter>
+    </Style>
   </Window.Styles>
 
+  <controls:FormsContentControl ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}"></controls:FormsContentControl>
 </Window>

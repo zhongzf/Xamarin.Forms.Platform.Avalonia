@@ -118,55 +118,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			this.Closed += (sender, e) => Disappearing();
 		}
 
-		private CancellationTokenSource tokenStartupPage;
-
-		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
-		{
-			base.OnPropertyChanged(e);
-			if (e.Property == StartupPageProperty)
-			{
-				OnStartupPageChanged(e);
-			}
-		}
-
-		protected virtual void OnStartupPageChanged(AvaloniaPropertyChangedEventArgs e)
-		{
-			var oldValue = e.OldValue;
-			var newValue = e.NewValue;
-			if (newValue != null && newValue.Equals(oldValue)) return;
-
-			var localTokenStartupPage = new CancellationTokenSource();
-			this.tokenStartupPage = localTokenStartupPage;
-
-			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-			var task = this.ContentLoader.LoadContentAsync(this, oldValue, newValue, this.tokenStartupPage.Token);
-
-			task.ContinueWith(t =>
-			{
-				try
-				{
-					if (t.IsFaulted || t.IsCanceled || localTokenStartupPage.IsCancellationRequested)
-					{
-						this.Content = null;
-					}
-					else
-					{
-						this.Content = t.Result;
-					}
-				}
-				finally
-				{
-					if (this.tokenStartupPage == localTokenStartupPage)
-					{
-						this.tokenStartupPage = null;
-					}
-					localTokenStartupPage.Dispose();
-				}
-			}, scheduler);
-			return;
-		}
-
-
 		protected virtual void Appearing()
 		{
 
