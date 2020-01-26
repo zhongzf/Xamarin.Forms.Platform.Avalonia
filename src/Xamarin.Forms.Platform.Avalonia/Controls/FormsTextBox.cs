@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Threading;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,16 +24,16 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         public new static readonly StyledProperty<string> TextProperty = AvaloniaProperty.Register<FormsTextBox, string>(nameof(Text));
         protected internal static readonly StyledProperty<string> DisabledTextProperty = AvaloniaProperty.Register<FormsTextBox, string>(nameof(DisabledText));
 
-        //static InputScope s_passwordInputScope;
-        //InputScope _cachedInputScope;
+        static InputScope s_passwordInputScope;
+        InputScope _cachedInputScope;
         CancellationTokenSource _cts;
         bool _internalChangeFlag;
         int _cachedSelectionLength;
 
         public FormsTextBox()
         {
-            //TextChanged += OnTextChanged;
-            //SelectionChanged += OnSelectionChanged;
+            TextProperty.Changed.AddClassHandler<FormsTextBox>((x, e) => x.OnTextPropertyChanged(e));
+            IsPasswordProperty.Changed.AddClassHandler<FormsTextBox>((x, e) => x.OnIsPasswordChanged(e));
         }
 
         protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
@@ -41,6 +42,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (e.Property == TextBox.TextProperty)
             {
                 OnTextChanged(e);
+            }
+            if (e.Property == SelectionStartProperty || e.Property == SelectionEndProperty)
+            {
+                OnSelectionChanged(e);
             }
         }
 
@@ -74,20 +79,22 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             set { SetValue(DisabledTextProperty, value); }
         }
 
-        //static InputScope PasswordInputScope
-        //{
-        //	get
-        //	{
-        //		if (s_passwordInputScope != null)
-        //			return s_passwordInputScope;
+        public InputScope InputScope { get; set; }
 
-        //		s_passwordInputScope = new InputScope();
-        //		var name = new InputScopeName { NameValue = InputScopeNameValue.Default };
-        //		s_passwordInputScope.Names.Add(name);
+        static InputScope PasswordInputScope
+        {
+            get
+            {
+                if (s_passwordInputScope != null)
+                    return s_passwordInputScope;
 
-        //		return s_passwordInputScope;
-        //	}
-        //}
+                s_passwordInputScope = new InputScope();
+                var name = new InputScopeName { NameValue = InputScopeNameValue.Default };
+                s_passwordInputScope.Names.Add(name);
+
+                return s_passwordInputScope;
+            }
+        }
 
         void DelayObfuscation()
         {
@@ -183,18 +190,19 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             return prefix + text.Substring(visibleSymbolIndex, 1) + suffix;
         }
 
-        //static void OnIsPasswordChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        //{
-        //	var textBox = (FormsTextBox)dependencyObject;
-        //	textBox.UpdateInputScope();
-        //	textBox.SyncBaseText();
-        //}
+        void OnIsPasswordChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            var textBox = this;
+            textBox.UpdateInputScope();
+            textBox.SyncBaseText();
+        }
 
-        //void OnSelectionChanged(object sender, RoutedEventArgs routedEventArgs)
-        //{
-        //	// Cache this value for later use as explained in OnKeyDown below
-        //	_cachedSelectionLength = SelectionLength;
-        //}
+        void OnSelectionChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            // Cache this value for later use as explained in OnKeyDown below
+            var selectionLength = SelectionEnd - SelectionStart;
+            _cachedSelectionLength = selectionLength;
+        }
 
         // Because the implementation of a password entry is based around inheriting from TextBox (via FormsTextBox), there
         // are some inaccuracies in the behavior. OnKeyDown is what needs to be used for a workaround in this case because 
@@ -282,21 +290,22 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             SelectionStart = savedSelectionStart > len ? len : savedSelectionStart;
         }
 
-        //static void TextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        //{
-        //	var textBox = (FormsTextBox)dependencyObject;
-        //	textBox.SyncBaseText();
-        //}
+        protected virtual void OnTextPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            SyncBaseText();
+        }
 
-        //void UpdateInputScope()
-        //{
-        //	if (IsPassword)
-        //	{
-        //		_cachedInputScope = InputScope;
-        //		InputScope = PasswordInputScope; // We don't want suggestions turned on if we're in password mode
-        //	}
-        //	else
-        //		InputScope = _cachedInputScope;
-        //}
+        void UpdateInputScope()
+        {
+            if (IsPassword)
+            {
+                _cachedInputScope = InputScope;
+                InputScope = PasswordInputScope; // We don't want suggestions turned on if we're in password mode
+            }
+            else
+            {
+                InputScope = _cachedInputScope;
+            }
+        }
     }
 }
