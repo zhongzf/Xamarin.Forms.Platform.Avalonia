@@ -26,7 +26,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 				// Update control property 
 				UpdateClipToBounds();
 				foreach (Element child in ElementController.LogicalChildren)
+				{
 					HandleChildAdded(Element, new ElementEventArgs(child));
+				}
 
 				// Suscribe element event
 				Element.ChildAdded += HandleChildAdded;
@@ -50,7 +52,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 				Platform.SetRenderer(view, renderer = Platform.CreateRenderer(view));
 				Control.Children.Add(renderer.GetNativeElement());
 				if (_isZChanged)
+				{
 					EnsureZIndex();
+				}
 			});
 		}
 
@@ -69,7 +73,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 					Control.Children.Remove(native);
 					view.Cleanup();
 					if (_isZChanged)
+					{
 						EnsureZIndex();
+					}
 				}
 			});
 		}
@@ -110,7 +116,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			base.OnElementPropertyChanged(sender, e);
 
 			if (e.PropertyName == Layout.IsClippedToBoundsProperty.PropertyName)
+			{
 				UpdateClipToBounds();
+			}
 		}
 
 		protected override void UpdateBackground()

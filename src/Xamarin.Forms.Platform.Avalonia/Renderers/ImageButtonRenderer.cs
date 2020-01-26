@@ -34,8 +34,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 						Stretch = Stretch.Uniform
 					};
 
-					//_image.ImageFailed += OnImageFailed;
-
 					_button = new AButton
 					{
 						Padding = new AThickness(0),
@@ -45,7 +43,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 						Content = _image
 					};
 
-					//_button.Click += OnButtonClick;
+					_button.Click += OnButtonClick;
 
 					SetNativeControl(_button);
 				}
@@ -90,14 +88,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			if (disposing)
 			{
-				if (_image != null)
-				{
-					//_image.ImageFailed -= OnImageFailed;
-				}
-
 				if (_button != null)
 				{
-					//_button.Click -= OnButtonClick;
+					_button.Click -= OnButtonClick;
 				}
 			}
 
@@ -162,17 +155,11 @@ namespace Xamarin.Forms.Platform.Avalonia
 			((IVisualElementController)Element)?.InvalidateMeasure(InvalidationTrigger.RendererReady);
 		}
 
-		//void OnButtonClick(object sender, System.Windows.RoutedEventArgs e)
-		//{
-		//	((IButtonController)Element)?.SendReleased();
-		//	((IButtonController)Element)?.SendClicked();
-		//}
-
-		//void OnImageFailed(object sender, System.Windows.ExceptionRoutedEventArgs e)
-		//{
-		//	Log.Warning("Image loading", $"Image failed to load: {e.ErrorException.Message}");
-		//	Element?.SetIsLoading(false);
-		//}
+		void OnButtonClick(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+		{
+			((IButtonController)Element)?.SendReleased();
+			((IButtonController)Element)?.SendClicked();
+		}
 
 		void UpdateBorderColor()
 		{
