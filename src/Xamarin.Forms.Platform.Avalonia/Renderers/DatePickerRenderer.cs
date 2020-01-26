@@ -18,7 +18,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new ADatePicker());
-					//Control.SelectedDateChanged += OnNativeSelectedDateChanged;
+					Control.SelectedDateChanged += OnNativeSelectedDateChanged;
 				}
 
 				// Update control property 
@@ -65,11 +65,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.UpdateDependencyColor(ADatePicker.ForegroundProperty, Element.TextColor);
 		}
 
-		//void OnNativeSelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		//{
-		//	if (Control.SelectedDate.HasValue)
-		//		((IElementController)Element).SetValueFromRenderer(DatePicker.DateProperty, Control.SelectedDate.Value);
-		//}
+		void OnNativeSelectedDateChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)
+		{
+			if (Control.SelectedDate.HasValue)
+			{
+				((IElementController)Element).SetValueFromRenderer(DatePicker.DateProperty, Control.SelectedDate.Value);
+			}
+		}
 
 		bool _isDisposed;
 
@@ -82,7 +84,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//Control.SelectedDateChanged -= OnNativeSelectedDateChanged;
+					Control.SelectedDateChanged -= OnNativeSelectedDateChanged;
 				}
 			}
 
