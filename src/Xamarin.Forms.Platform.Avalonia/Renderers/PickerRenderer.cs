@@ -20,14 +20,14 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new ComboBox());
-					//Control.SelectionChanged += OnControlSelectionChanged;
+					Control.SelectionChanged += OnControlSelectionChanged;
 				}
 
 				// Update control property 
 				UpdateTitle();
 				UpdateSelectedIndex();
 				UpdateTextColor();
-				//Control.ItemsSource = ((LockableObservableListWrapper)Element.Items)._list;
+				Control.Items = ((LockableObservableListWrapper)Element.Items)._list;
 			}
 
 			base.OnElementChanged(e);
@@ -69,7 +69,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 		private void OnControlSelectionChanged(object sender, ASelectionChangedEventArgs e)
 		{
 			if (Element != null)
+			{
 				Element.SelectedIndex = Control.SelectedIndex;
+			}
 		}
 
 		bool _isDisposed;
@@ -84,7 +86,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control != null)
 				{
 					Control.SelectionChanged -= OnControlSelectionChanged;
-					//Control.ItemsSource = null;
+					Control.Items = null;
 				}
 
 				if (Element != null)
