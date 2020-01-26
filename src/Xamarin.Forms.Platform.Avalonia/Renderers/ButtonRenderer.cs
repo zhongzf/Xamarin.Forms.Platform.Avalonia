@@ -91,8 +91,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateCornerRadius()
 		{
-			// TODO:
-			//Control.CornerRadius = Element.CornerRadius;
+			Control.CornerRadius = Element.CornerRadius;
 		}
 
 		async void UpdateContent()

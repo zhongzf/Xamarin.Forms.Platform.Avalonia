@@ -82,11 +82,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			SetTime();
 			base.OnLostFocus(e);
 		}
-
-		//protected override void OnGotFocus(RoutedEventArgs e)
-		//{
-		//	base.OnGotFocus(e);
-		//}
 		#endregion
 
 		#region Property Changes
