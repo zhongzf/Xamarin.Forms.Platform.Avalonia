@@ -30,7 +30,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             //this.DefaultStyleKey = typeof(FormsContentControl);
             this.LayoutUpdated += FormsContentControl_LayoutUpdated;
-            SourceProperty.Changed.AddClassHandler<FormsContentControl>((x, e) => x.OnSourceChanged(e));
             ContentLoaderProperty.Changed.AddClassHandler<FormsContentControl>((x, e) => x.OnContentLoaderChanged(e));
         }
 
@@ -44,6 +43,15 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (e.NewValue == null)
             {
                 throw new ArgumentNullException("ContentLoader");
+            }
+        }
+
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if(e.Property == SourceProperty)
+            {
+                OnSourceChanged(e);
             }
         }
 
