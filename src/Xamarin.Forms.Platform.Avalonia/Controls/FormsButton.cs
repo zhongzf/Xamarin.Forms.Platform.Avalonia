@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using System.Linq;
 using AButton = Avalonia.Controls.Button;
 
@@ -28,9 +29,9 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			CornerRadiusProperty.Changed.AddClassHandler<FormsButton>((x, e) => x.OnCornerRadiusChanged(e));
 		}
 
-		protected override void OnMeasureInvalidated()
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
 		{
-			base.OnMeasureInvalidated();
+			base.OnTemplateApplied(e);
 			_contentPresenter = VisualChildren.OfType<global::Avalonia.Controls.Presenters.ContentPresenter>().FirstOrDefault();
 			UpdateCornerRadius();
 		}
