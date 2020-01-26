@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia.Interactivity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new ACheckBox());
-					//Control.Checked += OnNativeToggled;
-					//Control.Unchecked += OnNativeToggled;
+					Control.Checked += OnNativeToggled;
+					Control.Unchecked += OnNativeToggled;
 				}
 
 				// Update control property 
@@ -43,10 +44,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.IsChecked = Element.IsToggled;
 		}
 
-		//void OnNativeToggled(object sender, System.Windows.RoutedEventArgs e)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(Switch.IsToggledProperty, Control.IsChecked);
-		//}
+		void OnNativeToggled(object sender, RoutedEventArgs e)
+		{
+			((IElementController)Element).SetValueFromRenderer(Switch.IsToggledProperty, Control.IsChecked);
+		}
 
 		bool _isDisposed;
 
@@ -59,8 +60,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//Control.Checked -= OnNativeToggled;
-					//Control.Unchecked -= OnNativeToggled;
+					Control.Checked -= OnNativeToggled;
+					Control.Unchecked -= OnNativeToggled;
 				}
 			}
 

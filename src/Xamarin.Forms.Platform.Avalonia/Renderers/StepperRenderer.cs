@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Layout;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,8 +24,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(CreateControl());
-					//_upButton.Click += UpButtonOnClick;
-					//_downButton.Click += DownButtonOnClick;
+					_upButton.Click += UpButtonOnClick;
+					_downButton.Click += DownButtonOnClick;
 				}
 
 				// Update control property 
@@ -45,8 +47,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 		Border CreateControl()
 		{
 			var border = new Border() { Child = _panel };
-			//_panel.HorizontalAlignment = HorizontalAlignment.Right;
-			//_panel.Orientation = Orientation.Horizontal;
+			_panel.HorizontalAlignment = HorizontalAlignment.Right;
+			_panel.Orientation = Orientation.Horizontal;
 
 			_upButton = new AButton { Content = "+", Width = 100 };
 			_downButton = new AButton { Content = "-", Width = 100 };
@@ -56,15 +58,15 @@ namespace Xamarin.Forms.Platform.Avalonia
 			return border;
 		}
 
-		//void DownButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(Stepper.ValueProperty, Math.Max(Element.Minimum, Element.Value - Element.Increment));
-		//}
+		void DownButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+		{
+			((IElementController)Element).SetValueFromRenderer(Stepper.ValueProperty, Math.Max(Element.Minimum, Element.Value - Element.Increment));
+		}
 
-		//void UpButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(Stepper.ValueProperty, Math.Min(Element.Maximum, Element.Value + Element.Increment));
-		//}
+		void UpButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+		{
+			((IElementController)Element).SetValueFromRenderer(Stepper.ValueProperty, Math.Min(Element.Maximum, Element.Value + Element.Increment));
+		}
 
 		void UpdateButtons()
 		{
@@ -88,8 +90,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//_upButton.Click -= UpButtonOnClick;
-					//_downButton.Click -= DownButtonOnClick;
+					_upButton.Click -= UpButtonOnClick;
+					_downButton.Click -= DownButtonOnClick;
 				}
 			}
 

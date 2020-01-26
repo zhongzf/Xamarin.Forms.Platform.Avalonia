@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new ASlider());
-					//Control.ValueChanged += HandleValueChanged;
+					Control.PropertyChanged += Control_PropertyChanged;
 				}
 
 				// Update control property 
@@ -27,6 +28,14 @@ namespace Xamarin.Forms.Platform.Avalonia
 			}
 
 			base.OnElementChanged(e);
+		}
+
+		private void Control_PropertyChanged(object sender, global::Avalonia.AvaloniaPropertyChangedEventArgs e)
+		{
+			if (e.Property == global::Avalonia.Controls.Primitives.RangeBase.ValueProperty)
+			{
+				HandleValueChanged(sender, e);
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -57,10 +66,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 				Control.Value = Element.Value;
 		}
 
-		//void HandleValueChanged(object sender, RoutedPropertyChangedEventArgs<double> routedPropertyChangedEventArgs)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(Slider.ValueProperty, Control.Value);
-		//}
+		void HandleValueChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+		{
+			((IElementController)Element).SetValueFromRenderer(Slider.ValueProperty, Control.Value);
+		}
 
 		bool _isDisposed;
 
@@ -73,7 +82,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//Control.ValueChanged -= HandleValueChanged;
+					Control.PropertyChanged -= Control_PropertyChanged;
 				}
 			}
 

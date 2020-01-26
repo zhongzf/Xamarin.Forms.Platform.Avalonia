@@ -119,8 +119,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				y = itemPosition.Y;
 			}
 
-			//if (Control.VerticalOffset == y && Control.HorizontalOffset == x)
-			//	return;
+			if (Control.Offset.Y == y && Control.Offset.X == x)
+				return;
 
 			if (e.ShouldAnimate)
 			{
@@ -178,16 +178,22 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateScrollOffset(double x, double y)
 		{
-			//if (Element.Orientation == ScrollOrientation.Horizontal)
-			//	Control.ScrollToHorizontalOffset(x);
-			//else
-			//	Control.ScrollToVerticalOffset(y);
+			if (Element.Orientation == ScrollOrientation.Horizontal)
+			{
+				Control.Offset = Control.Offset.WithX(x);
+			}
+			else
+			{
+				Control.Offset = Control.Offset.WithY(y);
+			}
 		}
 
 		void UpdateScrollPosition()
 		{
-			//if (Element != null)
-			//	Controller.SetScrolledPosition(Control.HorizontalOffset, Control.VerticalOffset);
+			if (Element != null)
+			{
+				Controller.SetScrolledPosition(Control.Offset.X, Control.Offset.Y);
+			}
 		}
 
 		void UpdateVerticalScrollBarVisibility()

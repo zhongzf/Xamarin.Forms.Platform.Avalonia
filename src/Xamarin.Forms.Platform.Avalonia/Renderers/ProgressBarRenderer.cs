@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Avalonia;
+using System.ComponentModel;
 using System.Windows;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
@@ -15,7 +16,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new AProgressBar { Minimum = 0, Maximum = 1 });
-					//Control.ValueChanged += HandleValueChanged;
+					Control.PropertyChanged += Control_PropertyChanged;
 				}
 
 				// Update control property 
@@ -24,6 +25,14 @@ namespace Xamarin.Forms.Platform.Avalonia
 			}
 
 			base.OnElementChanged(e);
+		}
+
+		private void Control_PropertyChanged(object sender, global::Avalonia.AvaloniaPropertyChangedEventArgs e)
+		{
+			if(e.Property == global::Avalonia.Controls.Primitives.RangeBase.ValueProperty)
+			{
+				HandleValueChanged(sender, e);
+			}
 		}
 
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -46,10 +55,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.Value = Element.Progress;
 		}
 
-		//void HandleValueChanged(object sender, RoutedPropertyChangedEventArgs<double> routedPropertyChangedEventArgs)
-		//{
-		//	((IVisualElementController)Element)?.InvalidateMeasure(InvalidationTrigger.MeasureChanged);
-		//}
+		void HandleValueChanged(object sender, AvaloniaPropertyChangedEventArgs e)
+		{
+			((IVisualElementController)Element)?.InvalidateMeasure(InvalidationTrigger.MeasureChanged);
+		}
 
 		bool _isDisposed;
 
@@ -62,7 +71,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//Control.ValueChanged -= HandleValueChanged;
+					Control.PropertyChanged -= Control_PropertyChanged;
 				}
 			}
 

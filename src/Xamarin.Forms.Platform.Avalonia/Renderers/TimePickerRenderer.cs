@@ -18,17 +18,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 		bool _fontApplied;
 		FontFamily _defaultFontFamily;
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && Control != null)
-			{
-				Control.TimeChanged -= OnControlTimeChanged;
-				//Control.Loaded -= ControlOnLoaded;
-			}
-
-			base.Dispose(disposing);
-		}
-
 		protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.TimePicker> e)
 		{
 			base.OnElementChanged(e);
@@ -41,13 +30,18 @@ namespace Xamarin.Forms.Platform.Avalonia
 					SetNativeControl(picker);
 
 					Control.TimeChanged += OnControlTimeChanged;
-					//Control.Loaded += ControlOnLoaded;
+					Control.AttachedToVisualTree += Control_AttachedToVisualTree;
 				}
 
 				UpdateTime();
 				UpdateFlowDirection();
 				UpdateTimeFormat();
 			}
+		}
+
+		private void Control_AttachedToVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+		{
+			ControlOnLoaded(sender, new RoutedEventArgs());
 		}
 
 		void ControlOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -86,7 +80,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateTimeFormat()
 		{
-			//Control.TimeFormat = Element.Format;
+			Control.TimeFormat = Element.Format;
 		}
 
 		void UpdateFlowDirection()
@@ -132,13 +126,24 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateTime()
 		{
-			//Control.Time = Element.Time;
+			Control.Time = Element.Time;
 		}
 
 		void UpdateTextColor()
 		{
 			Color color = Element.TextColor;
 			Control.Foreground = color.IsDefault ? (_defaultBrush ?? color.ToBrush()) : color.ToBrush();
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && Control != null)
+			{
+				Control.TimeChanged -= OnControlTimeChanged;
+				Control.AttachedToVisualTree -= Control_AttachedToVisualTree;
+			}
+
+			base.Dispose(disposing);
 		}
 	}
 }

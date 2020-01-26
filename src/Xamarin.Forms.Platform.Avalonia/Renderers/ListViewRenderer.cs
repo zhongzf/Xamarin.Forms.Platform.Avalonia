@@ -25,6 +25,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			//	scrollViewer?.ScrollToVerticalOffset((double)e.NewValue);
 			//}
 		}
+
 		ITemplatedItemsView<Cell> TemplatedItemsView => Element;
 		AScrollBarVisibility? _defaultHorizontalScrollVisibility;
 		AScrollBarVisibility? _defaultVerticalScrollVisibility;
@@ -159,7 +160,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 					index++;
 				}
 
-				//Control.ItemsSource = items;
+				Control.Items = items;
 			}
 			else
 			{
@@ -168,7 +169,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 					items.Add(item);
 				}
 
-				//Control.ItemsSource = items;
+				Control.Items = items;
 			}
 		}
 
@@ -294,6 +295,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		{
 			UpdateItemSource();
 		}
+
 		void ScrollTo(object group, object item, ScrollToPosition toPosition, bool shouldAnimate)
 		{
 			//var viewer = Control.FindVisualChild<ScrollViewer>();
@@ -321,6 +323,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			//	ScrollToPositionInView(Control, viewer, c, toPosition, shouldAnimate);
 			//});
 		}
+
 		static void ScrollToPositionInView(AList control, ScrollViewer sv, object item, ScrollToPosition position, bool animated)
 		{
 			// Scroll immediately if possible

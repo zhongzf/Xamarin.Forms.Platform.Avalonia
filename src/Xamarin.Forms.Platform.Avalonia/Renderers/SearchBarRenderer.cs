@@ -27,8 +27,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 					//scope.Names.Add(name);
 					
 					SetNativeControl(new FormsTextBox { /*InputScope = scope*/ });
-					//Control.KeyUp += PhoneTextBoxOnKeyUp;
-					//Control.TextChanged += PhoneTextBoxOnTextChanged;
+					Control.KeyUp += PhoneTextBoxOnKeyUp;
+					Control.TextChanged += PhoneTextBoxOnTextChanged;
 				}
 
 				// Update control property 
@@ -71,13 +71,15 @@ namespace Xamarin.Forms.Platform.Avalonia
 		void PhoneTextBoxOnKeyUp(object sender, KeyEventArgs keyEventArgs)
 		{
 			if (keyEventArgs.Key == Key.Enter)
+			{
 				((ISearchBarController)Element).OnSearchButtonPressed();
+			}
 		}
 
-		//void PhoneTextBoxOnTextChanged(object sender, global::Avalonia.TextChangedEventArgs textChangedEventArgs)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(SearchBar.TextProperty, Control.Text);
-		//}
+		void PhoneTextBoxOnTextChanged(object sender, global::Avalonia.Interactivity.RoutedEventArgs textChangedEventArgs)
+		{
+			((IElementController)Element).SetValueFromRenderer(SearchBar.TextProperty, Control.Text);
+		}
 
 		void UpdateHorizontalTextAlignment()
 		{
@@ -86,7 +88,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateVerticalTextAlignment()
 		{
-			//Control.VerticalContentAlignment = Element.VerticalTextAlignment.ToNativeVerticalAlignment();
+			Control.VerticalAlignment = Element.VerticalTextAlignment.ToNativeVerticalAlignment();
 		}
 
 		void UpdateFont()
@@ -131,7 +133,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (_defaultPlaceholderColorBrush == null)
 				{
-					//_defaultPlaceholderColorBrush = (Brush)AControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).DefaultValue;
+					_defaultPlaceholderColorBrush = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
 				}
 				Control.PlaceholderForegroundBrush = _defaultPlaceholderColorBrush;
 				return;
@@ -160,8 +162,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 				Control.Foreground = _defaultTextColorBrush;
 			}
 
-			//if (_defaultTextColorBrush == null)
-			//	_defaultTextColorBrush = Control.Foreground;
+			if (_defaultTextColorBrush == null)
+			{
+				_defaultTextColorBrush = (Brush)Control.Foreground;
+			}
 
 			Control.Foreground = textColor.ToBrush();
 		}
@@ -178,7 +182,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control != null)
 				{
 					Control.KeyUp -= PhoneTextBoxOnKeyUp;
-					//Control.TextChanged -= PhoneTextBoxOnTextChanged;
+					Control.TextChanged -= PhoneTextBoxOnTextChanged;
 				}
 			}
 
