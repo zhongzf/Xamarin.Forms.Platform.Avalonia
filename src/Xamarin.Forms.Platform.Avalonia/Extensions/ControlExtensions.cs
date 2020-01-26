@@ -39,5 +39,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Extensions
                 }
             }
         }
+
+        public static T GetDefaultValue<T>(this StyledPropertyMetadata<T> propertyMetadata)
+        {
+            return default(T);
+        }
     }
 }

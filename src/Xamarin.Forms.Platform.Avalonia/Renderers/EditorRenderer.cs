@@ -1,7 +1,9 @@
-﻿using Avalonia.Media;
+﻿using Avalonia;
+using Avalonia.Media;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
+using AControl = Avalonia.Controls.Control;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -17,8 +19,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
 					SetNativeControl(new FormsTextBox { TextWrapping = TextWrapping.Wrap, AcceptsReturn = true });
-					//Control.LostFocus += NativeOnLostFocus; 
-					//Control.TextChanged += NativeOnTextChanged;
+					Control.LostFocus += NativeOnLostFocus;
+					Control.TextChanged += NativeOnTextChanged;
 				}
 
 				// Update control property 
@@ -75,7 +77,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (_placeholderDefaultBrush == null)
 				{
-					//_placeholderDefaultBrush = (Brush)AControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).DefaultValue;
+					_placeholderDefaultBrush = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
 				}
 
 				// Use the cached default brush
@@ -92,15 +94,15 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.PlaceholderForegroundBrush = placeholderColor.ToBrush();
 		}
 
-		//void NativeOnTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs textChangedEventArgs)
-		//{
-		//	((IElementController)Element).SetValueFromRenderer(Editor.TextProperty, Control.Text);
-		//}
+		void NativeOnTextChanged(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+		{
+			((IElementController)Element).SetValueFromRenderer(Editor.TextProperty, Control.Text);
+		}
 
-		//void NativeOnLostFocus(object sender, RoutedEventArgs e)
-		//{
-		//	Element.SendCompleted();
-		//}
+		void NativeOnLostFocus(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+		{
+			Element.SendCompleted();
+		}
 
 		void UpdateFont()
 		{
@@ -129,7 +131,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateInputScope()
 		{
-			//Control.InputScope = Element.Keyboard.ToInputScope();
+			Control.InputScope = Element.Keyboard.ToInputScope();
 		}
 
 		void UpdateText()
@@ -145,7 +147,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateTextColor()
 		{
-			//Control.UpdateDependencyColor(System.Windows.Controls.Control.ForegroundProperty, Element.TextColor);
+			Control.UpdateDependencyColor(global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty, Element.TextColor);
 		}
 
 		void UpdateMaxLength()
@@ -169,8 +171,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control != null)
 				{
-					//Control.LostFocus -= NativeOnLostFocus;
-					//Control.TextChanged -= NativeOnTextChanged;
+					Control.LostFocus -= NativeOnLostFocus;
+					Control.TextChanged -= NativeOnTextChanged;
 				}
 			}
 

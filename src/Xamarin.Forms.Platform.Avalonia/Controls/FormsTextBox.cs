@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Threading;
 using System;
@@ -30,6 +31,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         bool _internalChangeFlag;
         int _cachedSelectionLength;
 
+        //
+        // Summary:
+        //     Occurs when the control loses focus.
+        public event EventHandler<RoutedEventArgs> TextChanged;
+        
         public FormsTextBox()
         {
             TextProperty.Changed.AddClassHandler<FormsTextBox>((x, e) => x.OnTextPropertyChanged(e));
@@ -293,6 +299,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         protected virtual void OnTextPropertyChanged(AvaloniaPropertyChangedEventArgs e)
         {
             SyncBaseText();
+            TextChanged?.Invoke(this, new RoutedEventArgs());
         }
 
         void UpdateInputScope()

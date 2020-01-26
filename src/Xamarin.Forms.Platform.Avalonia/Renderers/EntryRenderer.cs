@@ -23,7 +23,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                 {
                     SetNativeControl(new FormsTextBox());
                     Control.LostFocus += OnTextBoxUnfocused;
-                    //Control.TextChanged += TextBoxOnTextChanged;
+                    Control.TextChanged += TextBoxOnTextChanged;
                     Control.KeyUp += TextBoxOnKeyUp;
                 }
 
@@ -105,29 +105,29 @@ namespace Xamarin.Forms.Platform.Avalonia
                 ((IEntryController)Element).SendCompleted();
         }
 
-        //void TextBoxOnTextChanged(object sender, global::Avalonia.Controls.TextChangedEventArgs textChangedEventArgs)
-        //{
-        //    // Signal to the UpdateText method that the change to TextProperty doesn't need to update the control
-        //    // This prevents the cursor position from getting lost
-        //    _ignoreTextChange = true;
-        //    ((IElementController)Element).SetValueFromRenderer(Entry.TextProperty, Control.Text);
+        void TextBoxOnTextChanged(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // Signal to the UpdateText method that the change to TextProperty doesn't need to update the control
+            // This prevents the cursor position from getting lost
+            _ignoreTextChange = true;
+            ((IElementController)Element).SetValueFromRenderer(Entry.TextProperty, Control.Text);
 
-        //    // If an Entry.TextChanged handler modified the value of the Entry's text, the values could now be 
-        //    // out-of-sync; re-sync them and fix TextBox cursor position
-        //    string entryText = Element.Text;
-        //    if (Control.Text != entryText)
-        //    {
-        //        Control.Text = entryText;
-        //        if (Control.Text != null)
-        //        {
-        //            var savedSelectionStart = Control.SelectionStart;
-        //            var len = Control.Text.Length;
-        //            Control.SelectionStart = savedSelectionStart > len ? len : savedSelectionStart;
-        //        }
-        //    }
+            // If an Entry.TextChanged handler modified the value of the Entry's text, the values could now be 
+            // out-of-sync; re-sync them and fix TextBox cursor position
+            string entryText = Element.Text;
+            if (Control.Text != entryText)
+            {
+                Control.Text = entryText;
+                if (Control.Text != null)
+                {
+                    var savedSelectionStart = Control.SelectionStart;
+                    var len = Control.Text.Length;
+                    Control.SelectionStart = savedSelectionStart > len ? len : savedSelectionStart;
+                }
+            }
 
-        //    _ignoreTextChange = false;
-        //}
+            _ignoreTextChange = false;
+        }
 
         void UpdateHorizontalTextAlignment()
         {
@@ -142,7 +142,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Control == null)
                 return;
 
-            //Control.VerticalContentAlignment = Element.VerticalTextAlignment.ToNativeVerticalAlignment();
+            Control.VerticalAlignment = Element.VerticalTextAlignment.ToNativeVerticalAlignment();
         }
 
         void UpdateColor()
@@ -154,16 +154,22 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (entry != null)
             {
                 if (!entry.TextColor.IsDefault)
+                {
                     Control.Foreground = entry.TextColor.ToBrush();
-                //else
-                //    Control.Foreground = (Brush)AControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).DefaultValue;
+                }
+                else
+                {
+                    Control.Foreground = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
+                }
 
-                //// Force the PhoneTextBox control to do some internal bookkeeping
-                //// so the colors change immediately and remain changed when the control gets focus
+                ////Force the PhoneTextBox control to do some internal bookkeeping
+                ////so the colors change immediately and remain changed when the control gets focus
                 //Control.OnApplyTemplate();
             }
-            //else
-            //    Control.Foreground = (Brush)AControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).DefaultValue;
+            else
+            {
+                Control.Foreground = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
+            }
         }
 
         void UpdateFont()
@@ -197,7 +203,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         void UpdateInputScope()
         {
-            //Control.InputScope = Element.Keyboard.ToInputScope();
+            Control.InputScope = Element.Keyboard.ToInputScope();
         }
 
         void UpdateIsPassword()
@@ -216,10 +222,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             if (placeholderColor.IsDefault)
             {
-                //if (_placeholderDefaultBrush == null)
-                //{
-                //    _placeholderDefaultBrush = (Brush)AControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).DefaultValue;
-                //}
+                if (_placeholderDefaultBrush == null)
+                {
+                    _placeholderDefaultBrush = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
+                }
 
                 // Use the cached default brush
                 Control.PlaceholderForegroundBrush = _placeholderDefaultBrush;
@@ -246,8 +252,8 @@ namespace Xamarin.Forms.Platform.Avalonia
                 return;
 
             Control.Text = Element.Text ?? "";
-            // TODO:
-            //Control.Select(Control.Text == null ? 0 : Control.Text.Length, 0);
+            Control.SelectionStart = string.IsNullOrEmpty(Control.Text) ? 0 : Control.Text.Length;
+            Control.SelectionEnd = Control.SelectionStart;
         }
 
         void UpdateMaxLength()
@@ -272,7 +278,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                 if (Control != null)
                 {
                     Control.LostFocus -= OnTextBoxUnfocused;
-                    //Control.TextChanged -= TextBoxOnTextChanged;
+                    Control.TextChanged -= TextBoxOnTextChanged;
                     Control.KeyUp -= TextBoxOnKeyUp;
                 }
             }
