@@ -173,10 +173,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             Element.IsNativeStateConsistent = false;
 
-            //Control.Loaded += Control_Loaded;
-            //Control.AttachedToVisualTree += Control_AttachedToVisualTree;
-            Control.Initialized += Control_Initialized;
-            //Control.Unloaded += Control_Unloaded;
+            Control.AttachedToVisualTree += Control_AttachedToVisualTree;
             Control.DetachedFromVisualTree += Control_DetachedFromVisualTree;
 
             Control.GotFocus += OnGotFocus;
@@ -188,12 +185,6 @@ namespace Xamarin.Forms.Platform.Avalonia
             UpdateHeight();
         }
 
-        private void Control_Initialized(object sender, EventArgs e)
-        {
-            Control.Initialized -= Control_Initialized;
-            Control_Loaded(sender, new RoutedEventArgs());
-        }
-
         private void Control_AttachedToVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
         {
             Control.AttachedToVisualTree -= Control_AttachedToVisualTree;
@@ -202,7 +193,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            //Control.Loaded -= Control_Loaded;
             Element.IsNativeStateConsistent = true;
             Appearing();
         }
@@ -210,12 +200,11 @@ namespace Xamarin.Forms.Platform.Avalonia
         private void Control_DetachedFromVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
         {
             Control.DetachedFromVisualTree -= Control_DetachedFromVisualTree;
-            Control_Loaded(sender, new RoutedEventArgs());
+            Control_Unloaded(sender, new RoutedEventArgs());
         }
 
         private void Control_Unloaded(object sender, RoutedEventArgs e)
         {
-            //Control.Unloaded -= Control_Unloaded;
             Disappearing();
         }
 
@@ -232,7 +221,9 @@ namespace Xamarin.Forms.Platform.Avalonia
         protected virtual void UpdateBackground()
         {
             if (Control is AControl aControl)
+            {
                 aControl?.UpdateDependencyColor(AControl.BackgroundProperty, Element.BackgroundColor);
+            }
         }
 
         protected virtual void UpdateHeight()
@@ -297,20 +288,26 @@ namespace Xamarin.Forms.Platform.Avalonia
             //    // update TabStop of children for complex controls (like as DatePicker, TimePicker, SearchBar and Stepper)
             //    var children = FrameworkElementExtensions.GetChildren<AControl>(Control);
             //    foreach (var child in children)
+            //    {
             //        child.IsTabStop = aControl.IsTabStop;
+            //    }
             //}
         }
 
         protected void UpdateTabIndex()
         {
             //if (Control is AControl aControl)
+            //{
             //    aControl.TabIndex = Element.TabIndex;
+            //}
         }
 
         protected virtual void UpdateEnabled()
         {
             if (Control != null)
+            {
                 Control.IsEnabled = Element.IsEnabled;
+            }
         }
 
         void UpdateAlignment()
