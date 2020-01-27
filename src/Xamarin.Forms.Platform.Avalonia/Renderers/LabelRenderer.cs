@@ -135,14 +135,14 @@ namespace Xamarin.Forms.Platform.Avalonia
 				return;
 
 			Label label = Element;
-//			if (label == null || (label.IsDefault() && !_fontApplied))
-//				return;
+			if (label == null || (label.IsDefault() && !_fontApplied))
+				return;
 
-//#pragma warning disable 618
-//			Font fontToApply = label.IsDefault() ? Font.SystemFontOfSize(NamedSize.Medium) : label.Font;
-//#pragma warning restore 618
+#pragma warning disable 618
+			Font fontToApply = label.IsDefault() ? Font.SystemFontOfSize(NamedSize.Medium) : label.Font;
+#pragma warning restore 618
 
-//			Control.ApplyFont(fontToApply);
+			Control.ApplyFont(fontToApply);
 			_fontApplied = true;
 		}
 
@@ -151,35 +151,35 @@ namespace Xamarin.Forms.Platform.Avalonia
 			if (Control == null)
 				return;
 
-			//switch (Element.LineBreakMode)
-			//{
-			//	case LineBreakMode.NoWrap:
-			//		Control.TextTrimming = TextTrimming.None;
-			//		Control.TextWrapping = TextWrapping.NoWrap;
-			//		break;
-			//	case LineBreakMode.WordWrap:
-			//		Control.TextTrimming = TextTrimming.None;
-			//		Control.TextWrapping = TextWrapping.Wrap;
-			//		break;
-			//	case LineBreakMode.CharacterWrap:
-			//		Control.TextTrimming = TextTrimming.CharacterEllipsis;
-			//		Control.TextWrapping = TextWrapping.Wrap;
-			//		break;
-			//	case LineBreakMode.HeadTruncation:
-			//		Control.TextTrimming = TextTrimming.WordEllipsis;
-			//		Control.TextWrapping = TextWrapping.NoWrap;
-			//		break;
-			//	case LineBreakMode.TailTruncation:
-			//		Control.TextTrimming = TextTrimming.CharacterEllipsis;
-			//		Control.TextWrapping = TextWrapping.NoWrap;
-			//		break;
-			//	case LineBreakMode.MiddleTruncation:
-			//		Control.TextTrimming = TextTrimming.WordEllipsis;
-			//		Control.TextWrapping = TextWrapping.NoWrap;
-			//		break;
-			//	default:
-			//		throw new ArgumentOutOfRangeException();
-			//}
+			switch (Element.LineBreakMode)
+			{
+				case LineBreakMode.NoWrap:
+					//Control.TextTrimming = TextTrimming.None;
+					Control.TextWrapping = TextWrapping.NoWrap;
+					break;
+				case LineBreakMode.WordWrap:
+					//Control.TextTrimming = TextTrimming.None;
+					Control.TextWrapping = TextWrapping.Wrap;
+					break;
+				case LineBreakMode.CharacterWrap:
+					//Control.TextTrimming = TextTrimming.CharacterEllipsis;
+					Control.TextWrapping = TextWrapping.Wrap;
+					break;
+				case LineBreakMode.HeadTruncation:
+					//Control.TextTrimming = TextTrimming.WordEllipsis;
+					Control.TextWrapping = TextWrapping.NoWrap;
+					break;
+				case LineBreakMode.TailTruncation:
+					//Control.TextTrimming = TextTrimming.CharacterEllipsis;
+					Control.TextWrapping = TextWrapping.NoWrap;
+					break;
+				case LineBreakMode.MiddleTruncation:
+					//Control.TextTrimming = TextTrimming.WordEllipsis;
+					Control.TextWrapping = TextWrapping.NoWrap;
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 
 		void UpdateText()

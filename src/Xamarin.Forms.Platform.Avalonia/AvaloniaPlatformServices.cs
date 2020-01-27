@@ -1,4 +1,5 @@
-﻿using Avalonia.Threading;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -114,8 +115,12 @@ namespace Xamarin.Forms.Platform.Avalonia
         }
 
         public void QuitApplication()
-        {      
-            // TODO:
+        {
+            var application = global::Avalonia.Application.Current;
+            if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.Shutdown();
+            }
         }
 
         public void StartTimer(TimeSpan interval, Func<bool> callback)

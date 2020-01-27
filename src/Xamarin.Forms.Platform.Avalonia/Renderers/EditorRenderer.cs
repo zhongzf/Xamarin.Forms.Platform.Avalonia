@@ -115,16 +115,17 @@ namespace Xamarin.Forms.Platform.Avalonia
 			if (editor == null || (editorIsDefault && !_fontApplied))
 				return;
 
-			//if (editorIsDefault)
-			//{
-			//	Control.ClearValue(System.Windows.Controls.Control.FontStyleProperty);
-			//	Control.ClearValue(System.Windows.Controls.Control.FontSizeProperty);
-			//	Control.ClearValue(System.Windows.Controls.Control.FontFamilyProperty);
-			//	Control.ClearValue(System.Windows.Controls.Control.FontWeightProperty);
-			//	Control.ClearValue(System.Windows.Controls.Control.FontStretchProperty);
-			//}
-			//else
-			//	Control.ApplyFont(editor);
+			if (editorIsDefault)
+			{
+				Control.ClearValue(global::Avalonia.Controls.Primitives.TemplatedControl.FontStyleProperty);
+				Control.ClearValue(global::Avalonia.Controls.Primitives.TemplatedControl.FontSizeProperty);
+				Control.ClearValue(global::Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty);
+				Control.ClearValue(global::Avalonia.Controls.Primitives.TemplatedControl.FontWeightProperty);
+			}
+			else
+			{
+				Control.ApplyFont(editor);
+			}
 
 			_fontApplied = true;
 		}

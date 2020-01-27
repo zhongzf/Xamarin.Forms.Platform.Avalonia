@@ -22,16 +22,6 @@ namespace Xamarin.Forms
 			if (IsInitialized)
 				return;
 
-			string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-			// TODO:
-			//System.Windows.Application.Current.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary
-			//{
-			//	Source = new Uri(string.Format("/{0};component/WPFResources.xaml", assemblyName), UriKind.Relative)
-			//});
-
-			//var accentColor = (SolidColorBrush)System.Windows.Application.Current.Resources["AccentColor"];
-			//Color.SetAccent(Color.FromRgba(accentColor.Color.R, accentColor.Color.G, accentColor.Color.B, accentColor.Color.A));
-
 			Log.Listeners.Add(new DelegateLogListener((c, m) => Console.WriteLine("[{0}] {1}", m, c)));
 			Registrar.ExtraAssemblies = rendererAssemblies?.ToArray();
 

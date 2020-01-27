@@ -176,9 +176,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				return;
 
 			Font fontToApply = Element.Font == Font.Default ? Font.SystemFontOfSize(NamedSize.Medium) : Element.Font;
-
-			// TODO:
-			//Control.ApplyFont(fontToApply);
+			Control.ApplyFont(fontToApply);
 			_fontApplied = true;
 		}
 
