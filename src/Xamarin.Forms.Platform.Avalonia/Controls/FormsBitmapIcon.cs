@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
 	public class FormsBitmapIcon : FormsElementIcon
 	{
-		public static readonly StyledProperty<Uri> UriSourceProperty;// = DependencyProperty.Register("UriSource", typeof(Uri), typeof(FormsBitmapIcon), new PropertyMetadata(OnSourceChanged));
+		public static readonly StyledProperty<Uri> UriSourceProperty = AvaloniaProperty.Register<FormsBitmapIcon, Uri>(nameof(UriSource));
 
 		public Uri UriSource
 		{
@@ -24,10 +24,19 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			//this.DefaultStyleKey = typeof(FormsBitmapIcon);
 		}
 
-		//private static void OnSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-		//{
-		//	((FormsBitmapIcon)o).OnSourceChanged(e.OldValue, e.NewValue);
-		//}
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if (e.Property == UriSourceProperty)
+			{
+				OnSourceChanged(e);
+			}
+		}
+
+		private void OnSourceChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			OnSourceChanged(e.OldValue, e.NewValue);
+		}
 
 		private void OnSourceChanged(object oldValue, object newValue)
 		{

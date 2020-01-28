@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Xamarin.Forms.Sample.TabbedPageDemo">
+  <!--Pages can be added as references or inline-->
+    <ContentPage Title="Tab 1">
+        <StackLayout>
+            <Button Text="Test button"></Button>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Tab 2">
+        <StackLayout>
+            <Button Text="Test button2"></Button>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage Title="Tab 3">
+        <StackLayout>
+            <Button Text="Test button3"></Button>
+        </StackLayout>
+    </ContentPage>
+</TabbedPage>

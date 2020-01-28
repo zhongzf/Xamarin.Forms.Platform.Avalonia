@@ -11,6 +11,7 @@ namespace Xamarin.Forms.Sample
         {
             InitializeComponent();
 
+            //MainPage = new TabbedPageDemo();
             MainPage = new MainPage();
         }
 

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -25,52 +27,53 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
-		//public static readonly DependencyProperty ContentLoaderProperty = DependencyProperty.Register("ContentLoader", typeof(IContentLoader), typeof(FormsMultiPage), new PropertyMetadata(new DefaultContentLoader()));
-		//public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<object>), typeof(FormsMultiPage));
-		//public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(object), typeof(FormsMultiPage), new PropertyMetadata(OnSelectedItemChanged));
-		//public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(FormsMultiPage), new PropertyMetadata(0));
+		public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiPage, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
+		public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiPage, ObservableCollection<object>>(nameof(ItemsSource));
+		public static readonly StyledProperty<object> SelectedItemProperty = AvaloniaProperty.Register<FormsMultiPage, object>(nameof(SelectedItem));
+		public static readonly StyledProperty<int> SelectedIndexProperty = AvaloniaProperty.Register<FormsMultiPage, int>(nameof(SelectedIndex), 0);
 
-		//public IContentLoader ContentLoader
-		//{
-		//	get { return (IContentLoader)GetValue(ContentLoaderProperty); }
-		//	set { SetValue(ContentLoaderProperty, value); }
-		//}
+		public IContentLoader ContentLoader
+		{
+			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
+			set { SetValue(ContentLoaderProperty, value); }
+		}
 
-		//public ObservableCollection<object> ItemsSource
-		//{
-		//	get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
-		//	set { SetValue(ItemsSourceProperty, value); }
-		//}
+		public ObservableCollection<object> ItemsSource
+		{
+			get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
+			set { SetValue(ItemsSourceProperty, value); }
+		}
 
-		//public object SelectedItem
-		//{
-		//	get { return (object)GetValue(SelectedItemProperty); }
-		//	set { SetValue(SelectedItemProperty, value); }
-		//}
+		public object SelectedItem
+		{
+			get { return (object)GetValue(SelectedItemProperty); }
+			set { SetValue(SelectedItemProperty, value); }
+		}
 
-		//public int SelectedIndex
-		//{
-		//	get { return (int)GetValue(SelectedIndexProperty); }
-		//	set { SetValue(SelectedIndexProperty, value); }
-		//}
+		public int SelectedIndex
+		{
+			get { return (int)GetValue(SelectedIndexProperty); }
+			set { SetValue(SelectedIndexProperty, value); }
+		}
 
-		//private static void OnSelectedItemChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-		//{
-		//	if (e.OldValue == e.NewValue) return;
-		//	((FormsMultiPage)o).OnSelectedItemChanged(e.OldValue, e.NewValue);
-		//}
+		public FormsMultiPage()
+		{
+			SelectedItemProperty.Changed.AddClassHandler<FormsMultiPage>((x, e) => x.OnSelectedItemChanged(e));
+			SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
+		}
 
-		//private void OnSelectedItemChanged(object oldValue, object newValue)
-		//{
-		//	if (ItemsSource == null) return;
-		//	SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
-		//	SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
-		//}
+		private void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			if (e.OldValue == e.NewValue) return;
+			OnSelectedItemChanged(e.OldValue, e.NewValue);
+		}
 
-		//public FormsMultiPage()
-		//{
-		//	SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
-		//}
+		private void OnSelectedItemChanged(object oldValue, object newValue)
+		{
+			if (ItemsSource == null) return;
+			SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
+			SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
+		}
 
 		//public override void OnApplyTemplate()
 		//{
@@ -78,14 +81,14 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	FormsContentControl = Template.FindName("PART_Multi_Content", this) as FormsTransitioningContentControl;
 		//}
 
-		//public override bool GetHasNavigationBar()
-		//{
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetHasNavigationBar();
-		//	}
-		//	return false;
-		//}
+		public override bool GetHasNavigationBar()
+		{
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				return page.GetHasNavigationBar();
+			}
+			return false;
+		}
 
 		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
 		//{
