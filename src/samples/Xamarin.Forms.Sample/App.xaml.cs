@@ -11,8 +11,8 @@ namespace Xamarin.Forms.Sample
         {
             InitializeComponent();
 
-            //MainPage = new TabbedPageDemo();
-            MainPage = new MainPage();
+            MainPage = new TabbedPageDemo();
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()

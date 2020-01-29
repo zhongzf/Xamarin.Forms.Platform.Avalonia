@@ -18,22 +18,14 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 
 				if(frameworkElement != null)
 				{
-					//frameworkElement.Loaded += (sender, args) =>
-					//{
-					//	visualElement.Layout(new Rectangle(0, 0, frameworkElement.ActualWidth, frameworkElement.ActualHeight));
-					//};
 					frameworkElement.Initialized += (sender, args) =>
 					{
-						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Width, frameworkElement.Height));
+						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
 					};
 
-					//frameworkElement.SizeChanged += (sender, args) =>
-					//{
-					//	visualElement.Layout(new Rectangle(0, 0, frameworkElement.ActualWidth, frameworkElement.ActualHeight));
-					//};
 					frameworkElement.LayoutUpdated += (sender, args) =>
 					{
-						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Width, frameworkElement.Height));
+						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
 					};
 
 					return frameworkElement;

@@ -3,9 +3,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
+        xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApplication.Sample.MainWindow"
         Title="AvaloniaApplication.Sample">
+  <Window.Resources>
+    <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
+  </Window.Resources>
   <Window.Styles>
     <Style Selector="controls|FormsButton">
       <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
@@ -222,15 +226,18 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-
           <TabControl Items="{TemplateBinding ItemsSource}">
-            <TabControl.Styles>
-              <Style Selector="TabItem">
-                <Setter Property="Header" Value="{Binding Title}"/>
-              </Style>
-            </TabControl.Styles>
+            <TabControl.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Title}"></TextBlock>
+              </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+              <DataTemplate>
+                <ContentControl Content="{Binding Content, Converter={StaticResource ViewToRenderer}}"/>
+              </DataTemplate>
+            </TabControl.ContentTemplate>
           </TabControl>
-
         </ControlTemplate>
       </Setter>
     </Style>

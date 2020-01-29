@@ -108,7 +108,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (Double.IsPositiveInfinity(result.Width))
                 result = result.WithWidth(0.0);
 
-            var finalDesiredSize = new global::Avalonia.Size(Math.Max(baseDesiredSize.Width, result.Width), Math.Max(baseDesiredSize.Height, result.Height));
+            //var finalDesiredSize = new global::Avalonia.Size(Math.Max(baseDesiredSize.Width, result.Width), Math.Max(baseDesiredSize.Height, result.Height));
+            //return finalDesiredSize;
             return result;
         }
     }
