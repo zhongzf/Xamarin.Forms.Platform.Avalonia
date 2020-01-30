@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,13 +46,26 @@ namespace Xamarin.Forms.Platform.Avalonia
             }
         }
 
+        public void OnSizeContentChanged(Rect parentBounds, object page)
+        {
+            VisualElement visualElement = page as VisualElement;
+            if (visualElement != null)
+            {
+                CreateOrResizeContent(parentBounds, visualElement);
+            }
+        }
+
         private object CreateOrResizeContent(Control parent, VisualElement visualElement)
         {
-            var renderer = Platform.GetOrCreateRenderer(visualElement);
-
             //if (Debugger.IsAttached)
             //	Console.WriteLine("Page type : " + visualElement.GetType() + " (" + (visualElement as Page).Title + ") -- Parent type : " + visualElement.Parent.GetType() + " -- " + parent.ActualHeight + "H*" + parent.ActualWidth + "W");
             var parentBounds = parent.Bounds;
+            return CreateOrResizeContent(parentBounds, visualElement);
+        }
+
+        private object CreateOrResizeContent(Rect parentBounds, VisualElement visualElement)
+        {
+            var renderer = Platform.GetOrCreateRenderer(visualElement);
             var actualRect = new Rectangle(0, 0, parentBounds.Width, parentBounds.Height);
             visualElement.Layout(actualRect);
 

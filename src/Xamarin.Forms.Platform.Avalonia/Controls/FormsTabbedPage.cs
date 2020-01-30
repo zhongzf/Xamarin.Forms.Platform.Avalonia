@@ -29,5 +29,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public FormsTabbedPage()
 		{
 		}
+
+		protected override void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
+		{
+			var parentBounds = new Rect(0, 0, this.Width, this.Height - 50);
+			this.ContentLoader.OnSizeContentChanged(parentBounds, SelectedItem);
+		}
 	}
 }

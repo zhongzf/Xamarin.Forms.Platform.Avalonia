@@ -226,7 +226,7 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <TabControl Items="{TemplateBinding ItemsSource}">
+          <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}">
             <TabControl.ItemTemplate>
               <DataTemplate>
                 <TextBlock Text="{Binding Title}"></TextBlock>
@@ -234,7 +234,7 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
               <DataTemplate>
-                <ContentControl Content="{Binding Content, Converter={StaticResource ViewToRenderer}}"/>
+                <ContentControl Name="PART_ContentControl" Content="{Binding Content, Converter={StaticResource ViewToRenderer}}"/>
               </DataTemplate>
             </TabControl.ContentTemplate>
           </TabControl>

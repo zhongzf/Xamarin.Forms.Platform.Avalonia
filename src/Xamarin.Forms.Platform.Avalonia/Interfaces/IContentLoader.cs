@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Interfaces
 		Task<object> LoadContentAsync(Control parent, object oldContent, object newContent, CancellationToken cancellationToken);
 
 		void OnSizeContentChanged(Control parent, object content);
+		void OnSizeContentChanged(Rect parentBounds, object content);
 	}
 
 	public class DefaultContentLoader : IContentLoader
@@ -47,6 +49,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Interfaces
 		}
 
 		public void OnSizeContentChanged(Control parent, object page)
+		{
+		}
+
+		public void OnSizeContentChanged(Rect parentBounds, object content)
 		{
 		}
 	}

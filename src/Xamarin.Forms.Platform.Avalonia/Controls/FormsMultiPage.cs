@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,138 +10,152 @@ using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	public class SelectionChangedEventArgs : EventArgs
-	{
-		public SelectionChangedEventArgs(object oldElement, object newElement)
-		{
-			OldElement = oldElement;
-			NewElement = newElement;
-		}
-
-		public object NewElement { get; private set; }
-
-		public object OldElement { get; private set; }
-	}
-
-	public class FormsMultiPage : FormsPage
+    public class SelectionChangedEventArgs : EventArgs
     {
-		public FormsTransitioningContentControl FormsContentControl { get; private set; }
+        public SelectionChangedEventArgs(object oldElement, object newElement)
+        {
+            OldElement = oldElement;
+            NewElement = newElement;
+        }
 
-		public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public object NewElement { get; private set; }
 
-		public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiPage, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
-		public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiPage, ObservableCollection<object>>(nameof(ItemsSource));
-		public static readonly StyledProperty<object> SelectedItemProperty = AvaloniaProperty.Register<FormsMultiPage, object>(nameof(SelectedItem));
-		public static readonly StyledProperty<int> SelectedIndexProperty = AvaloniaProperty.Register<FormsMultiPage, int>(nameof(SelectedIndex), 0);
+        public object OldElement { get; private set; }
+    }
 
-		public IContentLoader ContentLoader
-		{
-			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
-			set { SetValue(ContentLoaderProperty, value); }
-		}
+    public class FormsMultiPage : FormsPage
+    {
+        public FormsTransitioningContentControl FormsContentControl { get; private set; }
 
-		public ObservableCollection<object> ItemsSource
-		{
-			get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
-		public object SelectedItem
-		{
-			get { return (object)GetValue(SelectedItemProperty); }
-			set { SetValue(SelectedItemProperty, value); }
-		}
+        public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiPage, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
+        public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiPage, ObservableCollection<object>>(nameof(ItemsSource));
+        public static readonly StyledProperty<object> SelectedItemProperty = AvaloniaProperty.Register<FormsMultiPage, object>(nameof(SelectedItem));
+        public static readonly StyledProperty<int> SelectedIndexProperty = AvaloniaProperty.Register<FormsMultiPage, int>(nameof(SelectedIndex), 0);
 
-		public int SelectedIndex
-		{
-			get { return (int)GetValue(SelectedIndexProperty); }
-			set { SetValue(SelectedIndexProperty, value); }
-		}
+        public IContentLoader ContentLoader
+        {
+            get { return (IContentLoader)GetValue(ContentLoaderProperty); }
+            set { SetValue(ContentLoaderProperty, value); }
+        }
 
-		public FormsMultiPage()
-		{
-			SelectedItemProperty.Changed.AddClassHandler<FormsMultiPage>((x, e) => x.OnSelectedItemChanged(e));
-			SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
-		}
+        public ObservableCollection<object> ItemsSource
+        {
+            get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
 
-		private void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
-		{
-			if (e.OldValue == e.NewValue) return;
-			OnSelectedItemChanged(e.OldValue, e.NewValue);
-		}
+        public object SelectedItem
+        {
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
 
-		private void OnSelectedItemChanged(object oldValue, object newValue)
-		{
-			if (ItemsSource == null) return;
-			SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
-			SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
-		}
+        public int SelectedIndex
+        {
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
+        }
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//	FormsContentControl = Template.FindName("PART_Multi_Content", this) as FormsTransitioningContentControl;
-		//}
+        public FormsMultiPage()
+        {
+            this.LayoutUpdated += OnLayoutUpdated;
 
-		public override bool GetHasNavigationBar()
-		{
-			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-			{
-				return page.GetHasNavigationBar();
-			}
-			return false;
-		}
+            SelectedItemProperty.Changed.AddClassHandler<FormsMultiPage>((x, e) => x.OnSelectedItemChanged(e));
+            SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
+        }
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryTopBarCommands);
+        protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            OnContentLoaderLayoutUpdated(this, e);
+        }
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
-		//	}
+        private void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.OldValue == e.NewValue) return;
+            OnSelectedItemChanged(e.OldValue, e.NewValue);
+            OnContentLoaderLayoutUpdated(this, e);
+        }
 
-		//	return frameworkElements;
-		//}
+        private void OnSelectedItemChanged(object oldValue, object newValue)
+        {
+            if (ItemsSource == null) return;
+            SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
+            SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
+        }
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryTopBarCommands);
+        protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
+        {
+            this.ContentLoader.OnSizeContentChanged(this, SelectedItem);
+        }
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
-		//	}
+        //protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+        //{
+        //    base.OnTemplateApplied(e);
+        //    // TODO:
+        //    FormsContentControl = this.FindControl<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
+        //}
 
-		//	return frameworkElements;
-		//}
+        public override bool GetHasNavigationBar()
+        {
+            if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+            {
+                return page.GetHasNavigationBar();
+            }
+            return false;
+        }
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryBottomBarCommands);
+        //public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
+        //{
+        //	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
+        //	frameworkElements.AddRange(this.PrimaryTopBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
-		//	}
+        //	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+        //	{
+        //		frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
+        //	}
 
-		//	return frameworkElements;
-		//}
+        //	return frameworkElements;
+        //}
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+        //public override IEnumerable<FrameworkElement> GetSecondaryTopBarCommands()
+        //{
+        //	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
+        //	frameworkElements.AddRange(this.SecondaryTopBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
-		//	}
+        //	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+        //	{
+        //		frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
+        //	}
 
-		//	return frameworkElements;
-		//}
-	}
+        //	return frameworkElements;
+        //}
+
+        //public override IEnumerable<FrameworkElement> GetPrimaryBottomBarCommands()
+        //{
+        //	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
+        //	frameworkElements.AddRange(this.PrimaryBottomBarCommands);
+
+        //	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+        //	{
+        //		frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
+        //	}
+
+        //	return frameworkElements;
+        //}
+
+        //public override IEnumerable<FrameworkElement> GetSecondaryBottomBarCommands()
+        //{
+        //	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
+        //	frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+
+        //	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+        //	{
+        //		frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
+        //	}
+
+        //	return frameworkElements;
+        //}
+    }
 }
