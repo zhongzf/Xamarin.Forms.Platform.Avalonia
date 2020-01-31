@@ -9,10 +9,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 {
     internal class AvaloniaDeviceInfo : DeviceInfo
     {
-        public override Size PixelScreenSize => throw new NotImplementedException();
+        public override Size PixelScreenSize => ScaledScreenSize;
 
-        public override Size ScaledScreenSize => (global::Avalonia.Application.Current as IClassicDesktopStyleApplicationLifetime)?.MainWindow.Screens.Primary.WorkingArea.ToRect(1.0).Size.ToSize() ?? Size.Zero;
+        public override Size ScaledScreenSize => (global::Avalonia.Application.Current as IClassicDesktopStyleApplicationLifetime)?.MainWindow.Screens.Primary.WorkingArea.ToRect(ScalingFactor).Size.ToSize() ?? Size.Zero;
 
-        public override double ScalingFactor => throw new NotImplementedException();
+        public override double ScalingFactor => 1.0;
     }
 }

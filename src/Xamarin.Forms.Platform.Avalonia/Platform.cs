@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
@@ -8,13 +9,25 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 namespace Xamarin.Forms.Platform.Avalonia
 {
     public class Platform : BindableObject, INavigation
+#pragma warning disable CS0618
+		, IPlatform
+#pragma warning restore
 	{
 		readonly FormsApplicationPage _page;
 		Page Page { get; set; }
 
-		public IReadOnlyList<Page> ModalStack => throw new NotImplementedException();
+		public IReadOnlyList<Page> NavigationStack
+		{
+			get { throw new InvalidOperationException("NavigationStack is not supported globally on Windows, please use a NavigationPage."); }
+		}
 
-		public IReadOnlyList<Page> NavigationStack => throw new NotImplementedException();
+		public IReadOnlyList<Page> ModalStack
+		{
+			get
+			{
+				return _page.InternalChildren.Cast<Page>().ToList();
+			}
+		}
 
 		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), typeof(Platform), default(IVisualElementRenderer));
 
@@ -166,64 +179,89 @@ namespace Xamarin.Forms.Platform.Avalonia
 		}
 
 
-		public void InsertPageBefore(Page page, Page before)
+		Task INavigation.PushAsync(Page root)
 		{
-			throw new NotImplementedException();
+			return ((INavigation)this).PushAsync(root, true);
 		}
 
-		public Task<Page> PopAsync()
+		Task<Page> INavigation.PopAsync()
 		{
-			throw new NotImplementedException();
+			return ((INavigation)this).PopAsync(true);
 		}
 
-		public Task<Page> PopAsync(bool animated)
+		Task INavigation.PopToRootAsync()
 		{
-			throw new NotImplementedException();
+			return ((INavigation)this).PopToRootAsync(true);
 		}
 
-		public Task<Page> PopModalAsync()
+		Task INavigation.PushAsync(Page root, bool animated)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException("PushAsync is not supported globally on Windows, please use a NavigationPage.");
 		}
 
-		public Task<Page> PopModalAsync(bool animated)
+		Task<Page> INavigation.PopAsync(bool animated)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException("PopAsync is not supported globally on Windows, please use a NavigationPage.");
 		}
 
-		public Task PopToRootAsync()
+		Task INavigation.PopToRootAsync(bool animated)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException("PopToRootAsync is not supported globally on Windows, please use a NavigationPage.");
 		}
 
-		public Task PopToRootAsync(bool animated)
+		void INavigation.RemovePage(Page page)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException("RemovePage is not supported globally on Windows, please use a NavigationPage.");
 		}
 
-		public Task PushAsync(Page page)
+		void INavigation.InsertPageBefore(Page page, Page before)
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException("InsertPageBefore is not supported globally on Windows, please use a NavigationPage.");
 		}
 
-		public Task PushAsync(Page page, bool animated)
+		Task INavigation.PushModalAsync(Page page)
 		{
-			throw new NotImplementedException();
+			return ((INavigation)this).PushModalAsync(page, true);
 		}
 
-		public Task PushModalAsync(Page page)
+		Task<Page> INavigation.PopModalAsync()
 		{
-			throw new NotImplementedException();
+			return ((INavigation)this).PopModalAsync(true);
 		}
 
-		public Task PushModalAsync(Page page, bool animated)
+		Task INavigation.PushModalAsync(Page page, bool animated)
 		{
-			throw new NotImplementedException();
+			if (page == null)
+				throw new ArgumentNullException(nameof(page));
+
+			var tcs = new TaskCompletionSource<bool>();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+			// The Platform property is no longer necessary, but we have to set it because some third-party
+			// library might still be retrieving it and using it
+			page.Platform = this;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+			_page.PushModal(page, animated);
+			tcs.SetResult(true);
+			return tcs.Task;
 		}
 
-		public void RemovePage(Page page)
+		Task<Page> INavigation.PopModalAsync(bool animated)
 		{
-			throw new NotImplementedException();
+			var tcs = new TaskCompletionSource<Page>();
+			var page = _page.PopModal(animated) as Page;
+			tcs.SetResult(page);
+			return tcs.Task;
 		}
+
+		#region Obsolete 
+
+		SizeRequest IPlatform.GetNativeSize(VisualElement view, double widthConstraint, double heightConstraint)
+		{
+			return GetNativeSize(view, widthConstraint, heightConstraint);
+		}
+
+		#endregion
 	}
 }

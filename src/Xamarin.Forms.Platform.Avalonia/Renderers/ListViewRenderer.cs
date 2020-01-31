@@ -51,8 +51,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				templatedItems.GroupedCollectionChanged -= OnGroupedCollectionChanged;
 				if (Control != null)
 				{
-					//Control.MouseUp -= OnNativeMouseUp;
-					//Control.KeyUp -= OnNativeKeyUp;
+					Control.PointerReleased -= OnNativeMouseUp;
+					Control.KeyUp -= OnNativeKeyUp;
 					//Control.TouchUp -= OnNativeTouchUp;
 					//Control.StylusUp -= OnNativeStylusUp;
 					//Control.Loaded -= ControlOnLoaded;
@@ -81,8 +81,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 					//VirtualizingPanel.SetScrollUnit(listView, ScrollUnit.Pixel);
 					SetNativeControl(listView);
 
-					//Control.MouseUp += OnNativeMouseUp;
-					//Control.KeyUp += OnNativeKeyUp;
+					Control.PointerReleased += OnNativeMouseUp;
+					Control.KeyUp += OnNativeKeyUp;
 					//Control.TouchUp += OnNativeTouchUp;
 					//Control.StylusUp += OnNativeStylusUp;
 					//Control.Loaded += ControlOnLoaded;
@@ -215,7 +215,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		void OnNativeKeyUp(object sender, KeyEventArgs e)
 			=> Element.NotifyRowTapped(Control.SelectedIndex, cell: null);
 
-		void OnNativeMouseUp(object sender, MouseButtonEventArgs e)
+		void OnNativeMouseUp(object sender, PointerReleasedEventArgs e)
 			=> Element.NotifyRowTapped(Control.SelectedIndex, cell: null);
 
 		//void OnNativeTouchUp(object sender, TouchEventArgs e)
