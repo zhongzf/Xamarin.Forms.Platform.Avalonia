@@ -32,10 +32,17 @@ namespace Xamarin.Forms.Platform.Avalonia.Extensions
 
 			var frameworkElement = renderer.GetNativeElement();
 
-			frameworkElement.Initialized += (sender, args) =>
+			if (frameworkElement != null)
 			{
-				view.Layout(new Rectangle(0, 0, frameworkElement.DesiredSize.Width, frameworkElement.DesiredSize.Height));
-			};
+				frameworkElement.Initialized += (sender, args) =>
+				{
+					view.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
+				};
+				frameworkElement.LayoutUpdated += (sender, args) =>
+				{
+					view.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
+				};
+			}
 
 			return frameworkElement;
 		}

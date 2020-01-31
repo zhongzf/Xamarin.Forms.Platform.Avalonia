@@ -216,6 +216,22 @@
       </Setter>
     </Style>
 
+    <Style Selector="controls|FormsTransitioningContentControl">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
     <Style Selector="controls|FormsTabbedPage">
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -226,18 +242,25 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}">
-            <TabControl.ItemTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding Title}"></TextBlock>
-              </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-              <DataTemplate>
-                <ContentControl Name="PART_ContentControl" Content="{Binding Content, Converter={StaticResource ViewToRenderer}}"/>
-              </DataTemplate>
-            </TabControl.ContentTemplate>
-          </TabControl>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
+              <TabControl.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Title}"></TextBlock>
+                </DataTemplate>
+              </TabControl.ItemTemplate>
+              <TabControl.ContentTemplate>
+                <DataTemplate>
+                  <StackPanel></StackPanel>
+                </DataTemplate>
+              </TabControl.ContentTemplate>
+            </TabControl>
+            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content" ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding SelectedItem}" />
+          </Grid>
         </ControlTemplate>
       </Setter>
     </Style>

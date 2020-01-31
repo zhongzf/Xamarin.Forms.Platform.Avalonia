@@ -87,7 +87,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
                     else
                     {
                         this.Content = t.Result;
-
                     }
                 }
                 finally

@@ -87,15 +87,14 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
         protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
         {
-            this.ContentLoader.OnSizeContentChanged(this, SelectedItem);
         }
 
-        //protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
-        //{
-        //    base.OnTemplateApplied(e);
-        //    // TODO:
-        //    FormsContentControl = this.FindControl<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
-        //}
+        protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+        {
+            base.OnTemplateApplied(e);
+            // TODO:
+            FormsContentControl = this.FindControl<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
+        }
 
         public override bool GetHasNavigationBar()
         {
