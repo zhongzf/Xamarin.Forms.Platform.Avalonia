@@ -9,10 +9,11 @@ using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
 using AScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility;
 using Avalonia.Interactivity;
 using Avalonia.Input;
+using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class ListViewRenderer : ViewRenderer<ListView, AList>
+	public class ListViewRenderer : ViewRenderer<ListView, FormsListBox>
 	{
 		class ScrollViewerBehavior
 		{
@@ -69,12 +70,12 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 				if (Control == null) // Construct and SetNativeControl and suscribe control event
 				{
-					var listView = new AList
+					var listView = new FormsListBox
 					{
 						DataContext = Element,
-						//ItemTemplate = (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["CellTemplate"],
+						ItemTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["CellTemplate"],
 						//Style = (System.Windows.Style)System.Windows.Application.Current.Resources["ListViewTemplate"]
-					};
+					};					
 
 					//VirtualizingPanel.SetVirtualizationMode(listView, VirtualizationMode.Recycling);
 					//VirtualizingPanel.SetScrollUnit(listView, ScrollUnit.Pixel);

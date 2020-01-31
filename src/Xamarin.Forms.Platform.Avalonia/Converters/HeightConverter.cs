@@ -9,13 +9,13 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			double def = 50;
 			var ps = parameter as string;
-			double def;
-			if (string.IsNullOrWhiteSpace(ps) || !double.TryParse(ps, out def))
-			{
-				def = double.NaN;
-			}
-
+			// TODO:
+			//if (string.IsNullOrWhiteSpace(ps) || !double.TryParse(ps, out def))
+			//{
+			//	def = double.NaN;
+			//}
 			var val = (double)value;
 			return val > 0 ? val : def;
 		}

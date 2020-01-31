@@ -64,7 +64,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		void SetSource(object oldCellObj, object newCellObj)
 		{
-
 			var oldCell = oldCellObj as Cell;
 			var newCell = newCellObj as Cell;
 

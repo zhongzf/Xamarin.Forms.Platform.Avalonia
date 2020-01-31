@@ -7,120 +7,6 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApplication.Sample.MainWindow"
         Title="AvaloniaApplication.Sample">
-  <Window.Resources>
-    <converters:HeightConverter x:Key="HeightConverter"/>
-    <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
-    <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
-    <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
-    <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
-    <converters:ColorConverter x:Key="ColorConverter" />
-    <converters:ImageConverter x:Key="ImageConverter" />
-
-    <DataTemplate x:Key="CellTemplate">
-      <controls:CellControl Cell="{Binding}" Margin="5,0,0,0"
-               Height="{Binding Cell.RenderHeight,RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource HeightConverter}}" >
-      </controls:CellControl>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TableSectionHeader">
-      <TextBlock Text="{Binding Title, Converter={StaticResource LowerConverter}}" FontSize="24">
-        <TextBlock.Foreground>
-          <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
-            <Binding RelativeSource="{RelativeSource Self}"/>
-            <Binding Path="TextColor"/>
-          </MultiBinding>
-        </TextBlock.Foreground>
-      </TextBlock>
-    </DataTemplate>
-
-    <DataTemplate x:Key="TextCell">
-      <StackPanel>
-        <TextBlock          
-          Text="{Binding Text}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
-
-          <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
-              <Binding RelativeSource="{RelativeSource Self}"/>
-              <Binding Path="TextColor"/>
-            </MultiBinding>
-          </TextBlock.Foreground>
-        </TextBlock>
-
-        <TextBlock
-          Text="{Binding Detail}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
-          <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
-              <Binding RelativeSource="{RelativeSource Self}"/>
-              <Binding Path="DetailColor"/>
-            </MultiBinding>
-          </TextBlock.Foreground>
-        </TextBlock>
-      </StackPanel>
-    </DataTemplate>
-
-    <DataTemplate x:Key="SwitchCell">
-      <Grid HorizontalAlignment="Stretch">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="{Binding Text}" VerticalAlignment="Center" />
-        <CheckBox Grid.Column="1" IsChecked="{Binding On, Mode=TwoWay}" VerticalAlignment="Center" />
-      </Grid>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ImageCell">
-      <Grid>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-          <RowDefinition />
-          <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Image Grid.Column="0" Grid.RowSpan="2"
-          DataContext="{Binding ImageSource, Converter={StaticResource ImageConverter}}" Source="{Binding Value}"
-          VerticalAlignment="Center" />
-
-        <TextBlock Grid.Column="1" Grid.Row="0"
-          Text="{Binding Text}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
-          <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
-              <Binding RelativeSource="{RelativeSource Self}"/>
-              <Binding Path="TextColor"/>
-            </MultiBinding>
-          </TextBlock.Foreground>
-        </TextBlock>
-
-        <TextBlock Grid.Column="1" Grid.Row="1"
-          Text="{Binding Detail}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
-          <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
-              <Binding RelativeSource="{RelativeSource Self}"/>
-              <Binding Path="DetailColor"/>
-            </MultiBinding>
-          </TextBlock.Foreground>
-        </TextBlock>
-      </Grid>
-    </DataTemplate>
-
-    <DataTemplate x:Key="EntryCell">
-
-      <controls:FormsTextBox Grid.Column="1" Text="{Binding Text, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsEnabled}"/>
-
-    </DataTemplate>
-
-    <DataTemplate x:Key="ViewCell">
-      <ContentPresenter Content="{Binding View, Converter={StaticResource ViewToRenderer}}" />
-    </DataTemplate>    
-  </Window.Resources>
   <Window.Styles>
     <Style Selector="controls|FormsButton">
       <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
@@ -471,6 +357,49 @@
               </Grid>
             </Border>
           </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|CellControl">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <ContentPresenter Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsListBox">
+      <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}"/>
+      <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}"/>
+      <Setter Property="Padding" Value="4"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <ScrollViewer Name="PART_ScrollViewer"
+                          Background="{TemplateBinding Background}"
+                          HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                          VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+              <ItemsPresenter Name="PART_ItemsPresenter"
+                              Items="{TemplateBinding Items}"
+                              ItemsPanel="{TemplateBinding ItemsPanel}"
+                              ItemTemplate="{TemplateBinding ItemTemplate}"
+                              Margin="{TemplateBinding Padding}"
+                              VirtualizationMode="{TemplateBinding VirtualizationMode}"/>
+            </ScrollViewer>
+          </Border>
+        </ControlTemplate>
       </Setter>
     </Style>
 
