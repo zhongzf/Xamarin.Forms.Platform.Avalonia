@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
@@ -46,39 +48,40 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			//this.DefaultStyleKey = typeof(FormsMasterDetailPage);
 		}
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//	lightMasterContentControl = Template.FindName("PART_Master", this) as FormsContentControl;
-		//	lightDetailContentControl = Template.FindName("PART_Detail_Content", this) as FormsContentControl;
-		//}
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
 
-		//public override string GetTitle()
-		//{
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetTitle();
-		//	}
-		//	return this.Title;
-		//}
+			lightMasterContentControl = e.NameScope.Find<FormsContentControl>("PART_Master") as FormsContentControl;
+			lightDetailContentControl = e.NameScope.Find<FormsContentControl>("PART_Detail_Content") as FormsContentControl;
+		}
 
-		//public override Brush GetTitleBarBackgroundColor()
-		//{
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetTitleBarBackgroundColor();
-		//	}
-		//	return this.TitleBarBackgroundColor;
-		//}
+		public override string GetTitle()
+		{
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				return page.GetTitle();
+			}
+			return this.Title;
+		}
 
-		//public override Brush GetTitleBarTextColor()
-		//{
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetTitleBarTextColor();
-		//	}
-		//	return this.TitleBarTextColor;
-		//}
+		public override Brush GetTitleBarBackgroundColor()
+		{
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				return page.GetTitleBarBackgroundColor();
+			}
+			return this.TitleBarBackgroundColor;
+		}
+
+		public override Brush GetTitleBarTextColor()
+		{
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				return page.GetTitleBarTextColor();
+			}
+			return this.TitleBarTextColor;
+		}
 
 		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
 		//{

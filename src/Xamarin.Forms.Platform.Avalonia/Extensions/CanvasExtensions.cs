@@ -16,5 +16,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Extensions
         {
             child.ZIndex = zIndex;
         }
+
+        public static Size ToSize(this global::Avalonia.Size size)
+        {
+            return new Size(size.Width, size.Height);
+        }
     }
 }
