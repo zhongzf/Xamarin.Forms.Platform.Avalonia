@@ -92,8 +92,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
         {
             base.OnTemplateApplied(e);
-            // TODO:
-            FormsContentControl = this.FindControl<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
+
+            FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
         }
 
         public override bool GetHasNavigationBar()

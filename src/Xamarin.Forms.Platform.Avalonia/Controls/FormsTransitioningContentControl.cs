@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -66,7 +67,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public const TransitionType DefaultTransitionState = TransitionType.Default;
 
 		//public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(FormsTransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
-		//public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(TransitionType), typeof(FormsTransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
+		public static readonly StyledProperty<TransitionType> TransitionProperty = AvaloniaProperty.Register<FormsTransitioningContentControl, TransitionType>(nameof(Transition));
 		//public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(FormsTransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
 		//public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(FormsTransitioningContentControl), new PropertyMetadata(null));
 		//public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register("CustomVisualStatesName", typeof(string), typeof(FormsTransitioningContentControl), new PropertyMetadata("CustomTransition"));
@@ -100,11 +101,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	}
 		//}
 
-		//public TransitionType Transition
-		//{
-		//	get { return (TransitionType)this.GetValue(TransitionProperty); }
-		//	set { this.SetValue(TransitionProperty, value); }
-		//}
+		public TransitionType Transition
+		{
+			get { return (TransitionType)this.GetValue(TransitionProperty); }
+			set { this.SetValue(TransitionProperty, value); }
+		}
 
 		//public bool RestartTransitionOnContentChange
 		//{

@@ -128,21 +128,21 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	ParentWindow?.SynchronizeToolbarCommands();
 		//}
 
-		//protected virtual void Appearing()
-		//{
-		//	this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
-		//	this.SecondaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
-		//	this.PrimaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
-		//	this.SecondaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-		//	ParentWindow?.SynchronizeToolbarCommands();
-		//	ParentWindow?.SynchronizeAppBar();
-		//}
+		protected virtual void Appearing()
+		{
+			//this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
+			//this.SecondaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
+			//this.PrimaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
+			//this.SecondaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
+			//ParentWindow?.SynchronizeToolbarCommands();
+			//ParentWindow?.SynchronizeAppBar();
+		}
 
 		//protected virtual void Disappearing()
 		//{
