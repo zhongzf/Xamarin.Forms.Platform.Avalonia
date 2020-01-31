@@ -242,11 +242,12 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <Grid>
+          <Grid Name="PART_Container">
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
               <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            
             <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
               <TabControl.ItemTemplate>
                 <DataTemplate>
@@ -259,8 +260,75 @@
                 </DataTemplate>
               </TabControl.ContentTemplate>
             </TabControl>
-            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content" ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding SelectedItem}" />
+
+            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+              Transition="Left"
+              ContentLoader="{TemplateBinding ContentLoader}"
+              Source="{TemplateBinding SelectedItem}" />
+            
           </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsCarouselPage">
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid ClipToBounds="True"
+                  Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+              <Grid VerticalAlignment="Center" Name="PART_ButtonPanel">
+                <RepeatButton Name="PART_NextButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Right" />
+                <RepeatButton Name="PART_PreviousButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Left" />
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsNavigationPage">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+          <ControlTemplate>
+            <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
+                ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
+          </ControlTemplate>
+      </Setter>
+    </Style>
+    
+    <Style Selector="controls|FormsLightNavigationPage">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
+              ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
         </ControlTemplate>
       </Setter>
     </Style>

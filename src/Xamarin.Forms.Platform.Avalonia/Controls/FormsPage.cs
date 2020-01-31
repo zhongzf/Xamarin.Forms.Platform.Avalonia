@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
@@ -97,15 +98,20 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	}
 		//}
 
-		//public FormsWindow ParentWindow
-		//{
-		//	get
-		//	{
-		//		if (System.Windows.Application.Current.MainWindow is FormsWindow parentWindow)
-		//			return parentWindow;
-		//		return null;
-		//	}
-		//}
+		public FormsWindow ParentWindow
+		{
+			get
+			{
+				if (global::Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+				{
+					if (desktop.MainWindow is FormsWindow parentWindow)
+					{
+						return parentWindow;
+					}
+				}
+				return null;
+			}
+		}
 
 		public FormsPage()
 		{
@@ -140,8 +146,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//ParentWindow?.SynchronizeToolbarCommands();
-			//ParentWindow?.SynchronizeAppBar();
+			ParentWindow?.SynchronizeToolbarCommands();
+			ParentWindow?.SynchronizeAppBar();
 		}
 
 		//protected virtual void Disappearing()

@@ -1,7 +1,12 @@
-﻿using System;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -11,137 +16,139 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public ObservableCollection<object> InternalChildren { get; } = new ObservableCollection<object>();
 
-		//public static readonly DependencyProperty ContentLoaderProperty = DependencyProperty.Register("ContentLoader", typeof(IContentLoader), typeof(FormsNavigationPage), new PropertyMetadata(new DefaultContentLoader()));
-		//public static readonly DependencyProperty CurrentPageProperty = DependencyProperty.Register("CurrentPage", typeof(object), typeof(FormsNavigationPage));
+		public static readonly StyledProperty<object> CurrentPageProperty = AvaloniaProperty.Register<FormsContentControl, object>(nameof(CurrentPage));
+		public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsContentControl, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
 
-		//public IContentLoader ContentLoader
-		//{
-		//	get { return (IContentLoader)GetValue(ContentLoaderProperty); }
-		//	set { SetValue(ContentLoaderProperty, value); }
-		//}
+		public IContentLoader ContentLoader
+		{
+			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
+			set { SetValue(ContentLoaderProperty, value); }
+		}
 
-		//public object CurrentPage
-		//{
-		//	get { return (object)GetValue(CurrentPageProperty); }
-		//	set { SetValue(CurrentPageProperty, value); }
-		//}
+		public object CurrentPage
+		{
+			get { return (object)GetValue(CurrentPageProperty); }
+			set { SetValue(CurrentPageProperty, value); }
+		}
 
 		public int StackDepth
 		{
 			get { return InternalChildren.Count; }
 		}
 
-		//public FormsNavigationPage()
-		//{
-		//	this.DefaultStyleKey = typeof(FormsNavigationPage);
-		//}
+		public FormsNavigationPage()
+		{
+			//this.DefaultStyleKey = typeof(FormsNavigationPage);
+		}
 
-		//public FormsNavigationPage(object root)
-		//	: this()
-		//{
-		//	this.Push(root);
-		//}
+		public FormsNavigationPage(object root)
+			: this()
+		{
+			this.Push(root);
+		}
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//	FormsContentControl = Template.FindName("PART_Navigation_Content", this) as FormsTransitioningContentControl;
-		//}
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
 
-		//public void InsertPageBefore(object page, object before)
-		//{
-		//	int index = InternalChildren.IndexOf(before);
-		//	InternalChildren.Insert(index, page);
-		//	ParentWindow?.SynchronizeAppBar();
-		//}
+			FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Navigation_Content") as FormsTransitioningContentControl;
+		}
 
-		//public void RemovePage(object page)
-		//{
-		//	if (InternalChildren.Remove(page))
-		//	{
-		//		if (FormsContentControl != null)
-		//		{
-		//			FormsContentControl.Transition = TransitionType.Normal;
-		//		}
-		//		CurrentPage = InternalChildren.Last();
-		//	}
 
-		//	ParentWindow?.SynchronizeAppBar();
-		//}
+		public void InsertPageBefore(object page, object before)
+		{
+			int index = InternalChildren.IndexOf(before);
+			InternalChildren.Insert(index, page);
+			ParentWindow?.SynchronizeAppBar();
+		}
 
-		//public void Pop()
-		//{
-		//	Pop(true);
-		//}
+		public void RemovePage(object page)
+		{
+			if (InternalChildren.Remove(page))
+			{
+				if (FormsContentControl != null)
+				{
+					FormsContentControl.Transition = TransitionType.Normal;
+				}
+				CurrentPage = InternalChildren.Last();
+			}
 
-		//public void Pop(bool animated)
-		//{
-		//	if (StackDepth <= 1)
-		//		return;
+			ParentWindow?.SynchronizeAppBar();
+		}
 
-		//	if (InternalChildren.Remove(InternalChildren.Last()))
-		//	{
-		//		if (FormsContentControl != null)
-		//		{
-		//			FormsContentControl.Transition = animated ? TransitionType.Right : TransitionType.Normal;
-		//		}
-		//		CurrentPage = InternalChildren.Last();
-		//	}
-		//}
+		public void Pop()
+		{
+			Pop(true);
+		}
 
-		//public void PopToRoot()
-		//{
-		//	PopToRoot(true);
-		//}
+		public void Pop(bool animated)
+		{
+			if (StackDepth <= 1)
+				return;
 
-		//public void PopToRoot(bool animated)
-		//{
-		//	if (StackDepth <= 1)
-		//		return;
+			if (InternalChildren.Remove(InternalChildren.Last()))
+			{
+				if (FormsContentControl != null)
+				{
+					FormsContentControl.Transition = animated ? TransitionType.Right : TransitionType.Normal;
+				}
+				CurrentPage = InternalChildren.Last();
+			}
+		}
 
-		//	object[] childrenToRemove = InternalChildren.Skip(1).ToArray();
-		//	foreach (object child in childrenToRemove)
-		//		InternalChildren.Remove(child);
+		public void PopToRoot()
+		{
+			PopToRoot(true);
+		}
 
-		//	if (FormsContentControl != null)
-		//	{
-		//		FormsContentControl.Transition = animated ? TransitionType.Right : TransitionType.Normal;
-		//	}
-		//	CurrentPage = InternalChildren.Last();
-		//}
+		public void PopToRoot(bool animated)
+		{
+			if (StackDepth <= 1)
+				return;
 
-		//public void Push(object page)
-		//{
-		//	Push(page, true);
-		//}
+			object[] childrenToRemove = InternalChildren.Skip(1).ToArray();
+			foreach (object child in childrenToRemove)
+				InternalChildren.Remove(child);
 
-		//public void Push(object page, bool animated)
-		//{
-		//	InternalChildren.Add(page);
-		//	if (FormsContentControl != null)
-		//	{
-		//		FormsContentControl.Transition = animated ? TransitionType.Left : TransitionType.Normal;
-		//	}
-		//	CurrentPage = page;
-		//}
+			if (FormsContentControl != null)
+			{
+				FormsContentControl.Transition = animated ? TransitionType.Right : TransitionType.Normal;
+			}
+			CurrentPage = InternalChildren.Last();
+		}
 
-		//public override string GetTitle()
-		//{
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetTitle();
-		//	}
-		//	return "";
-		//}
+		public void Push(object page)
+		{
+			Push(page, true);
+		}
 
-		//public override bool GetHasNavigationBar()
-		//{
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		return page.GetHasNavigationBar();
-		//	}
-		//	return false;
-		//}
+		public void Push(object page, bool animated)
+		{
+			InternalChildren.Add(page);
+			if (FormsContentControl != null)
+			{
+				FormsContentControl.Transition = animated ? TransitionType.Left : TransitionType.Normal;
+			}
+			CurrentPage = page;
+		}
+
+		public override string GetTitle()
+		{
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				return page.GetTitle();
+			}
+			return "";
+		}
+
+		public override bool GetHasNavigationBar()
+		{
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				return page.GetHasNavigationBar();
+			}
+			return false;
+		}
 
 		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
 		//{
@@ -213,30 +220,50 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	return "";
 		//}
 
-		//public void PopModal()
-		//{
-		//	PopModal(true);
-		//}
+		public void PopModal()
+		{
+			PopModal(true);
+		}
 
-		//public void PopModal(bool animated)
-		//{
-		//	ParentWindow?.PopModal(animated);
-		//}
+		public void PopModal(bool animated)
+		{
+			ParentWindow?.PopModal(animated);
+		}
 
-		//public void PushModal(object page)
-		//{
-		//	PushModal(page, true);
-		//}
+		public void PushModal(object page)
+		{
+			PushModal(page, true);
+		}
 
-		//public void PushModal(object page, bool animated)
-		//{
-		//	ParentWindow?.PushModal(page, animated);
-		//}
+		public void PushModal(object page, bool animated)
+		{
+			ParentWindow?.PushModal(page, animated);
+		}
 
 
 		//public virtual void OnBackButtonPressed()
 		//{
 		//	Pop();
+		//}
+	}
+
+	public class FormsLightNavigationPage : FormsNavigationPage
+	{
+		NavigationPage NavigationPage;
+
+		public FormsLightNavigationPage(NavigationPage navigationPage)
+		{
+			ContentLoader = new FormsContentLoader();
+			NavigationPage = navigationPage;
+		}
+
+		//public override void OnBackButtonPressed()
+		//{
+		//	if (NavigationPage?.CurrentPage == null)
+		//		return;
+
+		//	if (!NavigationPage.CurrentPage.SendBackButtonPressed())
+		//		NavigationPage.PopAsync();
 		//}
 	}
 }

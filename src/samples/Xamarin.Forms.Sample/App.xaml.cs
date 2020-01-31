@@ -13,7 +13,8 @@ namespace Xamarin.Forms.Sample
 
             //MainPage = new TabbedPageDemo();
             //MainPage = new MainPage();
-            MainPage = new CarouselPageDemo();
+            //MainPage = new CarouselPageDemo();
+            MainPage = new NavigationPage(new CarouselPageDemo());
         }
 
         protected override void OnStart()
