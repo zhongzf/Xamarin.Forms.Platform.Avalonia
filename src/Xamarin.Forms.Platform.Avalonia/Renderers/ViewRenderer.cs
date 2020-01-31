@@ -54,6 +54,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                     _tracker.Updated += HandleTrackerUpdated;
             }
         }
+
         void IEffectControlProvider.RegisterEffect(Effect effect)
         {
             PlatformEffect platformEffect = effect as PlatformEffect;

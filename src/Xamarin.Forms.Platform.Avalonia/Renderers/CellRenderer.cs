@@ -10,17 +10,17 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		public virtual global::Avalonia.Markup.Xaml.Templates.DataTemplate GetTemplate(Cell cell)
 		{
-			/*if (cell.RealParent is ListView)
+			if (cell.RealParent is ListView)
 			{
 				if (cell.GetIsGroupHeader<ItemsView<Cell>, Cell>())
-					return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["ListViewHeaderTextCell"];
+				{
+					return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ListViewHeaderTextCell"];
+				}
 
-				return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["ListViewTextCell"];
-			}*/
+				return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ListViewTextCell"];
+			}
 
-			//return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)System.Windows.Application.Current.Resources["TextCell"];
-			// TODO:
-			return null;
+			return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["TextCell"];
 		}
 	}
 
@@ -65,9 +65,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		public virtual global::Avalonia.Markup.Xaml.Templates.DataTemplate GetTemplate(Cell cell)
 		{
-			//return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["EntryCell"];
-			// TODO:
-			return null;
+			return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["EntryCell"];
 		}
 	}
 
@@ -75,9 +73,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		public virtual global::Avalonia.Markup.Xaml.Templates.DataTemplate GetTemplate(Cell cell)
 		{
-			//return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["ViewCell"];
-			// TODO:
-			return null;
+			return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ViewCell"];
 		}
 	}
 
@@ -85,9 +81,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		public virtual global::Avalonia.Markup.Xaml.Templates.DataTemplate GetTemplate(Cell cell)
 		{
-			//return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["SwitchCell"];
-			// TODO:
-			return null;
+			return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["SwitchCell"];
 		}
 	}
 
@@ -95,9 +89,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		public virtual global::Avalonia.Markup.Xaml.Templates.DataTemplate GetTemplate(Cell cell)
 		{
-			//return (System.Windows.DataTemplate)System.Windows.Application.Current.Resources["ImageCell"];
-			// TODO:
-			return null;
+			return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ImageCell"];
 		}
 	}
 }
