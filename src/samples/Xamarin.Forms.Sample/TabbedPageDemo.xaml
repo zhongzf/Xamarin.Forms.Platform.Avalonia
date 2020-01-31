@@ -66,6 +66,7 @@
             <AbsoluteLayout>
                 <BoxView AbsoluteLayout.LayoutBounds="100, 100" WidthRequest="200" HeightRequest="200" Color="Blue"></BoxView>
             </AbsoluteLayout>
+            <Button Text="Test button3"></Button>
         </StackLayout>
     </ContentPage>
 </TabbedPage>
