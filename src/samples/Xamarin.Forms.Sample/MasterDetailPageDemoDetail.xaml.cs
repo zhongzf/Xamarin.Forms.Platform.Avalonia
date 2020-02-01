@@ -15,6 +15,9 @@ namespace Xamarin.Forms.Sample
         public MasterDetailPageDemoDetail()
         {
             InitializeComponent();
+
+            var button = FindByName("TestButton") as Button;
+            button.Text = string.Format("Test Button => {0}", Guid.NewGuid());
         }
     }
 }

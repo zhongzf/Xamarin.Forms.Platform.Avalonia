@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Sample
     {
         public MasterDetailPageDemoMasterMenuItem()
         {
-            TargetType = typeof(MasterDetailPageDemoMasterMenuItem);
+            TargetType = typeof(MasterDetailPageDemoDetail);
         }
         public int Id { get; set; }
         public string Title { get; set; }

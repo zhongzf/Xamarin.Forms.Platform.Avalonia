@@ -34,8 +34,8 @@ namespace Xamarin.Forms.Sample
                 MenuItems = new ObservableCollection<MasterDetailPageDemoMasterMenuItem>(new[]
                 {
                     new MasterDetailPageDemoMasterMenuItem { Id = 0, Title = "Page 1" },
-                    new MasterDetailPageDemoMasterMenuItem { Id = 1, Title = "Page 2" },
-                    new MasterDetailPageDemoMasterMenuItem { Id = 2, Title = "Page 3" },
+                    new MasterDetailPageDemoMasterMenuItem { Id = 1, Title = "Page 2", TargetType = typeof(MainPage) },
+                    new MasterDetailPageDemoMasterMenuItem { Id = 2, Title = "Page 3", TargetType = typeof(CarouselPageDemo) },
                     new MasterDetailPageDemoMasterMenuItem { Id = 3, Title = "Page 4" },
                     new MasterDetailPageDemoMasterMenuItem { Id = 4, Title = "Page 5" },
                 });
