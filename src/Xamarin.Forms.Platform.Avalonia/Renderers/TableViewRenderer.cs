@@ -1,27 +1,34 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Avalonia.Controls;
+using Xamarin.Forms.Platform.Avalonia.Interfaces;
 using AList = Avalonia.Controls.ListBox;
 using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	//public class TableViewDataTemplateSelector : global::Avalonia.Controls.Primitives.DataTemplateSelector
-	//{
-	//	public override System.Windows.DataTemplate SelectTemplate(object item, DependencyObject container)
-	//	{
-	//		if(item is Cell)
-	//			return System.Windows.Application.Current.MainWindow.FindResource("CellTemplate") as System.Windows.DataTemplate;
-	//		else
-	//			return System.Windows.Application.Current.MainWindow.FindResource("TableSectionHeader") as System.Windows.DataTemplate;
-	//	}
-	//}
-	
-	public class TableViewRenderer : ViewRenderer<TableView, AList>
+	public class TableViewDataTemplateSelector : IDataTemplateSelector
+	{
+		public global::Avalonia.Markup.Xaml.Templates.DataTemplate SelectTemplate(object item, AvaloniaObject container)
+		{
+			if (item is Cell)
+			{
+				return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["CellTemplate"];
+			}
+			else
+			{
+				return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["TableSectionHeader"];
+			}
+		}
+	}
+
+	public class TableViewRenderer : ViewRenderer<TableView, FormsListBox>
 	{
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
@@ -42,18 +49,18 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					var listView = new AList
+					var listView = new FormsListBox
 					{
-						//ItemTemplateSelector = new TableViewDataTemplateSelector(),
+						ItemTemplateSelector = new TableViewDataTemplateSelector(),
 						//Style = (System.Windows.Style)System.Windows.Application.Current.Resources["TableViewTemplate"],
 					};
 					
 					SetNativeControl(listView);
-					//Control.SelectionChanged += Control_SelectionChanged;
+					Control.SelectionChanged += Control_SelectionChanged;
 				}
 
 				// Update control property 
-				//Control.ItemsSource = GetTableViewRow();
+				Control.Items = GetTableViewRow();
 
 				// Element event
 				Element.ModelChanged += OnModelChanged;
@@ -81,7 +88,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void OnModelChanged(object sender, EventArgs eventArgs)
 		{
-			//Control.ItemsSource = GetTableViewRow();
+			Control.Items = GetTableViewRow();
 		}
 
 		public IList<object> GetTableViewRow()

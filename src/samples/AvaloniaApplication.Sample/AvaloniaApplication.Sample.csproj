@@ -17,6 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Xamarin.Forms.Platform.Avalonia\Xamarin.Forms.Platform.Avalonia.csproj" />
-    <ProjectReference Include="..\Xamarin.Forms.Sample\Xamarin.Forms.Sample.csproj" />
+    <ProjectReference Include="..\FormsGallery\FormsGallery.csproj" />
   </ItemGroup>
 </Project>
