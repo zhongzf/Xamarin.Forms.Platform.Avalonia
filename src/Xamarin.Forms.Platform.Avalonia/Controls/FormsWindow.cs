@@ -1,7 +1,10 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -128,54 +131,56 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		}
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//	topAppBar = Template.FindName("PART_TopAppBar", this) as FormsAppBar;
-		//	bottomAppBar = Template.FindName("PART_BottomAppBar", this) as FormsAppBar;
-		//	previousButton = Template.FindName("PART_Previous", this) as System.Windows.Controls.Button;
-		//	if (previousButton != null)
-		//	{
-		//		previousButton.Click += PreviousButton_Click;
-		//	}
-		//	previousModalButton = Template.FindName("PART_Previous_Modal", this) as System.Windows.Controls.Button;
-		//	if (previousButton != null)
-		//	{
-		//		previousModalButton.Click += PreviousModalButton_Click;
-		//	}
-		//	hamburgerButton = Template.FindName("PART_Hamburger", this) as System.Windows.Controls.Button;
-		//	if (hamburgerButton != null)
-		//	{
-		//		hamburgerButton.Click += HamburgerButton_Click;
-		//	}
-		//}
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
 
-		//private void PreviousModalButton_Click(object sender, RoutedEventArgs e)
-		//{
-		//	OnBackSystemButtonPressed();
-		//}
+			topAppBar = e.NameScope.Find<FormsAppBar>("PART_TopAppBar");
+			bottomAppBar = e.NameScope.Find<FormsAppBar>("PART_BottomAppBar");
 
-		//private void HamburgerButton_Click(object sender, RoutedEventArgs e)
-		//{
-		//	if (CurrentMasterDetailPage != null)
-		//	{
-		//		CurrentMasterDetailPage.IsPresented = !CurrentMasterDetailPage.IsPresented;
-		//	}
-		//}
+			previousButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Previous");
+			if (previousButton != null)
+			{
+				previousButton.Click += PreviousButton_Click;
+			}
+			previousModalButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Previous_Modal");
+			if (previousButton != null)
+			{
+				previousModalButton.Click += PreviousModalButton_Click;
+			}
+			hamburgerButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Hamburger");
+			if (hamburgerButton != null)
+			{
+				hamburgerButton.Click += HamburgerButton_Click;
+			}
+		}
 
-		//private void PreviousButton_Click(object sender, RoutedEventArgs e)
-		//{
-		//	if (CurrentNavigationPage != null && CurrentNavigationPage.StackDepth > 1)
-		//	{
-		//		CurrentNavigationPage.OnBackButtonPressed();
-		//	}
-		//}
+		private void PreviousModalButton_Click(object sender, RoutedEventArgs e)
+		{
+			OnBackSystemButtonPressed();
+		}
 
-		//private static void OnContentLoaderChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-		//{
-		//	if (e.NewValue == null)
-		//		throw new ArgumentNullException("ContentLoader");
-		//}
+		private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (CurrentMasterDetailPage != null)
+			{
+				CurrentMasterDetailPage.IsPresented = !CurrentMasterDetailPage.IsPresented;
+			}
+		}
+
+		private void PreviousButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (CurrentNavigationPage != null && CurrentNavigationPage.StackDepth > 1)
+			{
+				CurrentNavigationPage.OnBackButtonPressed();
+			}
+		}
+
+		private static void OnContentLoaderChanged(AvaloniaObject o, AvaloniaPropertyChangedEventArgs e)
+		{
+			if (e.NewValue == null)
+				throw new ArgumentNullException("ContentLoader");
+		}
 
 		public void SynchronizeAppBar()
 		{

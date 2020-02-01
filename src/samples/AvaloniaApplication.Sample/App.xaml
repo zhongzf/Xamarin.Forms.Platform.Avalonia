@@ -1,5 +1,7 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"             
              xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
              xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
              x:Class="AvaloniaApplication.Sample.App">
@@ -7,6 +9,7 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
   </Application.Styles>
+  
   <Application.Resources>
     <converters:HeightConverter x:Key="HeightConverter"/>
     <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
@@ -15,6 +18,8 @@
     <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
     <converters:ColorConverter x:Key="ColorConverter" />
     <converters:ImageConverter x:Key="ImageConverter" />
+    <converters:SymbolToValueConverter x:Key="SymbolToValue" />
+       
 
     <DataTemplate x:Key="CellTemplate">
       <controls:CellControl Cell="{Binding}" Margin="5,0,0,0"
@@ -132,5 +137,104 @@
     <DataTemplate x:Key="ViewCell">
       <ContentPresenter Content="{Binding View, Converter={StaticResource ViewToRenderer}}" />
     </DataTemplate>
+
+    <Style x:Key="BaseLightWindowButtonStyle" Selector="Button">
+      <Setter Property="Foreground"
+              Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=(TextElement.Foreground)}" />
+      <Setter Property="Background"
+              Value="{DynamicResource TransparentWhiteBrush}" />
+      <Setter Property="HorizontalContentAlignment"
+              Value="Center" />
+      <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+      <Setter Property="Padding"
+              Value="1" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid Background="{TemplateBinding Background}">
+            <ContentPresenter Name="contentPresenter"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              Opacity="1.0" />
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
+          <ia:ChangePropertyAction TargetObject="{Binding #contentPresenter}" PropertyName="Background" Value="{DynamicResource SemiTransparentWhiteBrush}"/>
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Style>
+
+
+    <Style x:Key="LightOtherWindowButtonStyle" Selector="Button">
+      <Setter Property="Padding"
+              Value="14, 5" />
+    </Style>
+
+    <Style x:Key="LightCommandWindowButtonStyle" Selector="Button">
+      <Setter Property="Width"
+              Value="45" />
+      <Setter Property="Padding"
+              Value="14, 5" />
+    </Style>
+
+
+
+    <Style x:Key="LightRedCommandWindowButtonStyle" Selector="Button">
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
+          <ia:ChangePropertyAction PropertyName="Background" Value="Red"/>
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Style>
+
+    <Style x:Key="AppBarButtonStyle" Selector="controls|FormsAppBar">
+      <Setter Property="Foreground"
+              Value="White" />
+      <Setter Property="Width"
+              Value="72" />
+      <Setter Property="Padding"
+              Value="8, 5" />
+    </Style>
+
+
+    <Style x:Key="BaseLightWindowToggleButtonStyle" Selector="Button">
+      <Setter Property="Foreground"
+              Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=(TextElement.Foreground)}" />
+      <Setter Property="Background"
+              Value="{DynamicResource TransparentWhiteBrush}" />
+      <Setter Property="HorizontalContentAlignment"
+              Value="Center" />
+      <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+      <Setter Property="Padding"
+              Value="1" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid Background="{TemplateBinding Background}">
+            <ContentPresenter Name="contentPresenter"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              Opacity="1.0" />
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
+          <ia:ChangePropertyAction PropertyName="Background" Value="{DynamicResource SemiTransparentWhiteBrush}"/>
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
+    </Style>
+
+    <Style x:Key="AppBarToggleButtonStyle" Selector="controls|FormsAppBarButton">
+      <Setter Property="Width"
+              Value="72" />
+      <Setter Property="Padding"
+              Value="8, 5" />
+    </Style>
+
   </Application.Resources>
 </Application>

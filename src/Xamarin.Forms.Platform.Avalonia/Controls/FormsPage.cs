@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Helpers;
+using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -15,11 +17,13 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public static readonly StyledProperty<string> BackButtonTitleProperty = AvaloniaProperty.Register<FormsPage, string>(nameof(BackButtonTitle));
 		public static readonly StyledProperty<bool> HasNavigationBarProperty = AvaloniaProperty.Register<FormsPage, bool>(nameof(HasNavigationBar), true);
 		public static readonly StyledProperty<bool> HasBackButtonProperty = AvaloniaProperty.Register<FormsPage, bool>(nameof(HasBackButton), true);
-		//public static readonly DependencyProperty PrimaryTopBarCommandsProperty = DependencyProperty.Register("PrimaryTopBarCommands", typeof(ObservableCollection<FrameworkElement>), typeof(FormsPage));
-		//public static readonly DependencyProperty SecondaryTopBarCommandsProperty = DependencyProperty.Register("SecondaryTopBarCommands", typeof(ObservableCollection<FrameworkElement>), typeof(FormsPage));
-		//public static readonly DependencyProperty PrimaryBottomBarCommandsProperty = DependencyProperty.Register("PrimaryBottomBarCommands", typeof(ObservableCollection<FrameworkElement>), typeof(FormsPage));
-		//public static readonly DependencyProperty SecondaryBottomBarCommandsProperty = DependencyProperty.Register("SecondaryBottomBarCommands", typeof(ObservableCollection<FrameworkElement>), typeof(FormsPage));
-		//public static readonly DependencyProperty ContentBottomBarProperty = DependencyProperty.Register("ContentBottomBar", typeof(object), typeof(FormsPage));
+
+		public static readonly StyledProperty<ObservableCollection<Control>> PrimaryTopBarCommandsProperty = AvaloniaProperty.Register<FormsPage, ObservableCollection<Control>>(nameof(PrimaryTopBarCommands));
+		public static readonly StyledProperty<ObservableCollection<Control>> SecondaryTopBarCommandsProperty = AvaloniaProperty.Register<FormsPage, ObservableCollection<Control>>(nameof(SecondaryTopBarCommands));
+		public static readonly StyledProperty<ObservableCollection<Control>> PrimaryBottomBarCommandsProperty = AvaloniaProperty.Register<FormsPage, ObservableCollection<Control>>(nameof(PrimaryBottomBarCommands));
+		public static readonly StyledProperty<ObservableCollection<Control>> SecondaryBottomBarCommandsProperty = AvaloniaProperty.Register<FormsPage, ObservableCollection<Control>>(nameof(SecondaryBottomBarCommands));
+		public static readonly StyledProperty<ObservableCollection<Control>> ContentBottomBarProperty = AvaloniaProperty.Register<FormsPage, ObservableCollection<Control>>(nameof(ContentBottomBar));
+
 		public static readonly StyledProperty<Brush> TitleBarBackgroundColorProperty = AvaloniaProperty.Register<FormsPage, Brush>(nameof(TitleBarBackgroundColor));
 		public static readonly StyledProperty<Brush> TitleBarTextColorProperty = AvaloniaProperty.Register<FormsPage, Brush>(nameof(TitleBarTextColor));
 
@@ -59,44 +63,44 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			set { SetValue(HasBackButtonProperty, value); }
 		}
 
-		//public ObservableCollection<FrameworkElement> PrimaryTopBarCommands
-		//{
-		//	get { return (ObservableCollection<FrameworkElement>)GetValue(PrimaryTopBarCommandsProperty); }
-		//	set { SetValue(PrimaryTopBarCommandsProperty, value); }
-		//}
+		public ObservableCollection<Control> PrimaryTopBarCommands
+		{
+			get { return (ObservableCollection<Control>)GetValue(PrimaryTopBarCommandsProperty); }
+			set { SetValue(PrimaryTopBarCommandsProperty, value); }
+		}
 
-		//public ObservableCollection<FrameworkElement> SecondaryTopBarCommands
-		//{
-		//	get { return (ObservableCollection<FrameworkElement>)GetValue(SecondaryTopBarCommandsProperty); }
-		//	set { SetValue(SecondaryTopBarCommandsProperty, value); }
-		//}
+		public ObservableCollection<Control> SecondaryTopBarCommands
+		{
+			get { return (ObservableCollection<Control>)GetValue(SecondaryTopBarCommandsProperty); }
+			set { SetValue(SecondaryTopBarCommandsProperty, value); }
+		}
 
-		//public ObservableCollection<FrameworkElement> PrimaryBottomBarCommands
-		//{
-		//	get { return (ObservableCollection<FrameworkElement>)GetValue(PrimaryBottomBarCommandsProperty); }
-		//	set { SetValue(PrimaryBottomBarCommandsProperty, value); }
-		//}
+		public ObservableCollection<Control> PrimaryBottomBarCommands
+		{
+			get { return (ObservableCollection<Control>)GetValue(PrimaryBottomBarCommandsProperty); }
+			set { SetValue(PrimaryBottomBarCommandsProperty, value); }
+		}
 
-		//public ObservableCollection<FrameworkElement> SecondaryBottomBarCommands
-		//{
-		//	get { return (ObservableCollection<FrameworkElement>)GetValue(SecondaryBottomBarCommandsProperty); }
-		//	set { SetValue(SecondaryBottomBarCommandsProperty, value); }
-		//}
+		public ObservableCollection<Control> SecondaryBottomBarCommands
+		{
+			get { return (ObservableCollection<Control>)GetValue(SecondaryBottomBarCommandsProperty); }
+			set { SetValue(SecondaryBottomBarCommandsProperty, value); }
+		}
 
-		//public object ContentBottomBar
-		//{
-		//	get { return (object)GetValue(ContentBottomBarProperty); }
-		//	set { SetValue(ContentBottomBarProperty, value); }
-		//}
+		public object ContentBottomBar
+		{
+			get { return (object)GetValue(ContentBottomBarProperty); }
+			set { SetValue(ContentBottomBarProperty, value); }
+		}
 
-		//public IFormsNavigation Navigation
-		//{
-		//	get
-		//	{
-		//		IFormsNavigation nav = this.TryFindParent<FormsNavigationPage>();
-		//		return nav ?? new DefaultNavigation();
-		//	}
-		//}
+		public IFormsNavigation Navigation
+		{
+			get
+			{
+				IFormsNavigation nav = this.TryFindParent<FormsNavigationPage>();
+				return nav ?? new DefaultNavigation();
+			}
+		}
 
 		public FormsWindow ParentWindow
 		{
@@ -115,31 +119,31 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsPage()
 		{
-			//this.SetValue(FormsPage.PrimaryTopBarCommandsProperty, new ObservableCollection<FrameworkElement>());
-			//this.SetValue(FormsPage.SecondaryTopBarCommandsProperty, new ObservableCollection<FrameworkElement>());
-			//this.SetValue(FormsPage.PrimaryBottomBarCommandsProperty, new ObservableCollection<FrameworkElement>());
-			//this.SetValue(FormsPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<FrameworkElement>());
+			this.SetValue(FormsPage.PrimaryTopBarCommandsProperty, new ObservableCollection<Control>());
+			this.SetValue(FormsPage.SecondaryTopBarCommandsProperty, new ObservableCollection<Control>());
+			this.SetValue(FormsPage.PrimaryBottomBarCommandsProperty, new ObservableCollection<Control>());
+			this.SetValue(FormsPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 
 			//this.Loaded += (sender, e) => Appearing();
 			//this.Unloaded += (sender, e) => Disappearing();
 		}
 
-		//private void OnPropertyChanged(object sender, EventArgs arg)
-		//{
-		//	ParentWindow?.SynchronizeAppBar();
-		//}
+		private void OnPropertyChanged(object sender, EventArgs arg)
+		{
+			ParentWindow?.SynchronizeAppBar();
+		}
 
-		//private void Commands_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-		//{
-		//	ParentWindow?.SynchronizeToolbarCommands();
-		//}
+		private void Commands_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			ParentWindow?.SynchronizeToolbarCommands();
+		}
 
 		protected virtual void Appearing()
 		{
-			//this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
-			//this.SecondaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
-			//this.PrimaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
-			//this.SecondaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
+			this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
+			this.SecondaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
+			this.PrimaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
+			this.SecondaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
 			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
@@ -150,19 +154,19 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			ParentWindow?.SynchronizeAppBar();
 		}
 
-		//protected virtual void Disappearing()
-		//{
-		//	this.PrimaryTopBarCommands.CollectionChanged -= Commands_CollectionChanged;
-		//	this.SecondaryTopBarCommands.CollectionChanged -= Commands_CollectionChanged;
-		//	this.PrimaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
-		//	this.SecondaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//	DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-		//}
+		protected virtual void Disappearing()
+		{
+			this.PrimaryTopBarCommands.CollectionChanged -= Commands_CollectionChanged;
+			this.SecondaryTopBarCommands.CollectionChanged -= Commands_CollectionChanged;
+			this.PrimaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
+			this.SecondaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
+		}
 
 		//public override void OnApplyTemplate()
 		//{
@@ -189,24 +193,24 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			return this.TitleBarTextColor;
 		}
 
-		//public virtual IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
-		//{
-		//	return this.PrimaryTopBarCommands;
-		//}
+		public virtual IEnumerable<Control> GetPrimaryTopBarCommands()
+		{
+			return this.PrimaryTopBarCommands;
+		}
 
-		//public virtual IEnumerable<FrameworkElement> GetSecondaryTopBarCommands()
-		//{
-		//	return this.SecondaryTopBarCommands;
-		//}
+		public virtual IEnumerable<Control> GetSecondaryTopBarCommands()
+		{
+			return this.SecondaryTopBarCommands;
+		}
 
-		//public virtual IEnumerable<FrameworkElement> GetPrimaryBottomBarCommands()
-		//{
-		//	return this.PrimaryBottomBarCommands;
-		//}
+		public virtual IEnumerable<Control> GetPrimaryBottomBarCommands()
+		{
+			return this.PrimaryBottomBarCommands;
+		}
 
-		//public virtual IEnumerable<FrameworkElement> GetSecondaryBottomBarCommands()
-		//{
-		//	return this.SecondaryBottomBarCommands;
-		//}
+		public virtual IEnumerable<Control> GetSecondaryBottomBarCommands()
+		{
+			return this.SecondaryBottomBarCommands;
+		}
 	}
 }

@@ -1,41 +1,41 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using System.Collections.Generic;
 using System.Windows;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	//[TemplatePart(Name = "PART_More", Type = typeof(ToggleButton))]
-	//[TemplatePart(Name = "PART_Command", Type = typeof(ItemsControl))]
 	public class FormsAppBar : ContentControl
 	{
 		ToggleButton btnMore;
 
-		//public static readonly DependencyProperty PrimaryCommandsProperty = DependencyProperty.Register("PrimaryCommands", typeof(IEnumerable<FrameworkElement>), typeof(FormsAppBar), new PropertyMetadata(new List<FrameworkElement>()));
-		//public static readonly DependencyProperty SecondaryCommandsProperty = DependencyProperty.Register("SecondaryCommands", typeof(IEnumerable<FrameworkElement>), typeof(FormsAppBar), new PropertyMetadata(new List<FrameworkElement>()));
+		public static readonly StyledProperty<IEnumerable<Control>> PrimaryCommandsProperty = AvaloniaProperty.Register<FormsAppBar, IEnumerable<Control>>(nameof(PrimaryCommands));
+		public static readonly StyledProperty<IEnumerable<Control>> SecondaryCommandsProperty = AvaloniaProperty.Register<FormsAppBar, IEnumerable<Control>>(nameof(SecondaryCommands));
 
-		//public IEnumerable<FrameworkElement> PrimaryCommands
-		//{
-		//	get { return (IEnumerable<FrameworkElement>)GetValue(PrimaryCommandsProperty); }
-		//	set { SetValue(PrimaryCommandsProperty, value); }
-		//}
+		public IEnumerable<Control> PrimaryCommands
+		{
+			get { return (IEnumerable<Control>)GetValue(PrimaryCommandsProperty); }
+			set { SetValue(PrimaryCommandsProperty, value); }
+		}
 
-		//public IEnumerable<FrameworkElement> SecondaryCommands
-		//{
-		//	get { return (IEnumerable<FrameworkElement>)GetValue(SecondaryCommandsProperty); }
-		//	set { SetValue(SecondaryCommandsProperty, value); }
-		//}
+		public IEnumerable<Control> SecondaryCommands
+		{
+			get { return (IEnumerable<Control>)GetValue(SecondaryCommandsProperty); }
+			set { SetValue(SecondaryCommandsProperty, value); }
+		}
 
 		public FormsAppBar()
 		{
 			//this.DefaultStyleKey = typeof(FormsAppBar);
 		}
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//	btnMore = Template.FindName("PART_More", this) as ToggleButton;
-		//}
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
+
+			btnMore = e.NameScope.Find<ToggleButton>("PART_More");
+		}
 
 		public void Reset()
 		{

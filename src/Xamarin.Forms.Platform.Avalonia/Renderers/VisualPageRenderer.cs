@@ -87,8 +87,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 		
 		void UpdateToolbar()
 		{
-			//Control.PrimaryTopBarCommands.Clear();
-			//Control.SecondaryTopBarCommands.Clear();
+			Control.PrimaryTopBarCommands.Clear();
+			Control.SecondaryTopBarCommands.Clear();
 
 			foreach (var item in Element.ToolbarItems)
 			{
@@ -112,10 +112,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 					}
 				};
 
-				//if (item.Order == ToolbarItemOrder.Default || item.Order == ToolbarItemOrder.Primary)
-				//	Control.PrimaryTopBarCommands.Add(appBar);
-				//else
-				//	Control.SecondaryTopBarCommands.Add(appBar);
+				if (item.Order == ToolbarItemOrder.Default || item.Order == ToolbarItemOrder.Primary)
+					Control.PrimaryTopBarCommands.Add(appBar);
+				else
+					Control.SecondaryTopBarCommands.Add(appBar);
 			}
 		}
 

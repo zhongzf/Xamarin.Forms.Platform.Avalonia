@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsNavigationPage : FormsPage
-    {
+    public class FormsNavigationPage : FormsPage, IFormsNavigation
+	{
 		public FormsTransitioningContentControl FormsContentControl { get; private set; }
 
 		public ObservableCollection<object> InternalChildren { get; } = new ObservableCollection<object>();
@@ -51,7 +52,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			base.OnTemplateApplied(e);
 
-			FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Navigation_Content") as FormsTransitioningContentControl;
+			FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Navigation_Content");
 		}
 
 
@@ -202,23 +203,23 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//	return frameworkElements;
 		//}
 
-		//public bool GetHasBackButton()
-		//{
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		return page.HasBackButton && StackDepth > 1;
-		//	}
-		//	return false;
-		//}
+		public bool GetHasBackButton()
+		{
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				return page.HasBackButton && StackDepth > 1;
+			}
+			return false;
+		}
 
-		//public string GetBackButtonTitle()
-		//{
-		//	if (StackDepth > 1)
-		//	{
-		//		return this.InternalChildren[StackDepth - 2].GetPropValue<string>("Title") ?? "Back";
-		//	}
-		//	return "";
-		//}
+		public string GetBackButtonTitle()
+		{
+			if (StackDepth > 1)
+			{
+				return this.InternalChildren[StackDepth - 2].GetPropValue<string>("Title") ?? "Back";
+			}
+			return "";
+		}
 
 		public void PopModal()
 		{
@@ -240,11 +241,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			ParentWindow?.PushModal(page, animated);
 		}
 
-
-		//public virtual void OnBackButtonPressed()
-		//{
-		//	Pop();
-		//}
+		public virtual void OnBackButtonPressed()
+		{
+			Pop();
+		}
 	}
 
 	public class FormsLightNavigationPage : FormsNavigationPage
@@ -257,13 +257,13 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			NavigationPage = navigationPage;
 		}
 
-		//public override void OnBackButtonPressed()
-		//{
-		//	if (NavigationPage?.CurrentPage == null)
-		//		return;
+		public override void OnBackButtonPressed()
+		{
+			if (NavigationPage?.CurrentPage == null)
+				return;
 
-		//	if (!NavigationPage.CurrentPage.SendBackButtonPressed())
-		//		NavigationPage.PopAsync();
-		//}
+			if (!NavigationPage.CurrentPage.SendBackButtonPressed())
+				NavigationPage.PopAsync();
+		}
 	}
 }
