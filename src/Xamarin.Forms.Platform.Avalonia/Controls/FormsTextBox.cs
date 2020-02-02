@@ -35,7 +35,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         // Summary:
         //     Occurs when the control loses focus.
         public event EventHandler<RoutedEventArgs> TextChanged;
-        
+
         public FormsTextBox()
         {
             TextProperty.Changed.AddClassHandler<FormsTextBox>((x, e) => x.OnTextPropertyChanged(e));
@@ -102,106 +102,17 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             }
         }
 
-        void DelayObfuscation()
-        {
-            if (!string.IsNullOrEmpty(Text))
-            {
-                int lengthDifference = base.Text.Length - Text.Length;
-
-                var savedSelectionStart = SelectionStart;
-                string updatedRealText = DetermineTextFromPassword(Text, SelectionStart, base.Text);
-
-                if (Text == updatedRealText)
-                {
-                    // Nothing to do
-                    return;
-                }
-
-                _internalChangeFlag = true;
-                Text = updatedRealText;
-                _internalChangeFlag = false;
-
-                // Cancel any pending delayed obfuscation
-                _cts?.Cancel();
-                _cts = null;
-
-                string newText;
-
-                if (lengthDifference != 1)
-                {
-                    // Either More than one character got added in this text change (e.g., a paste operation)
-                    // Or characters were removed. Either way, we don't need to do the delayed obfuscation dance
-                    newText = Obfuscate(Text);
-                }
-                else
-                {
-                    // Only one character was added; we need to leave it visible for a brief time period
-                    // Obfuscate all but the character added for now
-                    newText = Obfuscate(Text, savedSelectionStart - 1);
-
-                    // Leave the added character visible until a new character is added
-                    // or sufficient time has passed
-                    if (_cts == null)
-                    {
-                        _cts = new CancellationTokenSource();
-                    }
-
-                    Task.Run(async () =>
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(0.5), _cts.Token);
-                        _cts.Token.ThrowIfCancellationRequested();
-                        await Dispatcher.UIThread.InvokeAsync(new Action(() =>
-                        {
-                            var ss = SelectionStart;
-                        //var sl = SelectionLength;
-                        base.Text = Obfuscate(Text);
-                            SelectionStart = ss;
-                        //SelectionLength = sl;
-                    }), DispatcherPriority.Normal);
-                    }, _cts.Token);
-                }
-
-                if (base.Text != newText)
-                {
-                    base.Text = newText;
-                }
-                SelectionStart = savedSelectionStart;
-            }
-        }
-
-        static string DetermineTextFromPassword(string realText, int start, string passwordText)
-        {
-            var lengthDifference = passwordText.Length - realText.Length;
-            if (lengthDifference > 0)
-                realText = realText.Insert(start - lengthDifference, new string(ObfuscationCharacter, lengthDifference));
-            else if (lengthDifference < 0)
-                realText = realText.Remove(start, -lengthDifference);
-
-            var sb = new System.Text.StringBuilder(passwordText.Length);
-            for (int i = 0; i < passwordText.Length; i++)
-                sb.Append(passwordText[i] == ObfuscationCharacter ? realText[i] : passwordText[i]);
-
-            return sb.ToString();
-        }
-
-        string Obfuscate(string text, int visibleSymbolIndex = -1)
-        {
-            if (visibleSymbolIndex == -1)
-                return new string(ObfuscationCharacter, text?.Length ?? 0);
-
-            if (text == null || text.Length == 1)
-                return text;
-            var prefix = visibleSymbolIndex > 0 ? new string(ObfuscationCharacter, visibleSymbolIndex) : string.Empty;
-            var suffix = visibleSymbolIndex == text.Length - 1
-                ? string.Empty
-                : new string(ObfuscationCharacter, text.Length - visibleSymbolIndex - 1);
-
-            return prefix + text.Substring(visibleSymbolIndex, 1) + suffix;
-        }
-
         void OnIsPasswordChanged(AvaloniaPropertyChangedEventArgs e)
         {
             var textBox = this;
+            if (IsPassword)
+            {
+                textBox.PasswordChar = ObfuscationCharacter;
+            }
+            else
+            {
+                textBox.PasswordChar = (char)0;
+            }
             textBox.UpdateInputScope();
             textBox.SyncBaseText();
         }
@@ -268,16 +179,14 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
                 }
             }
             else
+            {
                 base.OnKeyDown(e);
+            }
         }
 
         void OnTextChanged(AvaloniaPropertyChangedEventArgs textChangedEventArgs)
         {
-            if (IsPassword)
-            {
-                DelayObfuscation();
-            }
-            else if (base.Text != Text)
+            if (base.Text != Text)
             {
                 // Not in password mode, so we just need to make the "real" Text match
                 // what's in the textbox; the internalChange flag keeps the TextProperty
@@ -293,9 +202,9 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (_internalChangeFlag)
                 return;
             var savedSelectionStart = SelectionStart;
-            base.Text = IsPassword ? Obfuscate(Text) : Text;
+            base.Text = Text;
             DisabledText = base.Text;
-            var len = base.Text.Length;
+            var len = base.Text?.Length ?? 0;
             SelectionStart = savedSelectionStart > len ? len : savedSelectionStart;
         }
 
