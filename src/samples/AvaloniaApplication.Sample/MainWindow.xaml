@@ -461,7 +461,16 @@
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ContentPresenter Grid.ColumnSpan="3"/>
+            <ContentPresenter Grid.ColumnSpan="3"
+                            Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
 
             <ItemsControl Name="PART_Command" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Items="{Binding PrimaryCommands}">
               <ItemsControl.ItemsPanel>
@@ -544,10 +553,9 @@
     </Style>
 
   </Window.Styles>
-  
+
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
     <Grid>
-
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -555,9 +563,9 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-
       <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="35" VerticalAlignment="Center"
             Background="{DynamicResource CommandBarBackgroundColor}">
+      
         <Button Name="PART_Previous_Modal" Focusable="False"
                 IsVisible="{Binding HasBackButtonModal}"
                 HorizontalAlignment="Left">
@@ -575,19 +583,17 @@
                            Foreground="{DynamicResource CommandBarTextColor}"/>
       </Grid>
 
-
       <controls:FormsAppBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
                             IsVisible="{Binding HasNavigationBar}"
                             Foreground="{Binding TitleBarTextColor}">
+        
         <Grid>
           <StackPanel Grid.Column="0" Orientation="Horizontal" Height="65"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
             <Button Name="PART_Hamburger" Focusable="False">
               <controls:FormsSymbolIcon Symbol="GlobalNavigationButton" FontSize="25"  />
             </Button>
 
-            <Button Name="PART_Previous" Focusable="False"
-                    IsVisible="{Binding HasBackButton}"
-                    IsEnabled="True">
+            <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}">
               <StackPanel Orientation="Horizontal">
                 <controls:FormsSymbolIcon Symbol="ChevronFlipLeftLegacy"  />
                 <TextBlock Margin="5,0,0,0" Text="{Binding BackButtonTitle}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"  />
@@ -597,17 +603,16 @@
 
           <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"  />
         </Grid>
+        
       </controls:FormsAppBar>
 
-      <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}"></controls:FormsContentControl>
+      <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" />
 
-      <!--<controls:FormsTransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up"
-                ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" />
+      <controls:FormsTransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" />
 
-              <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000">
-                <ContentPresenter Content="{Binding CurrentContentDialog}"
-                                  VerticalAlignment="Center"/>
-              </Grid>-->
+      <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000" IsVisible="{Binding HasContentDialog}">
+        <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
+      </Grid>
 
       <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" />
     </Grid>

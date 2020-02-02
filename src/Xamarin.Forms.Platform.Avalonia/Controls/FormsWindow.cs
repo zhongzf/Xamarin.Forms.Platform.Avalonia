@@ -39,6 +39,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public static readonly StyledProperty<Brush> TitleBarBackgroundColorProperty = AvaloniaProperty.Register<FormsWindow, Brush>(nameof(TitleBarBackgroundColor));
 		public static readonly StyledProperty<Brush> TitleBarTextColorProperty = AvaloniaProperty.Register<FormsWindow, Brush>(nameof(TitleBarTextColor));
 
+		public static readonly StyledProperty<bool> HasContentDialogProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasContentDialog));
+
 		public Brush TitleBarBackgroundColor
 		{
 			get { return (Brush)GetValue(TitleBarBackgroundColorProperty); }
@@ -115,6 +117,12 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
 			set { SetValue(ContentLoaderProperty, value); }
+		}
+
+		public bool HasContentDialog
+		{
+			get { return (bool)GetValue(HasContentDialogProperty); }
+			private set { SetValue(HasContentDialogProperty, value); }
 		}
 
 		public FormsWindow()
@@ -249,11 +257,13 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public void ShowContentDialog(FormsContentDialog contentDialog)
 		{
 			this.CurrentContentDialog = contentDialog;
+			this.HasContentDialog = true;
 		}
 
 		public void HideContentDialog()
 		{
 			this.CurrentContentDialog = null;
+			this.HasContentDialog = false;
 		}
 
 		public ObservableCollection<object> InternalChildren { get; } = new ObservableCollection<object>();

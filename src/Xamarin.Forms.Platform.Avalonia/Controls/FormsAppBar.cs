@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using System.Collections.Generic;
 using System.Windows;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -34,7 +35,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			base.OnTemplateApplied(e);
 
-			btnMore = e.NameScope.Find<ToggleButton>("PART_More");
+			btnMore = this.Find<ToggleButton>("PART_More", e);
 		}
 
 		public void Reset()
