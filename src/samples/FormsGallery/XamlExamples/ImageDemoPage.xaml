@@ -9,7 +9,7 @@
                FontAttributes="Bold"
                HorizontalOptions="Center" />
 
-        <Image Source="https://aka.ms/campus.jpg"
+        <Image Source="https://img-blog.csdnimg.cn/20200120212054183.png"
                HorizontalOptions="Center"
                VerticalOptions="CenterAndExpand" />
     </StackLayout>

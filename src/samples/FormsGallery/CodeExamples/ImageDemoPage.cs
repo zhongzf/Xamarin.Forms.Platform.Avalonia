@@ -19,7 +19,7 @@ namespace FormsGallery.CodeExamples
             {
                 Source = new UriImageSource
                 {
-                    Uri = new Uri("https://aka.ms/campus.jpg")
+                    Uri = new Uri("https://img-blog.csdnimg.cn/20200120212054183.png")
                 },
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.CenterAndExpand
