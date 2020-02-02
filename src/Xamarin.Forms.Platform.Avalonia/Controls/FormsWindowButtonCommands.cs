@@ -1,9 +1,12 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Xamarin.Forms.Platform.Avalonia.Helpers;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
@@ -30,53 +33,53 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			//this.DefaultStyleKey = typeof(FormsWindowButtonCommands);
 		}
 
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
 
-		//	close = Template.FindName("PART_Close", this) as System.Windows.Controls.Button;
-		//	if (close != null)
-		//	{
-		//		close.Click += CloseClick;
-		//	}
+			close = this.Find<global::Avalonia.Controls.Button>("PART_Close", e);
+			if (close != null)
+			{
+				close.Click += CloseClick;
+			}
 
-		//	max = Template.FindName("PART_Max", this) as System.Windows.Controls.Button;
-		//	if (max != null)
-		//	{
-		//		max.Click += MaximizeClick;
-		//	}
+			max = this.Find<global::Avalonia.Controls.Button>("PART_Max", e);
+			if (max != null)
+			{
+				max.Click += MaximizeClick;
+			}
 
-		//	min = Template.FindName("PART_Min", this) as System.Windows.Controls.Button;
-		//	if (min != null)
-		//	{
-		//		min.Click += MinimizeClick;
-		//	}
-		//	this.ParentWindow = this.TryFindParent<FormsWindow>();
-		//}
+			min = this.Find<global::Avalonia.Controls.Button>("PART_Min", e);
+			if (min != null)
+			{
+				min.Click += MinimizeClick;
+			}
+			this.ParentWindow = this.TryFindParent<FormsWindow>();
+		}
 
-		//private void MinimizeClick(object sender, RoutedEventArgs e)
-		//{
-		//	if (null == this.ParentWindow) return;
-		//	Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(this.ParentWindow);
-		//}
+		private void MinimizeClick(object sender, RoutedEventArgs e)
+		{
+			if (null == this.ParentWindow) return;
+			SystemCommands.MinimizeWindow(this.ParentWindow);
+		}
 
-		//private void MaximizeClick(object sender, RoutedEventArgs e)
-		//{
-		//	if (null == this.ParentWindow) return;
-		//	if (this.ParentWindow.WindowState == WindowState.Maximized)
-		//	{
-		//		Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this.ParentWindow);
-		//	}
-		//	else
-		//	{
-		//		Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this.ParentWindow);
-		//	}
-		//}
+		private void MaximizeClick(object sender, RoutedEventArgs e)
+		{
+			if (null == this.ParentWindow) return;
+			if (this.ParentWindow.WindowState == WindowState.Maximized)
+			{
+				SystemCommands.RestoreWindow(this.ParentWindow);
+			}
+			else
+			{
+				SystemCommands.MaximizeWindow(this.ParentWindow);
+			}
+		}
 
-		//private void CloseClick(object sender, RoutedEventArgs e)
-		//{
-		//	if (null == this.ParentWindow) return;
-		//	this.ParentWindow.Close();
-		//}
+		private void CloseClick(object sender, RoutedEventArgs e)
+		{
+			if (null == this.ParentWindow) return;
+			this.ParentWindow.Close();
+		}
 	}
 }
