@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsCollectionView : UserControl
+    public class FormsCollectionView : FormsMultiView
     {
     }
 }

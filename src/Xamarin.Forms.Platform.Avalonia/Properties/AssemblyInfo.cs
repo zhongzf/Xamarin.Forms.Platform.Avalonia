@@ -66,3 +66,4 @@ using Xamarin.Forms.Platform.Avalonia;
 [assembly: ExportRenderer(typeof(IndicatorView), typeof(IndicatorViewRenderer))]
 [assembly: ExportRenderer(typeof(CollectionView), typeof(CollectionViewRenderer))]
 [assembly: ExportRenderer(typeof(SwipeView), typeof(SwipeViewRenderer))]
+[assembly: ExportRenderer(typeof(CarouselView), typeof(CarouselViewRenderer))]

@@ -624,6 +624,38 @@
       </Setter>
     </Style>
 
+    <Style Selector="controls|FormsCarouselView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid ClipToBounds="True"
+                  Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+              <Grid VerticalAlignment="Center" Name="PART_ButtonPanel">
+                <RepeatButton Name="PART_NextButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Right" />
+                <RepeatButton Name="PART_PreviousButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Left" />
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
   </Window.Styles>
 
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >

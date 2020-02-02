@@ -124,9 +124,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			this.SetValue(FormsPage.PrimaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 			this.SetValue(FormsPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 
-			//this.Loaded += (sender, e) => Appearing();
 			AttachedToVisualTree += (sender, e) => Appearing();
-			//this.Unloaded += (sender, e) => Disappearing();
 			DetachedFromVisualTree += (sender, e) => Disappearing();
 		}
 
