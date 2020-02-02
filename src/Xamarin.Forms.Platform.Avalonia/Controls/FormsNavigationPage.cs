@@ -151,57 +151,57 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			return false;
 		}
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryTopBarCommands);
+		public override IEnumerable<Control> GetPrimaryTopBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.PrimaryTopBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
-		//	}
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryTopBarCommands);
+		public override IEnumerable<Control> GetSecondaryTopBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.SecondaryTopBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
-		//	}
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryBottomBarCommands);
+		public override IEnumerable<Control> GetPrimaryBottomBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.PrimaryBottomBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
-		//	}
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+		public override IEnumerable<Control> GetSecondaryBottomBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.SecondaryBottomBarCommands);
 
-		//	if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
-		//	}
+			if (FormsContentControl != null && FormsContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
 		public bool GetHasBackButton()
 		{

@@ -83,76 +83,76 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			return this.TitleBarTextColor;
 		}
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryTopBarCommands);
+		public override IEnumerable<Control> GetPrimaryTopBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.PrimaryTopBarCommands);
 
-		//	if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-		//	{
-		//		frameworkElements.AddRange(masterPage.GetPrimaryTopBarCommands());
-		//	}
+			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+			{
+				frameworkElements.AddRange(masterPage.GetPrimaryTopBarCommands());
+			}
 
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
-		//	}
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryTopBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryTopBarCommands);
+		public override IEnumerable<Control> GetSecondaryTopBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.SecondaryTopBarCommands);
 
-		//	if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-		//	{
-		//		frameworkElements.AddRange(masterPage.GetSecondaryTopBarCommands());
-		//	}
+			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+			{
+				frameworkElements.AddRange(masterPage.GetSecondaryTopBarCommands());
+			}
 
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
-		//	}
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetPrimaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.PrimaryBottomBarCommands);
+		public override IEnumerable<Control> GetPrimaryBottomBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.PrimaryBottomBarCommands);
 
-		//	if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-		//	{
-		//		frameworkElements.AddRange(masterPage.GetPrimaryBottomBarCommands());
-		//	}
+			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+			{
+				frameworkElements.AddRange(masterPage.GetPrimaryBottomBarCommands());
+			}
 
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
-		//	}
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 
-		//public override IEnumerable<FrameworkElement> GetSecondaryBottomBarCommands()
-		//{
-		//	List<FrameworkElement> frameworkElements = new List<FrameworkElement>();
-		//	frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+		public override IEnumerable<Control> GetSecondaryBottomBarCommands()
+		{
+			List<Control> frameworkElements = new List<Control>();
+			frameworkElements.AddRange(this.SecondaryBottomBarCommands);
 
-		//	if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-		//	{
-		//		frameworkElements.AddRange(masterPage.GetSecondaryBottomBarCommands());
-		//	}
+			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+			{
+				frameworkElements.AddRange(masterPage.GetSecondaryBottomBarCommands());
+			}
 
-		//	if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-		//	{
-		//		frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
-		//	}
+			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+			{
+				frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
+			}
 
-		//	return frameworkElements;
-		//}
+			return frameworkElements;
+		}
 	}
 }
