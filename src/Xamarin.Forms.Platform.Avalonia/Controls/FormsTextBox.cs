@@ -104,66 +104,69 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
         void DelayObfuscation()
         {
-            int lengthDifference = base.Text.Length - Text.Length;
-
-            var savedSelectionStart = SelectionStart;
-            string updatedRealText = DetermineTextFromPassword(Text, SelectionStart, base.Text);
-
-            if (Text == updatedRealText)
+            if (!string.IsNullOrEmpty(Text))
             {
-                // Nothing to do
-                return;
-            }
+                int lengthDifference = base.Text.Length - Text.Length;
 
-            _internalChangeFlag = true;
-            Text = updatedRealText;
-            _internalChangeFlag = false;
+                var savedSelectionStart = SelectionStart;
+                string updatedRealText = DetermineTextFromPassword(Text, SelectionStart, base.Text);
 
-            // Cancel any pending delayed obfuscation
-            _cts?.Cancel();
-            _cts = null;
-
-            string newText;
-
-            if (lengthDifference != 1)
-            {
-                // Either More than one character got added in this text change (e.g., a paste operation)
-                // Or characters were removed. Either way, we don't need to do the delayed obfuscation dance
-                newText = Obfuscate(Text);
-            }
-            else
-            {
-                // Only one character was added; we need to leave it visible for a brief time period
-                // Obfuscate all but the character added for now
-                newText = Obfuscate(Text, savedSelectionStart - 1);
-
-                // Leave the added character visible until a new character is added
-                // or sufficient time has passed
-                if (_cts == null)
+                if (Text == updatedRealText)
                 {
-                    _cts = new CancellationTokenSource();
+                    // Nothing to do
+                    return;
                 }
 
-                Task.Run(async () =>
+                _internalChangeFlag = true;
+                Text = updatedRealText;
+                _internalChangeFlag = false;
+
+                // Cancel any pending delayed obfuscation
+                _cts?.Cancel();
+                _cts = null;
+
+                string newText;
+
+                if (lengthDifference != 1)
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(0.5), _cts.Token);
-                    _cts.Token.ThrowIfCancellationRequested();
-                    await Dispatcher.UIThread.InvokeAsync(new Action(() =>
+                    // Either More than one character got added in this text change (e.g., a paste operation)
+                    // Or characters were removed. Either way, we don't need to do the delayed obfuscation dance
+                    newText = Obfuscate(Text);
+                }
+                else
+                {
+                    // Only one character was added; we need to leave it visible for a brief time period
+                    // Obfuscate all but the character added for now
+                    newText = Obfuscate(Text, savedSelectionStart - 1);
+
+                    // Leave the added character visible until a new character is added
+                    // or sufficient time has passed
+                    if (_cts == null)
                     {
-                        var ss = SelectionStart;
+                        _cts = new CancellationTokenSource();
+                    }
+
+                    Task.Run(async () =>
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(0.5), _cts.Token);
+                        _cts.Token.ThrowIfCancellationRequested();
+                        await Dispatcher.UIThread.InvokeAsync(new Action(() =>
+                        {
+                            var ss = SelectionStart;
                         //var sl = SelectionLength;
                         base.Text = Obfuscate(Text);
-                        SelectionStart = ss;
+                            SelectionStart = ss;
                         //SelectionLength = sl;
                     }), DispatcherPriority.Normal);
-                }, _cts.Token);
-            }
+                    }, _cts.Token);
+                }
 
-            if (base.Text != newText)
-            {
-                base.Text = newText;
+                if (base.Text != newText)
+                {
+                    base.Text = newText;
+                }
+                SelectionStart = savedSelectionStart;
             }
-            SelectionStart = savedSelectionStart;
         }
 
         static string DetermineTextFromPassword(string realText, int start, string passwordText)

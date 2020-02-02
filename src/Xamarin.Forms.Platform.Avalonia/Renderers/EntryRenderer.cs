@@ -157,18 +157,6 @@ namespace Xamarin.Forms.Platform.Avalonia
                 {
                     Control.Foreground = entry.TextColor.ToBrush();
                 }
-                else
-                {
-                    Control.Foreground = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
-                }
-
-                ////Force the PhoneTextBox control to do some internal bookkeeping
-                ////so the colors change immediately and remain changed when the control gets focus
-                //Control.OnApplyTemplate();
-            }
-            else
-            {
-                Control.Foreground = (Brush)global::Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty.GetMetadata(typeof(FormsTextBox)).GetDefaultValue();
             }
         }
 
