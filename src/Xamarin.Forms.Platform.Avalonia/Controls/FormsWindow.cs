@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Xamarin.Forms.Platform.Avalonia.Helpers;
 using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
@@ -137,20 +138,20 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			base.OnTemplateApplied(e);
 
-			topAppBar = e.NameScope.Find<FormsAppBar>("PART_TopAppBar");
-			bottomAppBar = e.NameScope.Find<FormsAppBar>("PART_BottomAppBar");
+			topAppBar = this.Find<FormsAppBar>("PART_TopAppBar", e);
+			bottomAppBar = this.Find<FormsAppBar>("PART_BottomAppBar", e);
 
-			previousButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Previous");
+			previousButton = this.Find<global::Avalonia.Controls.Button>("PART_Previous", e);
 			if (previousButton != null)
 			{
 				previousButton.Click += PreviousButton_Click;
 			}
-			previousModalButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Previous_Modal");
+			previousModalButton = this.Find<global::Avalonia.Controls.Button>("PART_Previous_Modal", e);
 			if (previousButton != null)
 			{
 				previousModalButton.Click += PreviousModalButton_Click;
 			}
-			hamburgerButton = e.NameScope.Find<global::Avalonia.Controls.Button>("PART_Hamburger");
+			hamburgerButton = this.Find<global::Avalonia.Controls.Button>("PART_Hamburger", e);
 			if (hamburgerButton != null)
 			{
 				hamburgerButton.Click += HamburgerButton_Click;
