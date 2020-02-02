@@ -61,3 +61,8 @@ using Xamarin.Forms.Platform.Avalonia;
 // Others
 [assembly: Xamarin.Forms.Dependency(typeof(ResourcesProvider))]
 [assembly: Xamarin.Forms.Dependency(typeof(Deserializer))]
+
+// Addtional
+[assembly: ExportRenderer(typeof(IndicatorView), typeof(IndicatorViewRenderer))]
+[assembly: ExportRenderer(typeof(CollectionView), typeof(CollectionViewRenderer))]
+[assembly: ExportRenderer(typeof(SwipeView), typeof(SwipeViewRenderer))]
