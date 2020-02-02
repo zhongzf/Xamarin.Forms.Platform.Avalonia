@@ -18,28 +18,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Extensions
             return depo.GetValue(dp);
         }
 
-        internal static IEnumerable<T> GetChildren<T>(this AvaloniaObject parent) where T : AvaloniaObject
-        {
-            var visual = parent as global::Avalonia.Visual;
-            if (visual != null)
-            {
-                foreach (var child in (visual as global::Avalonia.VisualTree.IVisual).VisualChildren)
-                {
-                    if (child is T)
-                    {
-                        yield return child as T;
-                    }
-                    else
-                    {
-                        foreach (var subChild in (child as AvaloniaObject).GetChildren<T>())
-                        {
-                            yield return subChild;
-                        }
-                    }
-                }
-            }
-        }
-
         public static T GetDefaultValue<T>(this StyledPropertyMetadata<T> propertyMetadata)
         {
             return default(T);

@@ -125,12 +125,18 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			this.SetValue(FormsPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 
 			//this.Loaded += (sender, e) => Appearing();
+			AttachedToVisualTree += (sender, e) => Appearing();
 			//this.Unloaded += (sender, e) => Disappearing();
+			DetachedFromVisualTree += (sender, e) => Disappearing();
 		}
 
-		private void OnPropertyChanged(object sender, EventArgs arg)
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
 		{
-			ParentWindow?.SynchronizeAppBar();
+			base.OnPropertyChanged(e);
+			if(e.Property == TitleProperty || e.Property == HasBackButtonProperty ||e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
+			{
+				ParentWindow?.SynchronizeAppBar();
+			}
 		}
 
 		private void Commands_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -144,12 +150,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			this.SecondaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
 			this.PrimaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
 			this.SecondaryBottomBarCommands.CollectionChanged += Commands_CollectionChanged;
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).AddValueChanged(this, OnPropertyChanged);
 			ParentWindow?.SynchronizeToolbarCommands();
 			ParentWindow?.SynchronizeAppBar();
 		}
@@ -160,18 +160,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			this.SecondaryTopBarCommands.CollectionChanged -= Commands_CollectionChanged;
 			this.PrimaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
 			this.SecondaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasBackButtonProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.HasNavigationBarProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.BackButtonTitleProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarBackgroundColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
-			//DependencyPropertyDescriptor.FromProperty(FormsPage.TitleBarTextColorProperty, typeof(FormsPage)).RemoveValueChanged(this, OnPropertyChanged);
 		}
-
-		//public override void OnApplyTemplate()
-		//{
-		//	base.OnApplyTemplate();
-		//}
 
 		public virtual string GetTitle()
 		{

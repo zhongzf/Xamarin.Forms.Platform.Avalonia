@@ -5,10 +5,12 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms.Platform.Avalonia.Helpers;
 using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
@@ -184,54 +186,63 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public void SynchronizeAppBar()
 		{
-			//IEnumerable<FormsPage> childrens = this.FindVisualChildren<FormsPage>();
+			IEnumerable<FormsPage> childrens = this.FindVisualChildren<FormsPage>();
 
-			//CurrentTitle = childrens.FirstOrDefault()?.GetTitle();
-			//HasNavigationBar = childrens.FirstOrDefault()?.GetHasNavigationBar() ?? false;
-			//CurrentNavigationPage = childrens.OfType<FormsNavigationPage>()?.FirstOrDefault();
-			//CurrentMasterDetailPage = childrens.OfType<FormsMasterDetailPage>()?.FirstOrDefault();
-			//var page = childrens.FirstOrDefault();
-			//if (page != null)
-			//{
-			//	TitleBarBackgroundColor = page.GetTitleBarBackgroundColor();
-			//	TitleBarTextColor = page.GetTitleBarTextColor();
-			//}
-			//else
-			//{
-			//	ClearValue(TitleBarBackgroundColorProperty);
-			//	ClearValue(TitleBarTextColorProperty);
-			//}
+			CurrentTitle = childrens.FirstOrDefault()?.GetTitle();
+			HasNavigationBar = childrens.FirstOrDefault()?.GetHasNavigationBar() ?? false;
+			CurrentNavigationPage = childrens.OfType<FormsNavigationPage>()?.FirstOrDefault();
+			CurrentMasterDetailPage = childrens.OfType<FormsMasterDetailPage>()?.FirstOrDefault();
+			var page = childrens.FirstOrDefault();
+			if (page != null)
+			{
+				TitleBarBackgroundColor = page.GetTitleBarBackgroundColor();
+				TitleBarTextColor = page.GetTitleBarTextColor();
+			}
+			else
+			{
+				ClearValue(TitleBarBackgroundColorProperty);
+				ClearValue(TitleBarTextColorProperty);
+			}
 
-			//hamburgerButton.Visibility = CurrentMasterDetailPage != null ? Visibility.Visible : Visibility.Collapsed;
+			if (hamburgerButton != null)
+			{
+				hamburgerButton.IsVisible = CurrentMasterDetailPage != null;
+			}
 
-			//if (CurrentNavigationPage != null)
-			//{
-			//	HasBackButton = CurrentNavigationPage.GetHasBackButton();
-			//	BackButtonTitle = CurrentNavigationPage.GetBackButtonTitle();
+			if (CurrentNavigationPage != null)
+			{
+				HasBackButton = CurrentNavigationPage.GetHasBackButton();
+				BackButtonTitle = CurrentNavigationPage.GetBackButtonTitle();
 
-			//}
-			//else
-			//{
-			//	HasBackButton = false;
-			//	BackButtonTitle = "";
-			//}
+			}
+			else
+			{
+				HasBackButton = false;
+				BackButtonTitle = "";
+			}
 		}
 
 		public void SynchronizeToolbarCommands()
 		{
-			//IEnumerable<FormsPage> childrens = this.FindVisualChildren<FormsPage>();
+			IEnumerable<FormsPage> childrens = this.FindVisualChildren<FormsPage>();
 
-			//var page = childrens.FirstOrDefault();
-			//if (page == null) return;
+			var page = childrens.FirstOrDefault();
+			if (page == null) return;
 
-			//topAppBar.PrimaryCommands = page.GetPrimaryTopBarCommands().OrderBy(ti => ti.GetValue(FrameworkElementAttached.PriorityProperty));
-			//topAppBar.SecondaryCommands = page.GetSecondaryTopBarCommands().OrderBy(ti => ti.GetValue(FrameworkElementAttached.PriorityProperty));
-			//bottomAppBar.PrimaryCommands = page.GetPrimaryBottomBarCommands().OrderBy(ti => ti.GetValue(FrameworkElementAttached.PriorityProperty));
-			//bottomAppBar.SecondaryCommands = page.GetSecondaryBottomBarCommands().OrderBy(ti => ti.GetValue(FrameworkElementAttached.PriorityProperty));
-			//bottomAppBar.Content = childrens.LastOrDefault(x => x.ContentBottomBar != null)?.ContentBottomBar;
+			if (topAppBar != null)
+			{
+				topAppBar.PrimaryCommands = page.GetPrimaryTopBarCommands();
+				topAppBar.SecondaryCommands = page.GetSecondaryTopBarCommands();
+				topAppBar.Reset();
+			}
 
-			//topAppBar.Reset();
-			//bottomAppBar.Reset();
+			if (bottomAppBar != null)
+			{
+				bottomAppBar.PrimaryCommands = page.GetPrimaryBottomBarCommands();
+				bottomAppBar.SecondaryCommands = page.GetSecondaryBottomBarCommands();
+				bottomAppBar.Content = childrens.LastOrDefault(x => x.ContentBottomBar != null)?.ContentBottomBar;
+				bottomAppBar.Reset();
+			}
 		}
 
 		public void ShowContentDialog(FormsContentDialog contentDialog)
