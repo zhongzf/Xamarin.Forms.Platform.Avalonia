@@ -16,7 +16,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 		{
 			_rounding = new Border();
 			_rounding.Background = Color.White.ToBrush();
-			//_rounding.SnapsToDevicePixels = true;
 			//var wb = new global::Avalonia.Data.Binding(nameof(Border.ActualWidth));
 			//wb.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
 			//{
@@ -76,7 +75,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			}
 
 			_currentView = Element.Content;
-			Control.OpacityMask = _mask;
+			//Control.OpacityMask = _mask;
 			Control.Child = _currentView != null ? Platform.GetOrCreateRenderer(_currentView).GetNativeElement() : null;
 		}
 

@@ -75,8 +75,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		void HandleButtonClick(object sender, RoutedEventArgs e)
 		{
 			IButtonController buttonView = Element as IButtonController;
-			if (buttonView != null)
-				buttonView.SendClicked();
+			buttonView?.SendClicked();			
 		}
 		
 		void UpdateBorderColor()
