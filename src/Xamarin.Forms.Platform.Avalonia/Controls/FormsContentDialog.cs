@@ -1,16 +1,27 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Primitives;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsContentDialog : ContentControl
-    {
+    public class FormsContentDialog : ContentControl, ILightContentDialog
+	{
+		TaskCompletionSource<LightContentDialogResult> tcs;
+
+		public ReactiveCommand<Unit, Unit> PrimaryButtonRoutedCommand { get; }
+		public ReactiveCommand<Unit, Unit> SecondaryButtonRoutedCommand { get; }
+		private global::Avalonia.Controls.Button _primaryButton;
+		private global::Avalonia.Controls.Button _secondaryButton;
+
 		public static readonly StyledProperty<object> TitleProperty = AvaloniaProperty.Register<FormsContentDialog, object>(nameof(Title));
 		public static readonly StyledProperty<global::Avalonia.Markup.Xaml.Templates.DataTemplate> TitleTemplateProperty = AvaloniaProperty.Register<FormsContentDialog, global::Avalonia.Markup.Xaml.Templates.DataTemplate>(nameof(TitleTemplate));
 		public static readonly StyledProperty<bool> FullSizeDesiredProperty = AvaloniaProperty.Register<FormsContentDialog, bool>(nameof(FullSizeDesired));
@@ -92,41 +103,62 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public event EventHandler<LightContentDialogClosedEventArgs> Closed;
 		public event EventHandler<LightContentDialogClosingEventArgs> Closing;
 		public event EventHandler<LightContentDialogOpenedEventArgs> Opened;
+
 		public event EventHandler<LightContentDialogButtonClickEventArgs> PrimaryButtonClick;
 		public event EventHandler<LightContentDialogButtonClickEventArgs> SecondaryButtonClick;
 
 		public FormsContentDialog()
 		{
 			//this.DefaultStyleKey = typeof(FormsContentDialog);
-			//this.CommandBindings.Add(new CommandBinding(PrimaryButtonRoutedCommand, OnPrimaryButtonRoutedExecuted));
-			//this.CommandBindings.Add(new CommandBinding(SecondaryButtonRoutedCommand, this.SecondaryButtonRoutedExecuted));
+			this.PrimaryButtonRoutedCommand = ReactiveCommand.Create(this.OnPrimaryButtonRoutedExecuted);
+			this.SecondaryButtonRoutedCommand = ReactiveCommand.Create(this.OnSecondaryButtonRoutedExecuted);
 		}
 
-		//private void OnPrimaryButtonRoutedExecuted(object sender, ExecutedRoutedEventArgs e)
-		//{
-		//	LightContentDialogButtonClickEventArgs lightContentDialogButtonClickEventArgs = new LightContentDialogButtonClickEventArgs();
+		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+		{
+			base.OnTemplateApplied(e);
 
-		//	PrimaryButtonClick?.Invoke(this, lightContentDialogButtonClickEventArgs);
+			this._primaryButton = this.Find<global::Avalonia.Controls.Button>("PART_NextButton", e);
+			this._primaryButton.Click += _primaryButton_Click;
+			this._secondaryButton = this.Find<global::Avalonia.Controls.Button>("PART_SecondaryButton", e);
+			this._secondaryButton.Click += _secondaryButton_Click;
+		}
 
-		//	if (!lightContentDialogButtonClickEventArgs.Cancel)
-		//	{
-		//		PrimaryButtonCommand?.Execute(PrimaryButtonCommandParameter);
-		//		tcs.TrySetResult(LightContentDialogResult.Primary);
-		//	}
-		//}
+		private void _primaryButton_Click(object sender, EventArgs e)
+		{
+			OnPrimaryButtonRoutedExecuted();
+		}
 
-		//private void SecondaryButtonRoutedExecuted(object sender, ExecutedRoutedEventArgs e)
-		//{
-		//	LightContentDialogButtonClickEventArgs lightContentDialogButtonClickEventArgs = new LightContentDialogButtonClickEventArgs();
+		private void _secondaryButton_Click(object sender, EventArgs e)
+		{
+			
+		}
 
-		//	SecondaryButtonClick?.Invoke(this, lightContentDialogButtonClickEventArgs);
+		private void OnPrimaryButtonRoutedExecuted()
+		{
+			LightContentDialogButtonClickEventArgs lightContentDialogButtonClickEventArgs = new LightContentDialogButtonClickEventArgs();
 
-		//	if (!lightContentDialogButtonClickEventArgs.Cancel)
-		//	{
-		//		SecondaryButtonCommand?.Execute(SecondaryButtonCommandParameter);
-		//		tcs.TrySetResult(LightContentDialogResult.Secondary);
-		//	}
-		//}
+			PrimaryButtonClick?.Invoke(this, lightContentDialogButtonClickEventArgs);
+
+			if (!lightContentDialogButtonClickEventArgs.Cancel)
+			{
+				PrimaryButtonCommand?.Execute(PrimaryButtonCommandParameter);
+				tcs.TrySetResult(LightContentDialogResult.Primary);
+			}
+		}
+
+		private void OnSecondaryButtonRoutedExecuted()
+		{
+			LightContentDialogButtonClickEventArgs lightContentDialogButtonClickEventArgs = new LightContentDialogButtonClickEventArgs();
+
+			SecondaryButtonClick?.Invoke(this, lightContentDialogButtonClickEventArgs);
+
+			if (!lightContentDialogButtonClickEventArgs.Cancel)
+			{
+				SecondaryButtonCommand?.Execute(SecondaryButtonCommandParameter);
+				tcs.TrySetResult(LightContentDialogResult.Secondary);
+			}
+		}
 
 		public async Task<LightContentDialogResult> ShowAsync()
 		{
@@ -140,12 +172,12 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			LightContentDialogResult contentDialogResult = LightContentDialogResult.None;
 			bool exit = false;
 
-			//while (!exit)
-			//{
-			//	tcs = new TaskCompletionSource<LightContentDialogResult>();
-			//	contentDialogResult = await tcs.Task;
-			//	exit = InternalHide(contentDialogResult);
-			//}
+			while (!exit)
+			{
+				tcs = new TaskCompletionSource<LightContentDialogResult>();
+				contentDialogResult = await tcs.Task;
+				exit = InternalHide(contentDialogResult);
+			}
 
 			return contentDialogResult;
 		}

@@ -50,7 +50,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			FormsContentDialog dialog = new FormsContentDialog();
 
 			if (options.Message == null || options.Title == null)
+			{
 				dialog.Content = content;
+			}
 			else
 			{
 				dialog.Title = options.Title;
@@ -89,7 +91,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			};
 
 			if (options.Title != null)
+			{
 				dialog.Title = options.Title;
+			}
 
 			list.SelectionChanged += (s, e) =>
 			{
@@ -123,10 +127,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			LightContentDialogResult result = await dialog.ShowAsync();
 			if (result == LightContentDialogResult.Secondary)
+			{
 				options.SetResult(options.Cancel);
+			}
 			else if (result == LightContentDialogResult.Primary)
+			{
 				options.SetResult(options.Destruction);
-
+			}
 		}
 
 		public static SizeRequest GetNativeSize(VisualElement view, double widthConstraint, double heightConstraint)

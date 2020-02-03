@@ -138,6 +138,14 @@
       <ContentPresenter Content="{Binding View, Converter={StaticResource ViewToRenderer}}" />
     </DataTemplate>
 
+    <DataTemplate x:Key="TitleDefaultTemplate" >
+      <TextBlock DataContext="{Binding}"
+                 Text="{Binding}"
+                 FontFamily="Segoe UI"
+                 FontSize="26"
+                 Foreground="Black"/>
+    </DataTemplate>
+
     <Style x:Key="BaseLightWindowButtonStyle" Selector="Button">
       <Setter Property="Foreground"
               Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=(TextElement.Foreground)}" />
