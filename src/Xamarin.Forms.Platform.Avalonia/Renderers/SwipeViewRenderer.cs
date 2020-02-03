@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             {
                 if (Control == null) // construct and SetNativeControl and suscribe control event
                 {
-                    SetNativeControl(new FormsSwipeView());
+                    SetNativeControl(new FormsSwipeView() { ContentLoader = new FormsContentLoader() });
                 }
 
                 // TODO:

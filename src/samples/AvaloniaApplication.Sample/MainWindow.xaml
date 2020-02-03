@@ -623,6 +623,46 @@
         </ControlTemplate>
       </Setter>
     </Style>
+    
+    <Style Selector="controls|FormsCollectionView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid ClipToBounds="True"
+                  Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+    
+    <Style Selector="controls|FormsSwipeView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid ClipToBounds="True"
+                  Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
 
     <Style Selector="controls|FormsCarouselView">
       <Setter Property="Template">
@@ -654,7 +694,7 @@
           </Border>
         </ControlTemplate>
       </Setter>
-    </Style>
+    </Style> 
 
   </Window.Styles>
 

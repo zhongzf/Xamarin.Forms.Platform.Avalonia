@@ -69,7 +69,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
         }
 
-        private void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
+        protected virtual void OnSelectedItemChanged(AvaloniaPropertyChangedEventArgs e)
         {
             if (e.OldValue == e.NewValue) return;
             OnSelectedItemChanged(e.OldValue, e.NewValue);

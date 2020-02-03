@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class CollectionViewRenderer : ViewRenderer<CollectionView, FormsCollectionView>
+    public class CollectionViewRenderer : VisualMultiViewRenderer<CollectionView, FormsCollectionView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CollectionView> e)
         {
@@ -14,7 +14,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             {
                 if (Control == null) // construct and SetNativeControl and suscribe control event
                 {
-                    SetNativeControl(new FormsCollectionView());
+                    SetNativeControl(new FormsCollectionView() { ContentLoader = new FormsContentLoader() });
                 }
 
                 // TODO:
