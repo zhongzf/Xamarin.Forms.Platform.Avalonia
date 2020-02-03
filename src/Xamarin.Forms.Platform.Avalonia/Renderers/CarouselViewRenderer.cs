@@ -7,7 +7,7 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 namespace Xamarin.Forms.Platform.Avalonia
 {
     // TODO:
-    public class CarouselViewRenderer : VisualMultiViewRenderer<CarouselView, FormsCarouselView>
+    public class CarouselViewRenderer : ItemsViewRenderer<CarouselView, FormsCarouselView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CarouselView> e)
         {

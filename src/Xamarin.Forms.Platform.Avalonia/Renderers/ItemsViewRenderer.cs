@@ -11,10 +11,10 @@ using ASelectionChangedEventArgs = Xamarin.Forms.Platform.Avalonia.Controls.Sele
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class VisualMultiViewRenderer<TElement, TNativeElement> : ViewRenderer<TElement, TNativeElement>
-                where TElement : ItemsView where TNativeElement : FormsMultiView
+    public abstract class ItemsViewRenderer<TItemsView, TNativeElement> : ViewRenderer<TItemsView, TNativeElement>
+                where TItemsView : ItemsView where TNativeElement : FormsMultiView
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<TElement> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<TItemsView> e)
         {
             if (e.OldElement != null) // Clear old element event
             {

@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class CollectionViewRenderer : VisualMultiViewRenderer<CollectionView, FormsCollectionView>
+    public class CollectionViewRenderer : ItemsViewRenderer<CollectionView, FormsCollectionView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CollectionView> e)
         {
