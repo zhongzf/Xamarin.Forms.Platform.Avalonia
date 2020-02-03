@@ -72,6 +72,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				Element.SelectedIndex = Control.SelectedIndex;
 			}
+
+			// TODO: The control is not refresh.
 		}
 
 		bool _isDisposed;
