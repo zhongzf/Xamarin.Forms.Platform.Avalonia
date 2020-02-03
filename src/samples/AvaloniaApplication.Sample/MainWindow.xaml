@@ -750,15 +750,15 @@
         
       </controls:FormsAppBar>
 
-      <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" />
+      <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />
 
-      <controls:FormsTransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" />
+      <controls:FormsTransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" IsVisible="{Binding HasModalPage}" />
 
       <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000" IsVisible="{Binding HasContentDialog}">
         <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
       </Grid>
 
-      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" />
+      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding !HasModalPage}" />
     </Grid>
   </Border>
 

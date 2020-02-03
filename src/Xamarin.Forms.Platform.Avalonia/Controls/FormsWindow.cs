@@ -40,6 +40,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public static readonly StyledProperty<Brush> TitleBarTextColorProperty = AvaloniaProperty.Register<FormsWindow, Brush>(nameof(TitleBarTextColor));
 
 		public static readonly StyledProperty<bool> HasContentDialogProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasContentDialog));
+		public static readonly StyledProperty<bool> HasModalPageProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasModalPage));
 
 		public Brush TitleBarBackgroundColor
 		{
@@ -123,6 +124,12 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			get { return (bool)GetValue(HasContentDialogProperty); }
 			private set { SetValue(HasContentDialogProperty, value); }
+		}
+
+		public bool HasModalPage
+		{
+			get { return (bool)GetValue(HasModalPageProperty); }
+			private set { SetValue(HasModalPageProperty, value); }
 		}
 
 		public FormsWindow()
@@ -277,6 +284,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			InternalChildren.Add(page);
 			this.CurrentModalPage = InternalChildren.Last();
+			this.HasModalPage = true;
 			this.HasBackButtonModal = true;
 		}
 
@@ -302,6 +310,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			}
 
 			this.HasBackButtonModal = InternalChildren.Count >= 1;
+			this.HasModalPage = InternalChildren.Count >= 1;
 
 			return modal;
 		}

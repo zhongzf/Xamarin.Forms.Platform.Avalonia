@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new TextBlock());
+					SetNativeControl(new TextBlock() { });
 				}
 
 				// Update control property 
