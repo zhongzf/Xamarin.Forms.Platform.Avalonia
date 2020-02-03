@@ -40,7 +40,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
 		{
 			var size = base.GetDesiredSize(widthConstraint, heightConstraint);
-			//Control.RecalculateSpanPositions(Element, _inlineHeights);
+			Control.RecalculateSpanPositions(Element, _inlineHeights);
 			return size;
 		}
 
