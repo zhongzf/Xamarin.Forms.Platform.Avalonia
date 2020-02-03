@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,9 +27,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             set { SetValue(ContentLoaderProperty, value); }
         }
 
+        Type StyleKey => typeof(ContentControl);
+
         public FormsContentControl()
         {
-            //this.DefaultStyleKey = typeof(FormsContentControl);
             this.LayoutUpdated += OnLayoutUpdated;
             ContentLoaderProperty.Changed.AddClassHandler<FormsContentControl>((x, e) => x.OnContentLoaderChanged(e));
         }
