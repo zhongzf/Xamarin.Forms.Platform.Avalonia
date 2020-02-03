@@ -124,7 +124,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 				e.PropertyName == VisualElement.YProperty.PropertyName ||
 				e.PropertyName == VisualElement.WidthProperty.PropertyName ||
 				e.PropertyName == VisualElement.HeightProperty.PropertyName)
+			{
 				MaybeInvalidate();
+			}
 			else if (e.PropertyName == VisualElement.AnchorXProperty.PropertyName ||
 				e.PropertyName == VisualElement.AnchorYProperty.PropertyName ||
 				e.PropertyName == VisualElement.ScaleProperty.PropertyName ||
@@ -133,7 +135,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 				e.PropertyName == VisualElement.RotationProperty.PropertyName ||
 				e.PropertyName == VisualElement.RotationXProperty.PropertyName ||
 				e.PropertyName == VisualElement.RotationYProperty.PropertyName)
+			{
 				UpdateScaleAndTranslateAndRotation();
+			}
 			else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
 				UpdateVisibility();
 			else if (e.PropertyName == VisualElement.OpacityProperty.PropertyName)
@@ -153,7 +157,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			UpdateVisibility();
 
 			if (_invalidateArrangeNeeded)
+			{
 				MaybeInvalidate();
+			}
 			_invalidateArrangeNeeded = false;
 
 			UpdateTouchFrameReportedEvent();
