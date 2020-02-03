@@ -170,7 +170,9 @@ namespace Xamarin.Forms.Platform.Avalonia
             Control = native;
 
             if (AutoTrack && Tracker == null)
+            {
                 Tracker = new VisualElementTracker<TElement, Control> { Element = Element, Control = Control };
+            }
 
             Element.IsNativeStateConsistent = false;
 
