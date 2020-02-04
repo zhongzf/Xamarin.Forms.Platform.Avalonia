@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia.Styling;
 using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
     ///     An intermediate class for injecting bindings for things the default
     ///     textbox doesn't allow us to bind/modify
     /// </summary>
-    public class FormsTextBox : TextBox
+    public class FormsTextBox : TextBox, IStyleable
     {
         const char ObfuscationCharacter = '●';
 
@@ -35,6 +36,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         // Summary:
         //     Occurs when the control loses focus.
         public event EventHandler<RoutedEventArgs> TextChanged;
+
+        Type IStyleable.StyleKey => typeof(TextBox);
 
         public FormsTextBox()
         {

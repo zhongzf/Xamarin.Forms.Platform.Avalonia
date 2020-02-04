@@ -18,7 +18,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsPathIcon()
 		{
-			//this.DefaultStyleKey = typeof(FormsPathIcon);
 		}
 	}
 }

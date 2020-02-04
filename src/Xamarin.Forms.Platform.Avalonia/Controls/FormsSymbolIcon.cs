@@ -16,7 +16,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsSymbolIcon()
 		{
-			//this.DefaultStyleKey = typeof(FormsSymbolIcon);
 		}
 	}
 }

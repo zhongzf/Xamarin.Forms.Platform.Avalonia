@@ -151,7 +151,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 		public static IVisualElementRenderer GetOrCreateRenderer(VisualElement element)
 		{
 			if (GetRenderer(element) == null)
+			{
 				SetRenderer(element, CreateRenderer(element));
+			}
 
 			return GetRenderer(element);
 		}

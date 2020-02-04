@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsTimePicker : TextBox
+    public class FormsTimePicker : TextBox, IStyleable
     {
         #region Properties
         public static readonly StyledProperty<TimeSpan?> TimeProperty = AvaloniaProperty.Register<FormsTimePicker, TimeSpan?>(nameof(Time));
@@ -32,6 +33,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         public delegate void TimeChangedEventHandler(object sender, TimeChangedEventArgs e);
         public event TimeChangedEventHandler TimeChanged;
         #endregion
+
+        Type IStyleable.StyleKey => typeof(TextBox);
 
         public FormsTimePicker()
         {

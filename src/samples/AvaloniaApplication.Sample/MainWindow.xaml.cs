@@ -16,7 +16,8 @@ namespace AvaloniaApplication.Sample
             this.DataContext = this;
 
             Xamarin.Forms.Forms.Init();
-            LoadApplication(new FormsGallery.App());
+            //LoadApplication(new FormsGallery.App());
+            LoadApplication(new Xamarin.Forms.Sample.App());
         }
 
         private void InitializeComponent()

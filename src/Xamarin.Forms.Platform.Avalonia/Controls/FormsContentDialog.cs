@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -109,7 +110,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsContentDialog()
 		{
-			//this.DefaultStyleKey = typeof(FormsContentDialog);
 			this.PrimaryButtonRoutedCommand = ReactiveCommand.Create(this.OnPrimaryButtonRoutedExecuted);
 			this.SecondaryButtonRoutedCommand = ReactiveCommand.Create(this.OnSecondaryButtonRoutedExecuted);
 		}

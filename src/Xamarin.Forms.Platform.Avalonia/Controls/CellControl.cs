@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,12 +11,14 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	public class CellControl : ContentControl
+	public class CellControl : ContentControl, IStyleable
 	{
 		public static readonly StyledProperty<object> CellProperty = AvaloniaProperty.Register<CellControl, object>(nameof(Cell));
 		public static readonly StyledProperty<bool> ShowContextActionsProperty = AvaloniaProperty.Register<CellControl, bool>(nameof(ShowContextActions), true);
 
 		readonly PropertyChangedEventHandler _propertyChangedHandler;
+
+		Type IStyleable.StyleKey => typeof(ContentControl);
 
 		public CellControl()
 		{

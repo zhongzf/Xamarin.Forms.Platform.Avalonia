@@ -134,7 +134,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsWindow()
 		{
-			//this.DefaultStyleKey = typeof(FormsWindow);
 			this.Opened += (sender, e) => Appearing();
 			this.Closed += (sender, e) => Disappearing();
 		}

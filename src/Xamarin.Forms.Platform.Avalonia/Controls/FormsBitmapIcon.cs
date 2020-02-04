@@ -21,7 +21,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsBitmapIcon()
 		{
-			//this.DefaultStyleKey = typeof(FormsBitmapIcon);
 		}
 
 		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
