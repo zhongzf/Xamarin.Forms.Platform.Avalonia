@@ -105,7 +105,6 @@
       </Setter>
     </Style>
 
-
     <Style Selector="controls|FormsMasterDetailPage">
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -123,13 +122,13 @@
                 <controls:FormsContentControl Grid.Column="0" Name="PART_Master"
                           ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding MasterPage}" />
               </Grid>
-              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1"/>
+              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1" />
               <Grid x:Name="PART_GridDetailContent" Grid.Column="2">
                 <controls:FormsContentControl Grid.Column="1" Name="PART_Detail_Content"
                           ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
               </Grid>
             </Grid>
-            
+
           </Border>
         </ControlTemplate>
       </Setter>
@@ -213,7 +212,7 @@
               </ItemsControl.ItemsPanel>
             </ItemsControl>
 
-            <ToggleButton Name="PART_More" Grid.Column="2" >
+            <ToggleButton Name="PART_More" Grid.Column="2" Classes="AppBar">
               <controls:FormsSymbolIcon Symbol="More" FontSize="16" />
             </ToggleButton>
           </Grid>
@@ -276,6 +275,7 @@
         </ControlTemplate>
       </Setter>
     </Style>
+
 
     <Style Selector="controls|FormsCollectionView">
       <Setter Property="Template">
@@ -392,6 +392,19 @@
         </ControlTemplate>
       </Setter>
     </Style>
+
+    <Style Selector="Button.AppBar">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+    
+    <Style Selector="ToggleButton.AppBar">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+    
   </Window.Styles>
 
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
@@ -425,11 +438,11 @@
 
         <Grid>
           <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
-            <Button Name="PART_Hamburger" Focusable="False">
+            <Button Name="PART_Hamburger" Focusable="False" Classes="AppBar">
               <controls:FormsSymbolIcon Symbol="GlobalNavigationButton" FontSize="16"  />
             </Button>
 
-            <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}">
+            <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}" Classes="AppBar">
               <StackPanel Orientation="Horizontal">
                 <controls:FormsSymbolIcon Symbol="ChevronFlipLeftLegacy"  />
                 <TextBlock Margin="5,0,0,0" Text="{Binding BackButtonTitle}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"  />
@@ -450,8 +463,8 @@
         <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
       </Grid>
 
-      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomBar}" />
-      
+      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomBar}"  Background="{Binding TitleBarBackgroundColor}" />
+
     </Grid>
   </Border>
 
