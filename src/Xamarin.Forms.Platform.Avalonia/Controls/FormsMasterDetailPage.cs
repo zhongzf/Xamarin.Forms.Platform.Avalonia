@@ -96,7 +96,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			{
 				frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
 			}
-
 			return frameworkElements;
 		}
 

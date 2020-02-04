@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Xamarin.Forms.Platform.Avalonia.Controls;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
 using AScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class ScrollViewRenderer : ViewRenderer<ScrollView, ScrollViewer>
+	public class ScrollViewRenderer : ViewRenderer<ScrollView, FormsScrollViewer>
 	{
 		VisualElement _currentView;
 		Animatable _animatable;
@@ -33,7 +34,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new ScrollViewer() { 
+					SetNativeControl(new FormsScrollViewer() { 
 						HorizontalScrollBarVisibility = e.NewElement.HorizontalScrollBarVisibility.ToNativeScrollBarVisibility(),
 						VerticalScrollBarVisibility = e.NewElement.VerticalScrollBarVisibility.ToNativeScrollBarVisibility()
 					});
