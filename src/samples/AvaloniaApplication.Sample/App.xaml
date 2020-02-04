@@ -18,6 +18,7 @@
 
     <!-- Default Command Bar Color -->
     <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="CommandBarBackgroundLightColor" Color="#78bae7" />
     <SolidColorBrush x:Key="CommandBarTextColor" Color="White" />
 
     <!-- Default Title Bar Color -->

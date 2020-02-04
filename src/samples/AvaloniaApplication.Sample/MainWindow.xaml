@@ -398,13 +398,25 @@
       <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
       <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
     </Style>
+
+    <Style Selector="Button.AppBar:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
     
     <Style Selector="ToggleButton.AppBar">
       <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
       <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
       <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
     </Style>
-    
+
+    <Style Selector="ToggleButton.AppBar:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+
   </Window.Styles>
 
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
