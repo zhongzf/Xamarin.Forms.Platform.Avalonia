@@ -51,9 +51,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                 _tracker = value;
 
                 if (_tracker != null)
-                {
                     _tracker.Updated += HandleTrackerUpdated;
-                }
             }
         }
 
@@ -116,14 +114,11 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             var controller = (IElementController)oldElement;
             if (controller != null && controller.EffectControlProvider == this)
-            {
                 controller.EffectControlProvider = null;
-            }
+
             controller = element;
             if (controller != null)
-            {
                 controller.EffectControlProvider = this;
-            }
         }
 
         public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
@@ -239,7 +234,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Control == null || Element == null)
                 return;
 
-            Control.Height = Element.Height > 0 ? Element.Height : Double.NaN;
+            Control.Height = Element.Height > 0 ? Element.Height : Element.HeightRequest;
         }
 
         protected virtual void UpdateWidth()
@@ -247,7 +242,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Control == null || Element == null)
                 return;
 
-            Control.Width = Element.Width > 0 ? Element.Width : Double.NaN;
+            Control.Width = Element.Width > 0 ? Element.Width : Element.WidthRequest;
         }
 
         protected virtual void UpdateNativeWidget()

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaApplication.Sample"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormsGallery", "samples\FormsGallery\FormsGallery.csproj", "{63D9EF61-6DF1-4501-9DC7-58A8CC03A34A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.Forms.Sample", "samples\Xamarin.Forms.Sample\Xamarin.Forms.Sample.csproj", "{1408546D-4FCC-43B1-869E-515BAB1E77F5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,22 +71,6 @@ Global
 		{63D9EF61-6DF1-4501-9DC7-58A8CC03A34A}.Release|x64.Build.0 = Release|Any CPU
 		{63D9EF61-6DF1-4501-9DC7-58A8CC03A34A}.Release|x86.ActiveCfg = Release|Any CPU
 		{63D9EF61-6DF1-4501-9DC7-58A8CC03A34A}.Release|x86.Build.0 = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|ARM.Build.0 = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|x64.Build.0 = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Debug|x86.Build.0 = Debug|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|ARM.ActiveCfg = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|ARM.Build.0 = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|x64.ActiveCfg = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|x64.Build.0 = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|x86.ActiveCfg = Release|Any CPU
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,7 +78,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E2CEA07D-FA65-45AE-BE7B-938AE3DA528C} = {84630256-E375-4273-8512-B8669C4EDF34}
 		{63D9EF61-6DF1-4501-9DC7-58A8CC03A34A} = {84630256-E375-4273-8512-B8669C4EDF34}
-		{1408546D-4FCC-43B1-869E-515BAB1E77F5} = {84630256-E375-4273-8512-B8669C4EDF34}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {222AD3A1-08CC-49AA-B7C7-4927A775CB3E}

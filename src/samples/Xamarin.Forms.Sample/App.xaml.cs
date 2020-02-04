@@ -15,8 +15,7 @@ namespace Xamarin.Forms.Sample
             //MainPage = new MainPage();
             //MainPage = new CarouselPageDemo();
             //MainPage = new NavigationPage(new CarouselPageDemo());
-            //MainPage = new MasterDetailPageDemo();
-            MainPage = new StackPanelPage();
+            MainPage = new MasterDetailPageDemo();
         }
 
         protected override void OnStart()

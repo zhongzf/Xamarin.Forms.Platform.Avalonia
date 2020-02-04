@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         private void FormsApplicationPage_LayoutUpdated(object sender, EventArgs e)
         {
-            //this.ContentLoader.OnSizeContentChanged(this, StartupPage);
+            this.ContentLoader.OnSizeContentChanged(this, StartupPage);
         }
 
         public void LoadApplication(Application application)
