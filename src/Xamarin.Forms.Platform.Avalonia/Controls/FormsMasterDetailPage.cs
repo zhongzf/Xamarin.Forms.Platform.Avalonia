@@ -45,7 +45,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsMasterDetailPage()
 		{
-			//this.DefaultStyleKey = typeof(FormsMasterDetailPage);
 		}
 
 		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)

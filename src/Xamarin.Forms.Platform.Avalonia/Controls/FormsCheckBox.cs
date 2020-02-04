@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Media;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ using ACheckBox = Avalonia.Controls.CheckBox;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	public class FormsCheckBox : ACheckBox
+	public class FormsCheckBox : ACheckBox, IStyleable
 	{
 		public static readonly StyledProperty<Brush> TintBrushProperty = AvaloniaProperty.Register<FormsPage, Brush>(nameof(TintBrush));
 
@@ -30,6 +31,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 				checkBox.BorderBrush = b;
 			}
 		}
+
+		Type IStyleable.StyleKey => typeof(ACheckBox);
 
 		public FormsCheckBox()
 		{

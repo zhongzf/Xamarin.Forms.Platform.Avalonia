@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Styling;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -50,7 +52,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		Custom
 	}
 
-	public class FormsTransitioningContentControl : FormsContentControl
+	public class FormsTransitioningContentControl : FormsContentControl, IStyleable
 	{
 		internal const string PresentationGroup = "PresentationStates";
 		internal const string NormalState = "Normal";
@@ -63,7 +65,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//private Storyboard currentTransition;
 
 		//public event RoutedEventHandler TransitionCompleted;
-
+		
 		public const TransitionType DefaultTransitionState = TransitionType.Default;
 
 		//public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(FormsTransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
@@ -106,6 +108,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			get { return (TransitionType)this.GetValue(TransitionProperty); }
 			set { this.SetValue(TransitionProperty, value); }
 		}
+
+		Type IStyleable.StyleKey => typeof(FormsContentControl);
 
 		//public bool RestartTransitionOnContentChange
 		//{
@@ -193,7 +197,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		//public FormsTransitioningContentControl()
 		//{
 		//	this.CustomVisualStates = new ObservableCollection<VisualState>();
-		//	this.DefaultStyleKey = typeof(FormsTransitioningContentControl);
 		//}
 
 		//public override void OnApplyTemplate()

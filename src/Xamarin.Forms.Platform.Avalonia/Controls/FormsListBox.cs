@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsListBox : ListBox
+    public class FormsListBox : ListBox, IStyleable
     {
         public static readonly StyledProperty<object> ItemTemplateSelectorProperty = AvaloniaProperty.Register<FormsListBox, object>(nameof(ItemTemplateSelector));
 
@@ -16,6 +17,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             get { return (object)GetValue(ItemTemplateSelectorProperty); }
             set { SetValue(ItemTemplateSelectorProperty, value); }
         }
+
+        Type IStyleable.StyleKey => typeof(ListBox);
 
         public FormsListBox()
         {

@@ -1,12 +1,14 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
+using System;
 using System.Linq;
 using AButton = Avalonia.Controls.Button;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	public class FormsButton : AButton
+	public class FormsButton : AButton, IStyleable
 	{
 		public static readonly StyledProperty<int> CornerRadiusProperty = AvaloniaProperty.Register<FormsButton, int>(nameof(CornerRadius));
 
@@ -23,6 +25,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 				SetValue(CornerRadiusProperty, value);
 			}
 		}
+
+		Type IStyleable.StyleKey => typeof(AButton);
 
 		public FormsButton()
 		{

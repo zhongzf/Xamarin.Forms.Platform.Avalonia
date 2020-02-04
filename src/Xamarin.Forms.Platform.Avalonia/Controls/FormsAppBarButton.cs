@@ -22,7 +22,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsAppBarButton()
 		{
-			//this.DefaultStyleKey = typeof(FormsAppBarButton);
 		}
 	}
 }

@@ -27,8 +27,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             set { SetValue(ContentLoaderProperty, value); }
         }
 
-        Type StyleKey => typeof(ContentControl);
-
         public FormsContentControl()
         {
             this.LayoutUpdated += OnLayoutUpdated;

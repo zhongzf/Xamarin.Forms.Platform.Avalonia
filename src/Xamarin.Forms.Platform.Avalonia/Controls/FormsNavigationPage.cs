@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsNavigationPage()
 		{
-			//this.DefaultStyleKey = typeof(FormsNavigationPage);
 		}
 
 		public FormsNavigationPage(object root)
@@ -247,9 +247,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		}
 	}
 
-	public class FormsLightNavigationPage : FormsNavigationPage
+	public class FormsLightNavigationPage : FormsNavigationPage, IStyleable
 	{
 		NavigationPage NavigationPage;
+
+		Type IStyleable.StyleKey => typeof(FormsNavigationPage);
 
 		public FormsLightNavigationPage(NavigationPage navigationPage)
 		{

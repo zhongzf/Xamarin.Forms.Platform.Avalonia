@@ -28,7 +28,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsAppBar()
 		{
-			//this.DefaultStyleKey = typeof(FormsAppBar);
 		}
 
 		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)

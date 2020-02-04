@@ -30,7 +30,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public FormsWindowButtonCommands()
 		{
-			//this.DefaultStyleKey = typeof(FormsWindowButtonCommands);
 		}
 
 		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
