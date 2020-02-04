@@ -4,10 +4,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
         xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApplication.Sample.MainWindow"
         Title="AvaloniaApplication.Sample">
-  <Window.Styles>  
+  <Window.Styles>
     <Style Selector="controls|FormsTabbedPage">
       <Setter Property="Background" Value="Transparent" />
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -32,16 +34,17 @@
               </TabControl.ItemTemplate>
               <TabControl.ContentTemplate>
                 <DataTemplate>
-                  <StackPanel></StackPanel>
+                  <Grid>
+                  </Grid>                  
                 </DataTemplate>
               </TabControl.ContentTemplate>
             </TabControl>
-
-            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
-              Transition="Left"
-              ContentLoader="{TemplateBinding ContentLoader}"
-              Source="{TemplateBinding SelectedItem}" />
-
+            
+                    <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+                      Transition="Left"
+                      ContentLoader="{TemplateBinding ContentLoader}"
+                      Source="{TemplateBinding SelectedItem}" />
+            
           </Grid>
         </ControlTemplate>
       </Setter>
@@ -108,18 +111,16 @@
                   VerticalAlignment="{TemplateBinding VerticalAlignment}"
                   Background="{TemplateBinding Background}" >
 
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
-
-              <controls:FormsContentControl Grid.Column="0" Name="PART_Master"
-                        ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding MasterPage}" />
-
-              <controls:FormsContentControl Grid.Column="1" Name="PART_Detail_Content"
-                        ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
-
+            <Grid ColumnDefinitions="300,8,*">
+              <Grid x:Name="PART_GridMaster" Grid.Column="0">
+                <controls:FormsContentControl Grid.Column="0" Name="PART_Master"
+                          ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding MasterPage}" />
+              </Grid>
+              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1"/>
+              <Grid x:Name="PART_GridDetailContent" Grid.Column="2">
+                <controls:FormsContentControl Grid.Column="1" Name="PART_Detail_Content"
+                          ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
+              </Grid>
             </Grid>
           </Border>
         </ControlTemplate>
@@ -267,7 +268,7 @@
         </ControlTemplate>
       </Setter>
     </Style>
-    
+
     <Style Selector="controls|FormsCollectionView">
       <Setter Property="Template">
         <ControlTemplate>
@@ -287,7 +288,7 @@
         </ControlTemplate>
       </Setter>
     </Style>
-    
+
     <Style Selector="controls|FormsSwipeView">
       <Setter Property="Template">
         <ControlTemplate>
@@ -344,47 +345,47 @@
       <Setter Property="Width" Value="500" />
       <Setter Property="TitleTemplate" Value="{DynamicResource TitleDefaultTemplate}" />
       <Setter Property="Template">
-          <ControlTemplate>
-            <Border BorderBrush="{DynamicResource AccentColor}" Background="#FFF2F2F2" BorderThickness="2">
+        <ControlTemplate>
+          <Border BorderBrush="{DynamicResource AccentColor}" Background="#FFF2F2F2" BorderThickness="2">
 
-              <Grid Margin="24">
-                <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto" />
-                  <RowDefinition Height="*" MinHeight="150" />
-                  <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid Margin="24">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="150" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
 
-                <!-- title -->
-                <ContentControl Name="Title"
-                            Content="{TemplateBinding Title}"
-                            ContentTemplate="{TemplateBinding TitleTemplate}">
-                </ContentControl>
+              <!-- title -->
+              <ContentControl Name="Title"
+                          Content="{TemplateBinding Title}"
+                          ContentTemplate="{TemplateBinding TitleTemplate}">
+              </ContentControl>
 
-                <!-- content -->
-                <ContentPresenter Name="Content" Margin="0,20"
-                        Content="{TemplateBinding Content}"
-                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                        Grid.Row="1" >
-                </ContentPresenter>
+              <!-- content -->
+              <ContentPresenter Name="Content" Margin="0,20"
+                      Content="{TemplateBinding Content}"
+                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                      Grid.Row="1" >
+              </ContentPresenter>
 
-                <!-- buttons -->
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                  <Button Name="PART_PrimaryButton" Content="{TemplateBinding PrimaryButtonText}"
-                              Height="50"
-                              MinWidth="140"
-                              Margin="4,0,0,0"
-                              BorderBrush="Transparent"
-                            IsVisible="{TemplateBinding IsPrimaryButtonEnabled}" />
-                  <Button Name="PART_SecondaryButton" Content="{TemplateBinding SecondaryButtonText}"
-                              Height="50"
-                              MinWidth="140"
-                              Margin="4,0,0,0"
-                              BorderBrush="Transparent"
-                            IsVisible="{TemplateBinding IsSecondaryButtonEnabled}" />
-                </StackPanel>
-              </Grid>
-            </Border>
-          </ControlTemplate>
+              <!-- buttons -->
+              <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="PART_PrimaryButton" Content="{TemplateBinding PrimaryButtonText}"
+                            Height="50"
+                            MinWidth="140"
+                            Margin="4,0,0,0"
+                            BorderBrush="Transparent"
+                          IsVisible="{TemplateBinding IsPrimaryButtonEnabled}" />
+                <Button Name="PART_SecondaryButton" Content="{TemplateBinding SecondaryButtonText}"
+                            Height="50"
+                            MinWidth="140"
+                            Margin="4,0,0,0"
+                            BorderBrush="Transparent"
+                          IsVisible="{TemplateBinding IsSecondaryButtonEnabled}" />
+              </StackPanel>
+            </Grid>
+          </Border>
+        </ControlTemplate>
       </Setter>
     </Style>
   </Window.Styles>
@@ -401,7 +402,7 @@
       <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="20" VerticalAlignment="Center"
             IsVisible="{Binding HasBackButtonModal}"
             Background="{DynamicResource CommandBarBackgroundColor}">
-      
+
         <Button Name="PART_Previous_Modal" Focusable="False"
                 IsVisible="{Binding HasBackButtonModal}"
                 HorizontalAlignment="Left">
@@ -423,7 +424,7 @@
       <controls:FormsAppBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
                             IsVisible="{Binding HasNavigationBar}"
                             Foreground="{Binding TitleBarTextColor}">
-        
+
         <Grid>
           <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
             <Button Name="PART_Hamburger" Focusable="False">
@@ -440,7 +441,7 @@
 
           <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"  />
         </Grid>
-        
+
       </controls:FormsAppBar>
 
       <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />

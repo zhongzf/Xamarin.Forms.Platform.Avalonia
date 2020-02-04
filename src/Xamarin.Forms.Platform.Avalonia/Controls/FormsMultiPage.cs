@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
@@ -66,6 +67,12 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
         }
 
+        protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
+        {
+            ContentLoader.OnSizeContentChanged(this, SelectedItem);
+            InvalidateArrange();
+        }
+
         protected virtual void OnLayoutUpdated(object sender, EventArgs e)
         {
             OnContentLoaderLayoutUpdated(this, e);
@@ -75,6 +82,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             if (e.OldValue == e.NewValue) return;
             OnSelectedItemChanged(e.OldValue, e.NewValue);
+
             OnContentLoaderLayoutUpdated(this, e);
         }
 
@@ -85,15 +93,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
         }
 
-        protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
-        {
-        }
-
         protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
         {
             base.OnTemplateApplied(e);
 
-            FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
+            FormsContentControl = this.Find<FormsTransitioningContentControl>("PART_Multi_Content", e);
         }
 
         public override bool GetHasNavigationBar()
