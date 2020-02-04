@@ -42,8 +42,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		public static readonly StyledProperty<bool> HasContentDialogProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasContentDialog));
 		public static readonly StyledProperty<bool> HasModalPageProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasModalPage));
 
-		public static readonly StyledProperty<bool> HasTopBarProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasTopBar));
-		public static readonly StyledProperty<bool> HasBottomBarProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasBottomBar));
+		public static readonly StyledProperty<bool> HasTopAppBarProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasTopAppBar));
+		public static readonly StyledProperty<bool> HasBottomAppBarProperty = AvaloniaProperty.Register<FormsWindow, bool>(nameof(HasBottomAppBar));
 
 		public Brush TitleBarBackgroundColor
 		{
@@ -135,16 +135,16 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			private set { SetValue(HasModalPageProperty, value); }
 		}
 
-		public bool HasTopBar
+		public bool HasTopAppBar
 		{
-			get { return (bool)GetValue(HasTopBarProperty); }
-			private set { SetValue(HasTopBarProperty, value); }
+			get { return (bool)GetValue(HasTopAppBarProperty); }
+			private set { SetValue(HasTopAppBarProperty, value); }
 		}
 
-		public bool HasBottomBar
+		public bool HasBottomAppBar
 		{
-			get { return (bool)GetValue(HasBottomBarProperty); }
-			private set { SetValue(HasBottomBarProperty, value); }
+			get { return (bool)GetValue(HasBottomAppBarProperty); }
+			private set { SetValue(HasBottomAppBarProperty, value); }
 		}
 
 		public FormsWindow()
@@ -264,6 +264,9 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 				topAppBar.PrimaryCommands = page.GetPrimaryTopBarCommands();
 				topAppBar.SecondaryCommands = page.GetSecondaryTopBarCommands();
 				topAppBar.Reset();
+
+				// TODO:
+				HasTopAppBar = false;
 			}
 
 			if (bottomAppBar != null)
@@ -273,7 +276,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 				bottomAppBar.Content = childrens.LastOrDefault(x => x.ContentBottomBar != null)?.ContentBottomBar;
 				bottomAppBar.Reset();
 
-				HasBottomBar = bottomAppBar.PrimaryCommands.Count() > 0 || bottomAppBar.SecondaryCommands.Count() > 0 || bottomAppBar.Content != null;
+				// TODO:
+				HasBottomAppBar = bottomAppBar.PrimaryCommands.Count() > 0 || bottomAppBar.SecondaryCommands.Count() > 0 || bottomAppBar.Content != null;
 			}
 		}
 

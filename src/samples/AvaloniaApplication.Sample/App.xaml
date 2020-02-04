@@ -9,6 +9,413 @@
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+
+    <Style Selector="controls|FormsTabbedPage">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="BarBackgroundColor" Value="{DynamicResource DefaultTabbedBarBackgroundColor}"/>
+      <Setter Property="BarTextColor" Value="{DynamicResource DefaultTabbedBarTextColor}"/>
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container" RowDefinitions="Auto,*">
+
+              <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
+                <TabControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Title}" FontSize="18"></TextBlock>
+                  </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                  <DataTemplate>
+                    <Grid>
+                    </Grid>
+                  </DataTemplate>
+                </TabControl.ContentTemplate>
+              </TabControl>
+
+              <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+                Transition="Left"
+                ContentLoader="{TemplateBinding ContentLoader}"
+                Source="{TemplateBinding SelectedItem}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsCarouselPage">
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+              <Grid VerticalAlignment="Center" Name="PART_ButtonPanel">
+                <RepeatButton Name="PART_NextButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Right" />
+                <RepeatButton Name="PART_PreviousButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Left" />
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsNavigationPage">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
+                ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsMasterDetailPage">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="TitleBarBackgroundColor" Value="{DynamicResource DefaultTitleBarBackgroundColor}"/>
+      <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                  VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                  Background="{TemplateBinding Background}" >
+
+            <Grid ColumnDefinitions="300,8,*">
+              <Grid x:Name="PART_GridMaster" Grid.Column="0">
+                <controls:FormsContentControl Grid.Column="0" Name="PART_Master"
+                          ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding MasterPage}" />
+              </Grid>
+              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1" />
+              <Grid x:Name="PART_GridDetailContent" Grid.Column="2">
+                <controls:FormsContentControl Grid.Column="1" Name="PART_Detail_Content"
+                          ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
+              </Grid>
+            </Grid>
+
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+
+    <Style Selector="controls|FormsSymbolIcon">
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="FontSize" Value="22"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <TextBlock Text="{Binding Symbol, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SymbolToValue}}"
+                     FontSize="{TemplateBinding FontSize}"
+                     FontFamily="Segoe MDL2 Assets"/>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsPathIcon">
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="Height" Value="24"/>
+      <Setter Property="Width" Value="24"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Viewbox>
+            <Path Data="{Binding Data, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+              Fill="{TemplateBinding Foreground}"
+              Stretch="Fill" />
+          </Viewbox>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsBitmapIcon">
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="Height" Value="22.4"/>
+      <Setter Property="Width" Value="22.4"/>
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Image Source="{Binding UriSource, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsAppBar">
+      <Setter Property="Background" Value="{DynamicResource AccentColor}"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+      <Setter Property="VerticalAlignment" Value="Stretch"/>
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+      <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Height" Value="32" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid  VerticalAlignment="Stretch" Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter Grid.ColumnSpan="3"
+                            Name="PART_ContentPresenter"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+            <ItemsControl Name="PART_Command" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Items="{TemplateBinding PrimaryCommands}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal"  Focusable="False" UseLayoutRounding="True"/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <ToggleButton Name="PART_More" Grid.Column="2" Classes="AppBar" IsVisible="{Binding HasTopAppBar}">
+              <controls:FormsSymbolIcon Symbol="More" FontSize="16" />
+            </ToggleButton>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsAppBarButton" >
+      <Setter Property="Width"
+              Value="72" />
+      <Setter Property="Padding"
+              Value="8, 5" />
+      <Setter Property="Background"
+              Value="{DynamicResource TransparentWhiteBrush}" />
+      <Setter Property="HorizontalContentAlignment"
+              Value="Center" />
+      <Setter Property="VerticalContentAlignment"
+              Value="Center" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid Background="{TemplateBinding Background}">
+            <StackPanel VerticalAlignment="Center" >
+              <ContentPresenter Content="{TemplateBinding Icon}" HorizontalAlignment="Center" />
+              <TextBlock Margin="0,6,0,0" FontFamily="Calibri"  FontSize="12"
+                     Text="{TemplateBinding Label}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            </StackPanel>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsWindowButtonCommands">
+      <Setter Property="VerticalAlignment"
+              Value="Center" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <StackPanel Orientation="Horizontal">
+            <Button x:Name="PART_Min"
+                    Focusable="False"
+                    IsEnabled="True">
+              <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+            </Button>
+            <Button x:Name="PART_Max"
+                    Focusable="False"
+                    IsEnabled="True">
+              <!-- normal state -->
+              <Path x:Name="PART_MaxPath"
+                    Width="10"
+                    Height="10"
+                    Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
+                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+            </Button>
+            <Button x:Name="PART_Close"
+                    Focusable="False">
+              <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
+                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+            </Button>
+          </StackPanel>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+
+    <Style Selector="controls|FormsCollectionView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsSwipeView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsCarouselView">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+                        Transition="Left"
+                        ContentLoader="{TemplateBinding ContentLoader}"
+                        Source="{TemplateBinding SelectedItem}" />
+
+              <Grid VerticalAlignment="Center" Name="PART_ButtonPanel">
+                <RepeatButton Name="PART_NextButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Right" />
+                <RepeatButton Name="PART_PreviousButton"
+                              FontFamily="Segoe UI Symbol"
+                              Content=""
+                              FontSize="18"
+                              HorizontalAlignment="Left" />
+              </Grid>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="controls|FormsContentDialog">
+      <Setter Property="Width" Value="500" />
+      <Setter Property="TitleTemplate" Value="{DynamicResource TitleDefaultTemplate}" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border BorderBrush="{DynamicResource AccentColor}" Background="#FFF2F2F2" BorderThickness="2">
+            <Grid Margin="24">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="150" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <!-- title -->
+              <ContentControl Name="Title"
+                          Content="{TemplateBinding Title}"
+                          ContentTemplate="{TemplateBinding TitleTemplate}">
+              </ContentControl>
+
+              <!-- content -->
+              <ContentPresenter Name="Content" Margin="0,20"
+                      Content="{TemplateBinding Content}"
+                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                      Grid.Row="1" >
+              </ContentPresenter>
+
+              <!-- buttons -->
+              <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="PART_PrimaryButton" Content="{TemplateBinding PrimaryButtonText}"
+                            Height="50"
+                            MinWidth="140"
+                            Margin="4,0,0,0"
+                            BorderBrush="Transparent"
+                          IsVisible="{TemplateBinding IsPrimaryButtonEnabled}" />
+                <Button Name="PART_SecondaryButton" Content="{TemplateBinding SecondaryButtonText}"
+                            Height="50"
+                            MinWidth="140"
+                            Margin="4,0,0,0"
+                            BorderBrush="Transparent"
+                          IsVisible="{TemplateBinding IsSecondaryButtonEnabled}" />
+              </StackPanel>
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="Button.AppBar">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+
+    <Style Selector="Button.AppBar:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+
+    <Style Selector="ToggleButton.AppBar">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
+
+    <Style Selector="ToggleButton.AppBar:pointerover">
+      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
+      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+    </Style>
   </Application.Styles>
 
   <Application.Resources>

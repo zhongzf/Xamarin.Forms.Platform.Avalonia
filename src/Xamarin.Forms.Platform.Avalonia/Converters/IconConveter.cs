@@ -9,7 +9,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 {
 	public class IconConveter : global::Avalonia.Data.Converters.IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public object Convert(object value, Type targetType = null, object parameter = null, CultureInfo culture = null)
 		{
 			if (value is FileImageSource imageSource)
 			{

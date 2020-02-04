@@ -2,6 +2,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reactive;
+using System.Reactive.Subjects;
+using System.Reactive.Linq;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 using Xamarin.Forms.Platform.Avalonia.Converters;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
@@ -92,16 +95,17 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			foreach (var item in Element.ToolbarItems)
 			{
-				var appBar = new FormsAppBarButton() { DataContext = item };
-
 				var iconBinding = new global::Avalonia.Data.Binding(nameof(item.IconImageSource))
 				{
 					Converter = new IconConveter()
 				};
 
-				// TODO:
-				//appBar.SetBinding(FormsAppBarButton.IconProperty, iconBinding);
-				//appBar.SetBinding(FormsAppBarButton.LabelProperty, nameof(item.Text));
+				var appBar = new FormsAppBarButton() 
+				{ 
+					DataContext = item, 
+					[!FormsAppBarButton.IconProperty] = iconBinding,
+					[!FormsAppBarButton.LabelProperty] = new global::Avalonia.Data.Binding(nameof(item.Text)),
+				};
 
 				appBar.Click += (sender, e) =>
 				{
@@ -112,9 +116,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 				};
 
 				if (item.Order == ToolbarItemOrder.Default || item.Order == ToolbarItemOrder.Primary)
+				{
 					Control.PrimaryTopBarCommands.Add(appBar);
+				}
 				else
+				{
 					Control.SecondaryTopBarCommands.Add(appBar);
+				}
 			}
 		}
 
