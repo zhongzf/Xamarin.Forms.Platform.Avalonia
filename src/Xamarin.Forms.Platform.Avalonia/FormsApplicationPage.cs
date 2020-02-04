@@ -27,7 +27,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         private void FormsApplicationPage_LayoutUpdated(object sender, EventArgs e)
         {
-        }
+		}
 
         public void LoadApplication(Application application)
         {

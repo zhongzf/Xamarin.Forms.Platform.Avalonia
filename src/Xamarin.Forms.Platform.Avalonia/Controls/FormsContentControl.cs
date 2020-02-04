@@ -32,7 +32,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         public FormsContentControl()
         {
             this.LayoutUpdated += OnLayoutUpdated;
-            ContentLoaderProperty.Changed.AddClassHandler<FormsContentControl>((x, e) => x.OnContentLoaderChanged(e));
         }
 
         protected virtual void OnLayoutUpdated(object sender, EventArgs e)
@@ -59,6 +58,14 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if(e.Property == SourceProperty)
             {
                 OnSourceChanged(e);
+            }
+            if(e.Property == ContentLoaderProperty)
+            {
+                OnContentLoaderChanged(e);
+            }
+            if(e.Property == ContentProperty)
+            {
+                InvalidateMeasure();
             }
         }
 
