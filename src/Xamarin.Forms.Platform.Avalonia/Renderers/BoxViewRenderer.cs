@@ -59,6 +59,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		{
 			Color color = Element.Color != Color.Default ? Element.Color : Element.BackgroundColor;
 			_border.UpdateDependencyColor(Border.BackgroundProperty, color);
+			Control.InvalidateMeasure();
 		}
 
 		void UpdateCornerRadius()

@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
@@ -10,350 +11,369 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public abstract class VisualElementTracker : IDisposable
-	{
-		public abstract void Dispose();
+    public abstract class VisualElementTracker : IDisposable
+    {
+        public abstract void Dispose();
 
-		public event EventHandler Updated;
+        public event EventHandler Updated;
 
-		protected void OnUpdated()
-		{
-			Updated?.Invoke(this, EventArgs.Empty);
-		}
-	}
+        protected void OnUpdated()
+        {
+            Updated?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
-	public class VisualElementTracker<TElement, TNativeElement> : VisualElementTracker where TElement : VisualElement where TNativeElement : Control
-	{
-		bool _disposed;
-		TNativeElement _control;
-		TElement _element;
+    public class VisualElementTracker<TElement, TNativeElement> : VisualElementTracker where TElement : VisualElement where TNativeElement : Control
+    {
+        bool _disposed;
+        TNativeElement _control;
+        TElement _element;
 
-		bool _invalidateArrangeNeeded;
-		bool _isPanning;
+        bool _invalidateArrangeNeeded;
+        bool _isPanning;
 #pragma warning disable 0414 // The private field 'field' is assigned but its value is never used
-		bool _isPinching;
+        bool _isPinching;
 #pragma warning restore 0414
 
-		bool _touchFrameReportedEventSet;
-		int _touchPoints = 1;
+        bool _touchFrameReportedEventSet;
+        int _touchPoints = 1;
 
-		public TNativeElement Control
-		{
-			get { return _control; }
-			set
-			{
-				if (_control == value)
-					return;
+        public TNativeElement Control
+        {
+            get { return _control; }
+            set
+            {
+                if (_control == value)
+                    return;
 
-				if (_control != null)
-				{
-					//_control.MouseLeftButtonUp -= MouseLeftButtonUp;
-					_control.PointerReleased -= Control_PointerReleased;
-					//_control.ManipulationDelta -= OnManipulationDelta;
-					//_control.ManipulationCompleted -= OnManipulationCompleted;
-				}
+                if (_control != null)
+                {
+                    _control.PointerReleased -= OnControl_PointerReleased;
+                    _control.PointerPressed -= OnControl_PointerPressed;
+                    _control.PointerCaptureLost -= OnControl_PointerCaptureLost;
+                    _control.PointerMoved -= OnControl_PointerMoved;
+                }
 
-				_control = value;
+                _control = value;
 
-				if (_control != null)
-				{
-					//_control.MouseLeftButtonUp += MouseLeftButtonUp;
-					_control.PointerReleased += Control_PointerReleased;
-					//_control.ManipulationDelta += OnManipulationDelta;
-					//_control.ManipulationCompleted += OnManipulationCompleted;
-				}
-				UpdateNativeControl();
-			}
-		}
+                if (_control != null)
+                {
+                    _control.PointerReleased += OnControl_PointerReleased;
+                    _control.PointerPressed += OnControl_PointerPressed;
+                    _control.PointerCaptureLost += OnControl_PointerCaptureLost;
+                    _control.PointerMoved += OnControl_PointerMoved;
+                }
+                UpdateNativeControl();
+            }
+        }
 
-		public TElement Element
-		{
-			get { return _element; }
-			set
-			{
-				if (_element == value)
-					return;
+        private void OnControl_PointerReleased(object sender, global::Avalonia.Input.PointerReleasedEventArgs e)
+        {
+            MouseLeftButtonUp(sender, new MouseButtonEventArgs(e));
+        }
 
-				if (_element != null)
-				{
-					_element.BatchCommitted -= HandleRedrawNeeded;
-					_element.PropertyChanged -= HandlePropertyChanged;
-				}
+        private void OnControl_PointerPressed(object sender, global::Avalonia.Input.PointerPressedEventArgs e)
+        {
+            OnManipulationDelta(sender, e);
+        }
 
-				_element = value;
+        private void OnControl_PointerCaptureLost(object sender, global::Avalonia.Input.PointerCaptureLostEventArgs e)
+        {
+            OnManipulationCompleted(sender, e);
+        }
 
-				if (_element != null)
-				{
-					_element.BatchCommitted += HandleRedrawNeeded;
-					_element.PropertyChanged += HandlePropertyChanged;
-				}
+        private void OnControl_PointerMoved(object sender, PointerEventArgs e)
+        {
+            Touch_FrameReported(sender, e);
+        }
 
-				UpdateNativeControl();
-			}
-		}
+        public TElement Element
+        {
+            get { return _element; }
+            set
+            {
+                if (_element == value)
+                    return;
 
-		private void Control_PointerReleased(object sender, global::Avalonia.Input.PointerReleasedEventArgs e)
-		{
-			MouseLeftButtonUp(sender, new MouseButtonEventArgs(e));
-		}
+                if (_element != null)
+                {
+                    _element.BatchCommitted -= HandleRedrawNeeded;
+                    _element.PropertyChanged -= HandlePropertyChanged;
+                }
 
-		private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			var fe = (sender as Control);
-			var vr = (sender as DefaultViewRenderer)?.Element;
+                _element = value;
 
-			if ((fe != null && !fe.IsEnabled) || (vr != null && !vr.IsEnabled))
-				return;
+                if (_element != null)
+                {
+                    _element.BatchCommitted += HandleRedrawNeeded;
+                    _element.PropertyChanged += HandlePropertyChanged;
+                }
 
-			e.Handled = ElementOnTap(e.ClickCount, e.GetPosition(fe));
-		}
+                UpdateNativeControl();
+            }
+        }
 
-		protected virtual void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if (Element.Batched)
-			{
-				if (e.PropertyName == VisualElement.XProperty.PropertyName ||
-					e.PropertyName == VisualElement.YProperty.PropertyName ||
-					e.PropertyName == VisualElement.WidthProperty.PropertyName ||
-					e.PropertyName == VisualElement.HeightProperty.PropertyName)
-					_invalidateArrangeNeeded = true;
-				return;
-			}
+        protected virtual void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (Element.Batched)
+            {
+                if (e.PropertyName == VisualElement.XProperty.PropertyName ||
+                    e.PropertyName == VisualElement.YProperty.PropertyName ||
+                    e.PropertyName == VisualElement.WidthProperty.PropertyName ||
+                    e.PropertyName == VisualElement.HeightProperty.PropertyName)
+                    _invalidateArrangeNeeded = true;
+                return;
+            }
 
-			if (e.PropertyName == VisualElement.XProperty.PropertyName ||
-				e.PropertyName == VisualElement.YProperty.PropertyName ||
-				e.PropertyName == VisualElement.WidthProperty.PropertyName ||
-				e.PropertyName == VisualElement.HeightProperty.PropertyName)
-			{
-				MaybeInvalidate();
-			}
-			else if (e.PropertyName == VisualElement.AnchorXProperty.PropertyName ||
-				e.PropertyName == VisualElement.AnchorYProperty.PropertyName ||
-				e.PropertyName == VisualElement.ScaleProperty.PropertyName ||
-				e.PropertyName == VisualElement.TranslationXProperty.PropertyName ||
-				e.PropertyName == VisualElement.TranslationYProperty.PropertyName ||
-				e.PropertyName == VisualElement.RotationProperty.PropertyName ||
-				e.PropertyName == VisualElement.RotationXProperty.PropertyName ||
-				e.PropertyName == VisualElement.RotationYProperty.PropertyName)
-			{
-				UpdateScaleAndTranslateAndRotation();
-			}
-			else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
-				UpdateVisibility();
-			else if (e.PropertyName == VisualElement.OpacityProperty.PropertyName)
-				UpdateOpacity();
-			else if (e.PropertyName == VisualElement.InputTransparentProperty.PropertyName)
-				UpdateInputTransparent();
-		}
+            if (e.PropertyName == VisualElement.XProperty.PropertyName ||
+                e.PropertyName == VisualElement.YProperty.PropertyName ||
+                e.PropertyName == VisualElement.WidthProperty.PropertyName ||
+                e.PropertyName == VisualElement.HeightProperty.PropertyName)
+            {
+                MaybeInvalidate();
+            }
+            else if (e.PropertyName == VisualElement.AnchorXProperty.PropertyName ||
+                e.PropertyName == VisualElement.AnchorYProperty.PropertyName ||
+                e.PropertyName == VisualElement.ScaleProperty.PropertyName ||
+                e.PropertyName == VisualElement.TranslationXProperty.PropertyName ||
+                e.PropertyName == VisualElement.TranslationYProperty.PropertyName ||
+                e.PropertyName == VisualElement.RotationProperty.PropertyName ||
+                e.PropertyName == VisualElement.RotationXProperty.PropertyName ||
+                e.PropertyName == VisualElement.RotationYProperty.PropertyName)
+            {
+                UpdateScaleAndTranslateAndRotation();
+            }
+            else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
+                UpdateVisibility();
+            else if (e.PropertyName == VisualElement.OpacityProperty.PropertyName)
+                UpdateOpacity();
+            else if (e.PropertyName == VisualElement.InputTransparentProperty.PropertyName)
+                UpdateInputTransparent();
+        }
 
-		protected virtual void UpdateNativeControl()
-		{
-			if (Element == null || Control == null)
-				return;
+        protected virtual void UpdateNativeControl()
+        {
+            if (Element == null || Control == null)
+                return;
 
-			UpdateOpacity();
-			UpdateScaleAndTranslateAndRotation();
-			UpdateInputTransparent();
-			UpdateVisibility();
+            UpdateOpacity();
+            UpdateScaleAndTranslateAndRotation();
+            UpdateInputTransparent();
+            UpdateVisibility();
 
-			if (_invalidateArrangeNeeded)
-			{
-				MaybeInvalidate();
-			}
-			_invalidateArrangeNeeded = false;
+            if (_invalidateArrangeNeeded)
+            {
+                MaybeInvalidate();
+            }
+            _invalidateArrangeNeeded = false;
 
-			UpdateTouchFrameReportedEvent();
+            UpdateTouchFrameReportedEvent();
 
-			OnUpdated();
-		}
+            OnUpdated();
+        }
 
-		bool ElementOnTap(int numberOfTapsRequired, global::Avalonia.Point tapPosition)
-		{
-			var view = Element as View;
-			if (view == null)
-				return false;
+        private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var fe = (sender as Control);
+            var vr = (sender as DefaultViewRenderer)?.Element;
 
-			var handled = false;
+            if ((fe != null && !fe.IsEnabled) || (vr != null && !vr.IsEnabled))
+                return;
 
-			var children = (view as IGestureController)?.GetChildElements(new Point(tapPosition.X, tapPosition.Y));
+            e.Handled = ElementOnTap(e.ClickCount, e.GetPosition(fe));
+        }
 
-			if (children != null)
-				foreach (var recognizer in children.GetChildGesturesFor<TapGestureRecognizer>().Where(g => g.NumberOfTapsRequired == numberOfTapsRequired))
-				{
-					recognizer.SendTapped(view);
-					handled = true;
-				}
+        bool ElementOnTap(int numberOfTapsRequired, global::Avalonia.Point tapPosition)
+        {
+            var view = Element as View;
+            if (view == null)
+                return false;
 
-			if (handled)
-				return handled;
+            var handled = false;
 
-			foreach (var gestureRecognizer in
-				view.GestureRecognizers.OfType<TapGestureRecognizer>().Where(g => g.NumberOfTapsRequired == numberOfTapsRequired))
-			{
-				gestureRecognizer.SendTapped(view);
-				handled = true;
-			}
-			return handled;
-		}
+            var children = (view as IGestureController)?.GetChildElements(new Point(tapPosition.X, tapPosition.Y));
 
-		//void HandlePan(ManipulationDeltaEventArgs e, View view)
-		//{
-		//	foreach (PanGestureRecognizer recognizer in
-		//		view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Where(g => g.TouchPoints == _touchPoints))
-		//	{
-		//		if (!_isPanning)
-		//			((IPanGestureController)recognizer).SendPanStarted(view, Application.Current.PanGestureId);
+            if (children != null)
+            {
+                foreach (var recognizer in children.GetChildGesturesFor<TapGestureRecognizer>().Where(g => g.NumberOfTapsRequired == numberOfTapsRequired))
+                {
+                    recognizer.SendTapped(view);
+                    handled = true;
+                }
+            }
 
-		//		double totalX = 0;
-		//		double totalY = 0;
+            if (handled)
+                return handled;
 
-		//		((IPanGestureController)recognizer).SendPan(view, totalX, totalY, Application.Current.PanGestureId);
-		//		_isPanning = true;
-		//	}
-		//}
+            foreach (var gestureRecognizer in
+                view.GestureRecognizers.OfType<TapGestureRecognizer>().Where(g => g.NumberOfTapsRequired == numberOfTapsRequired))
+            {
+                gestureRecognizer.SendTapped(view);
+                handled = true;
+            }
+            return handled;
+        }
 
-		void HandleRedrawNeeded(object sender, EventArgs e)
-		{
-			UpdateNativeControl();
-		}
+        void HandlePan(global::Avalonia.Input.PointerPressedEventArgs e, View view)
+        {
+            foreach (PanGestureRecognizer recognizer in
+                view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Where(g => g.TouchPoints == _touchPoints))
+            {
+                if (!_isPanning)
+                {
+                    ((IPanGestureController)recognizer).SendPanStarted(view, Application.Current.PanGestureId);
+                }
 
-		//void OnManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-		//{
-		//	var view = Element as View;
-		//	if (view == null)
-		//		return;
+                double totalX = 0;
+                double totalY = 0;
 
-		//	IEnumerable pinchGestures = view.GestureRecognizers.GetGesturesFor<PinchGestureRecognizer>();
-		//	foreach (var recognizer in pinchGestures)
-		//		((IPinchGestureController)recognizer).SendPinchEnded(view);
-		//	_isPinching = false;
+                ((IPanGestureController)recognizer).SendPan(view, totalX, totalY, Application.Current.PanGestureId);
+                _isPanning = true;
+            }
+        }
 
-		//	IEnumerable<PanGestureRecognizer> panGestures = view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Where(g => g.TouchPoints == _touchPoints);
-		//	foreach (PanGestureRecognizer recognizer in panGestures)
-		//		((IPanGestureController)recognizer).SendPanCompleted(view, Application.Current.PanGestureId);
-		//	Application.Current.PanGestureId++;
-		//	_isPanning = false;
-		//}
+        void OnManipulationCompleted(object sender, PointerCaptureLostEventArgs e)
+        {
+            var view = Element as View;
+            if (view == null)
+                return;
 
-		//void OnManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-		//{
-		//	var view = Element as View;
-		//	if (view == null)
-		//		return;
+            var pinchGestures = view.GestureRecognizers.GetGesturesFor<PinchGestureRecognizer>();
+            foreach (var recognizer in pinchGestures)
+            {
+                ((IPinchGestureController)recognizer).SendPinchEnded(view);
+            }
+            _isPinching = false;
 
-		//	HandlePan(e, view);
-		//}
+            IEnumerable<PanGestureRecognizer> panGestures = view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Where(g => g.TouchPoints == _touchPoints);
+            foreach (PanGestureRecognizer recognizer in panGestures)
+            {
+                ((IPanGestureController)recognizer).SendPanCompleted(view, Application.Current.PanGestureId);
+            }
+            Application.Current.PanGestureId++;
+            _isPanning = false;
+        }
 
-		//void Touch_FrameReported(object sender, TouchFrameEventArgs e)
-		//{
-		//	_touchPoints = e.GetTouchPoints(Control).Count;
-		//}
+        void OnManipulationDelta(object sender, global::Avalonia.Input.PointerPressedEventArgs e)
+        {
+            var view = Element as View;
+            if (view == null)
+                return;
 
-		void MaybeInvalidate()
-		{
-			if (Element.IsInNativeLayout)
-				return;
-			var parent = (Control)Control.Parent;
-			parent?.InvalidateMeasure();
-			Control.InvalidateMeasure();
-		}
+            HandlePan(e, view);
+        }
 
-		void UpdateInputTransparent()
-		{
-			Control.IsHitTestVisible = !Element.InputTransparent;
-		}
+        void Touch_FrameReported(object sender, PointerEventArgs e)
+        {
+            _touchPoints = e.Pointer.Type == PointerType.Touch ? 1 : 0;
+        }
 
-		void UpdateOpacity()
-		{
-			Control.Opacity = Element.Opacity;
-		}
+        void HandleRedrawNeeded(object sender, EventArgs e)
+        {
+            UpdateNativeControl();
+        }
 
-		void UpdateScaleAndTranslateAndRotation()
-		{
-			// TODO : Implement plane projection - Don't exist in WPF framework :( 
-			double anchorX = Element.AnchorX;
-			double anchorY = Element.AnchorY;
-			double rotationX = Element.RotationX;
-			double rotationY = Element.RotationY;
-			double rotation = Element.Rotation;
-			double translationX = Element.TranslationX;
-			double translationY = Element.TranslationY;
-			double scale = Element.Scale;
+        void MaybeInvalidate()
+        {
+            if (Element.IsInNativeLayout)
+                return;
+            var parent = (Control)Control.Parent;
+            parent?.InvalidateMeasure();
+            Control.InvalidateMeasure();
+        }
 
-			double offsetX = scale == 0 ? 0 : translationX / scale;
-			double offsetY = scale == 0 ? 0 : translationY / scale;
+        void UpdateInputTransparent()
+        {
+            Control.IsHitTestVisible = !Element.InputTransparent;
+        }
 
-			Control.RenderTransformOrigin = new RelativePoint(anchorX, anchorY, RelativeUnit.Relative);
-			Control.RenderTransform = new TransformGroup()
-			{
-				Children = new Transforms()
-				{
-					new RotateTransform()
-					{
-						//CenterX = anchorX,
-						//CenterY = anchorY,
+        void UpdateOpacity()
+        {
+            Control.Opacity = Element.Opacity;
+        }
+
+        void UpdateScaleAndTranslateAndRotation()
+        {
+            // TODO : Implement plane projection - Don't exist in WPF framework :( 
+            double anchorX = Element.AnchorX;
+            double anchorY = Element.AnchorY;
+            double rotationX = Element.RotationX;
+            double rotationY = Element.RotationY;
+            double rotation = Element.Rotation;
+            double translationX = Element.TranslationX;
+            double translationY = Element.TranslationY;
+            double scale = Element.Scale;
+
+            double offsetX = scale == 0 ? 0 : translationX / scale;
+            double offsetY = scale == 0 ? 0 : translationY / scale;
+
+            Control.RenderTransformOrigin = new RelativePoint(anchorX, anchorY, RelativeUnit.Relative);
+            Control.RenderTransform = new TransformGroup()
+            {
+                Children = new Transforms()
+                {
+                    new RotateTransform()
+                    {
 						Angle = Element.Rotation
-					},
-					new TranslateTransform()
-					{
-						X = offsetX,
-						Y = offsetY
-					},
-					new ScaleTransform
-					{
-						ScaleX = scale,
-						ScaleY = scale
-					}
-				}
-			};
-		}
+                    },
+                    new TranslateTransform()
+                    {
+                        X = offsetX,
+                        Y = offsetY
+                    },
+                    new ScaleTransform
+                    {
+                        ScaleX = scale,
+                        ScaleY = scale
+                    }
+                }
+            };
+        }
 
-		void UpdateTouchFrameReportedEvent()
-		{
-			if (_touchFrameReportedEventSet)
-				return;
+        void UpdateTouchFrameReportedEvent()
+        {
+            if (_touchFrameReportedEventSet)
+                return;
 
-			//Touch.FrameReported -= Touch_FrameReported;
-			_touchFrameReportedEventSet = false;
+            _touchFrameReportedEventSet = false;
 
-			var view = Element as View;
-			if (view == null)
-				return;
+            var view = Element as View;
+            if (view == null)
+                return;
 
-			if (!view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Any(g => g.TouchPoints > 1))
-				return;
+            if (!view.GestureRecognizers.GetGesturesFor<PanGestureRecognizer>().Any(g => g.TouchPoints > 1))
+                return;
 
-			//Touch.FrameReported += Touch_FrameReported;
-			_touchFrameReportedEventSet = true;
-		}
+            _touchFrameReportedEventSet = true;
+        }
 
-		void UpdateVisibility()
-		{
-			Control.IsVisible = Element.IsVisible;
-		}
+        void UpdateVisibility()
+        {
+            Control.IsVisible = Element.IsVisible;
+        }
 
-		public override void Dispose()
-		{
-			if (_disposed)
-				return;
-			_disposed = true;
+        public override void Dispose()
+        {
+            if (_disposed)
+                return;
+            _disposed = true;
 
-			if (_control != null)
-			{
-				//_control.MouseLeftButtonUp -= MouseLeftButtonUp;
-				_control.PointerReleased += Control_PointerReleased;
-				//_control.ManipulationDelta -= OnManipulationDelta;
-				//_control.ManipulationCompleted -= OnManipulationCompleted;
-			}
+            if (_control != null)
+            {
+                //_control.MouseLeftButtonUp -= MouseLeftButtonUp;
+                _control.PointerReleased += OnControl_PointerReleased;
+                //_control.ManipulationDelta -= OnManipulationDelta;
+                //_control.ManipulationCompleted -= OnManipulationCompleted;
+            }
 
-			if (_element != null)
-			{
-				_element.BatchCommitted -= HandleRedrawNeeded;
-				_element.PropertyChanged -= HandlePropertyChanged;
-			}
+            if (_element != null)
+            {
+                _element.BatchCommitted -= HandleRedrawNeeded;
+                _element.PropertyChanged -= HandlePropertyChanged;
+            }
 
-			Element = null;
-			Control = null;
-		}
-	}
+            Element = null;
+            Control = null;
+        }
+    }
 }
