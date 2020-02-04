@@ -428,8 +428,6 @@
           </ControlTemplate>
       </Setter>
     </Style>
-
-
   </Window.Styles>
 
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >

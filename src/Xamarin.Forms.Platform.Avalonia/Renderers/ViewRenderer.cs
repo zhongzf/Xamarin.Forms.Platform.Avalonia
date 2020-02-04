@@ -51,7 +51,9 @@ namespace Xamarin.Forms.Platform.Avalonia
                 _tracker = value;
 
                 if (_tracker != null)
+                {
                     _tracker.Updated += HandleTrackerUpdated;
+                }
             }
         }
 
@@ -59,7 +61,9 @@ namespace Xamarin.Forms.Platform.Avalonia
         {
             PlatformEffect platformEffect = effect as PlatformEffect;
             if (platformEffect != null)
+            {
                 OnRegisterEffect(platformEffect);
+            }
         }
 
         VisualElement IVisualElementRenderer.Element
@@ -114,11 +118,15 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             var controller = (IElementController)oldElement;
             if (controller != null && controller.EffectControlProvider == this)
+            {
                 controller.EffectControlProvider = null;
+            }
 
             controller = element;
             if (controller != null)
+            {
                 controller.EffectControlProvider = this;
+            }
         }
 
         public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
@@ -127,7 +135,9 @@ namespace Xamarin.Forms.Platform.Avalonia
         {
             var args = new VisualElementChangedEventArgs(e.OldElement, e.NewElement);
             for (var i = 0; i < _elementChangedHandlers.Count; i++)
+            {
                 _elementChangedHandlers[i](this, args);
+            }
 
             ElementChanged?.Invoke(this, e);
         }
