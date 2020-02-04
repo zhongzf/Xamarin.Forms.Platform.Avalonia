@@ -20,28 +20,32 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <Grid Name="PART_Container" RowDefinitions="Auto,*">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container" RowDefinitions="Auto,*">
 
-            <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
-              <TabControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding Title}" FontSize="18"></TextBlock>
-                </DataTemplate>
-              </TabControl.ItemTemplate>
-              <TabControl.ContentTemplate>
-                <DataTemplate>
-                  <Grid>
-                  </Grid>
-                </DataTemplate>
-              </TabControl.ContentTemplate>
-            </TabControl>
+              <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
+                <TabControl.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding Title}" FontSize="18"></TextBlock>
+                  </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                  <DataTemplate>
+                    <Grid>
+                    </Grid>
+                  </DataTemplate>
+                </TabControl.ContentTemplate>
+              </TabControl>
 
-            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
-              Transition="Left"
-              ContentLoader="{TemplateBinding ContentLoader}"
-              Source="{TemplateBinding SelectedItem}" />
+              <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+                Transition="Left"
+                ContentLoader="{TemplateBinding ContentLoader}"
+                Source="{TemplateBinding SelectedItem}" />
 
-          </Grid>
+            </Grid>
+          </Border>
         </ControlTemplate>
       </Setter>
     </Style>
@@ -51,6 +55,9 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
               <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
@@ -71,6 +78,7 @@
                               HorizontalAlignment="Left" />
               </Grid>
             </Grid>
+          </Border>
         </ControlTemplate>
       </Setter>
     </Style>
@@ -83,8 +91,16 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
-              ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid Name="PART_Container">
+
+              <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
+                ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
+
+            </Grid>
+          </Border>
         </ControlTemplate>
       </Setter>
     </Style>
@@ -113,6 +129,7 @@
                           ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
               </Grid>
             </Grid>
+            
           </Border>
         </ControlTemplate>
       </Setter>
@@ -266,8 +283,7 @@
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid ClipToBounds="True"
-                  Name="PART_Container">
+            <Grid Name="PART_Container">
 
               <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
@@ -286,8 +302,7 @@
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid ClipToBounds="True"
-                  Name="PART_Container">
+            <Grid Name="PART_Container">
 
               <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
@@ -306,8 +321,7 @@
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid ClipToBounds="True"
-                  Name="PART_Container">
+            <Grid Name="PART_Container">
 
               <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
@@ -338,7 +352,6 @@
       <Setter Property="Template">
         <ControlTemplate>
           <Border BorderBrush="{DynamicResource AccentColor}" Background="#FFF2F2F2" BorderThickness="2">
-
             <Grid Margin="24">
               <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -382,13 +395,7 @@
   </Window.Styles>
 
   <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition  />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
       <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="20" VerticalAlignment="Center"
             IsVisible="{Binding HasBackButtonModal}"
@@ -444,6 +451,7 @@
       </Grid>
 
       <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomBar}" />
+      
     </Grid>
   </Border>
 
