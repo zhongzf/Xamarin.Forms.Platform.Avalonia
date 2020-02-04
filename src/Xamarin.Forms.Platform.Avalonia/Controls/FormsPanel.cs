@@ -34,20 +34,20 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
                 if (child == null)
                     continue;
 
-                IVisualElementRenderer renderer = Platform.GetRenderer(child);
-                if (renderer == null)
+                var childRenderer = Platform.GetRenderer(child);
+                if (childRenderer == null)
                     continue;
-                Rectangle bounds = child.Bounds;
-                var control = renderer.GetNativeElement();
-                var width = Math.Max(bounds.Width, control.DesiredSize.Width);
-                var height = Math.Max(bounds.Height, control.DesiredSize.Height);
+
+                var childControl = childRenderer.GetNativeElement();
+                var childBounds = child.Bounds;
+                var childWidth = Math.Max(0, childBounds.Width);
+                var childHeight = Math.Max(0, childBounds.Height);
                 if (stepX != 1 && stepY != 1 && stepX != 0 && stepY != 0)
                 {
-                    control.Width = width = Math.Ceiling(width / stepX) * stepX;
-                    control.Height = height = Math.Ceiling(height / stepY) * stepY;
+                    childControl.Width = childWidth = Math.Ceiling(childWidth / stepX) * stepX;
+                    childControl.Height = childHeight = Math.Ceiling(childHeight / stepY) * stepY;
                 }
-                var childRect = new global::Avalonia.Rect(bounds.X, bounds.Y, width, height);
-                control.Arrange(childRect);
+                childControl.Arrange(new global::Avalonia.Rect(childBounds.X, childBounds.Y, childWidth, childHeight));
             }
 
             Element.IsInNativeLayout = false;
@@ -57,9 +57,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
         protected override global::Avalonia.Size MeasureOverride(global::Avalonia.Size availableSize)
         {
-            var baseDesiredSize = base.MeasureOverride(availableSize);
-            bool hasVisibleChild = false;
-
             if (Element == null || availableSize.Width * availableSize.Height == 0)
                 return new global::Avalonia.Size(0, 0);
 
@@ -70,24 +67,18 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
                 var child = ElementController.LogicalChildren[i] as VisualElement;
                 if (child == null)
                     continue;
-                IVisualElementRenderer renderer = Platform.GetRenderer(child);
-                if (renderer == null)
+
+                var childRenderer = Platform.GetRenderer(child);
+                if (childRenderer == null)
                     continue;
 
-                Control control = renderer.GetNativeElement();
-                bool isVisible = control.IsVisible;
-
-                if (isVisible && !hasVisibleChild)
+                var childControl = childRenderer.GetNativeElement();
+                if (childControl.Width != child.Width || childControl.Height != child.Height)
                 {
-                    hasVisibleChild = true;
-                }
-                var controlBounds = control.Bounds;
-                if (controlBounds.Width != child.Width || controlBounds.Height != child.Height)
-                {
-                    double width = child.Width <= -1 ? availableSize.Width : child.Width;
-                    double height = child.Height <= -1 ? availableSize.Height : child.Height;
-                    control.Measure(new global::Avalonia.Size(width, height));
-                    var childDesiredSize = control.DesiredSize;
+                    var parentBounds = Bounds;
+                    double width = child.Width <= -1 ? parentBounds.Width : child.Width;
+                    double height = child.Height <= -1 ? parentBounds.Height : child.Height;
+                    childControl.Measure(new global::Avalonia.Size(width, height));
                 }
             }
 
@@ -108,8 +99,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (Double.IsPositiveInfinity(result.Width))
                 result = result.WithWidth(0.0);
 
-            var finalDesiredSize = new global::Avalonia.Size(Math.Max(baseDesiredSize.Width, result.Width), Math.Max(baseDesiredSize.Height, result.Height));
-            return finalDesiredSize;
+            return result;
         }
     }
 }
