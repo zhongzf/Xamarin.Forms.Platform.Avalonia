@@ -109,7 +109,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			set { this.SetValue(TransitionProperty, value); }
 		}
 
-		Type IStyleable.StyleKey => typeof(FormsContentControl);
+		Type IStyleable.StyleKey => typeof(ContentControl);
 
 		//public bool RestartTransitionOnContentChange
 		//{

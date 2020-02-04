@@ -8,7 +8,7 @@ using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsContentControl : ContentControl
+    public class FormsContentControl : ContentControl, IStyleable
     {
         private CancellationTokenSource tokenSource;
 
@@ -27,12 +27,13 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             set { SetValue(ContentLoaderProperty, value); }
         }
 
+        Type IStyleable.StyleKey => typeof(ContentControl);
+
         public FormsContentControl()
         {
             this.LayoutUpdated += OnLayoutUpdated;
             ContentLoaderProperty.Changed.AddClassHandler<FormsContentControl>((x, e) => x.OnContentLoaderChanged(e));
         }
-
 
         protected virtual void OnLayoutUpdated(object sender, EventArgs e)
         {
