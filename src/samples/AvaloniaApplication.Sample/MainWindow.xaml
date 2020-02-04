@@ -60,7 +60,7 @@
             <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
               <TabControl.ItemTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding Title}"></TextBlock>
+                  <TextBlock Text="{Binding Title}" FontSize="18"></TextBlock>
                 </DataTemplate>
               </TabControl.ItemTemplate>
               <TabControl.ContentTemplate>
@@ -208,7 +208,7 @@
       <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
       <Setter Property="VerticalContentAlignment" Value="Stretch"/>
       <Setter Property="Padding" Value="0" />
-      <Setter Property="Height" Value="60" />
+      <Setter Property="Height" Value="32" />
       <Setter Property="Template">
         <ControlTemplate>
           <Grid  VerticalAlignment="Stretch" Background="{TemplateBinding Background}">
@@ -238,7 +238,7 @@
             </ItemsControl>
 
             <ToggleButton Name="PART_More" Grid.Column="2" >
-              <controls:FormsSymbolIcon Symbol="More" FontSize="25" />
+              <controls:FormsSymbolIcon Symbol="More" FontSize="16" />
             </ToggleButton>
           </Grid>
         </ControlTemplate>
@@ -274,16 +274,13 @@
               Value="Center" />
       <Setter Property="Template">
         <ControlTemplate>
-
           <StackPanel Orientation="Horizontal">
-
             <Button x:Name="PART_Min"
                     Focusable="False"
                     IsEnabled="True">
               <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                     Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
             </Button>
-
             <Button x:Name="PART_Max"
                     Focusable="False"
                     IsEnabled="True">
@@ -294,17 +291,12 @@
                     Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
                     Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
             </Button>
-
             <Button x:Name="PART_Close"
                     Focusable="False">
               <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
                     Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
             </Button>
-
-
           </StackPanel>
-
-
         </ControlTemplate>
       </Setter>
     </Style>
@@ -439,7 +431,8 @@
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
-      <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="35" VerticalAlignment="Center"
+      <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="20" VerticalAlignment="Center"
+            IsVisible="{Binding HasBackButtonModal}"
             Background="{DynamicResource CommandBarBackgroundColor}">
       
         <Button Name="PART_Previous_Modal" Focusable="False"
@@ -452,10 +445,11 @@
                    FontSize="14" Opacity="1" Foreground="{DynamicResource CommandBarTextColor}"/>
 
         <controls:FormsWindowButtonCommands Name="PART_WindowButtonCommands"
+                                            IsVisible="{Binding !HasSystemDecorations}"
                            Focusable="False" HorizontalAlignment="Right"
                            VerticalAlignment="Center" Opacity="1"
                            UseLayoutRounding="True"
-                           Height="35"
+                           Height="20"
                            Foreground="{DynamicResource CommandBarTextColor}"/>
       </Grid>
 
@@ -464,9 +458,9 @@
                             Foreground="{Binding TitleBarTextColor}">
         
         <Grid>
-          <StackPanel Grid.Column="0" Orientation="Horizontal" Height="65"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
+          <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
             <Button Name="PART_Hamburger" Focusable="False">
-              <controls:FormsSymbolIcon Symbol="GlobalNavigationButton" FontSize="25"  />
+              <controls:FormsSymbolIcon Symbol="GlobalNavigationButton" FontSize="16"  />
             </Button>
 
             <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}">
@@ -490,7 +484,7 @@
         <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
       </Grid>
 
-      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding !HasModalPage}" />
+      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomBar}" />
     </Grid>
   </Border>
 

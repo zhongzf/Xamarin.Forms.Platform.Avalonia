@@ -1,7 +1,8 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"             
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+					   xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
              xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
              x:Class="AvaloniaApplication.Sample.App">
@@ -9,8 +10,41 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
   </Application.Styles>
-  
+
   <Application.Resources>
+    <!-- Default Global Color -->
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="AccentColor" Color="#3498db" />
+
+    <!-- Default Command Bar Color -->
+    <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="CommandBarTextColor" Color="White" />
+
+    <!-- Default Title Bar Color -->
+    <SolidColorBrush x:Key="DefaultTitleBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="DefaultTitleBarTextColor" Color="White" />
+
+    <!-- Default Tabbed Bar Color -->
+    <SolidColorBrush x:Key="DefaultTabbedBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="DefaultTabbedBarTextColor" Color="White" />
+
+    <system:Double x:Key="FontSizeSmall">18</system:Double>
+    <system:Double x:Key="FontSizeNormal">20</system:Double>
+    <system:Double x:Key="FontSizeMedium">22</system:Double>
+    <system:Double x:Key="FontSizeMediumLarge">25</system:Double>
+    <system:Double x:Key="FontSizeLarge">32</system:Double>
+    <system:Double x:Key="FontSizeExtraLarge">42</system:Double>
+    <system:Double x:Key="FontSizeExtraExtraLarge">72</system:Double>
+    <system:Double x:Key="FontSizeHuge">186</system:Double>
+    <system:Double x:Key="FontSizeBody">14</system:Double>
+    <system:Double x:Key="FontSizeCaption">12</system:Double>
+    <system:Double x:Key="FontSizeHeader">46</system:Double>
+    <system:Double x:Key="FontSizeSubtitle">20</system:Double>
+    <system:Double x:Key="FontSizeTitle">24</system:Double>
+
+    <FontFamily x:Key="FontFamilyNormal">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontFamilySemiBold">Segoe UI</FontFamily>
+
     <converters:HeightConverter x:Key="HeightConverter"/>
     <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
     <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
@@ -19,7 +53,7 @@
     <converters:ColorConverter x:Key="ColorConverter" />
     <converters:ImageConverter x:Key="ImageConverter" />
     <converters:SymbolToValueConverter x:Key="SymbolToValue" />
-       
+
 
     <DataTemplate x:Key="CellTemplate">
       <controls:CellControl Cell="{Binding}" Margin="5,0,0,0"
