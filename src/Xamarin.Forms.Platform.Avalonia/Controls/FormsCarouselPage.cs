@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -17,22 +18,33 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         private RepeatButton _nextButton;
         private RepeatButton _previousButton;
 
+        private global::Avalonia.Controls.Grid _buttonPanel;
+
         public FormsCarouselPage()
         {
-            SelectedIndexProperty.Changed.AddClassHandler<FormsCarouselPage>((x, e) => x.OnSelectedIndexChanged(e));
-
             this.NextCommand = ReactiveCommand.Create(this.OnNextExecuted, this.OnNextCanExecute());
             this.PreviousCommand = ReactiveCommand.Create(this.OnPreviousExecuted, this.OnPreviousCanExecute());
+        }
+
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if(e.Property == SelectedIndexProperty)
+            {
+                OnSelectedIndexChanged(e);
+            }
         }
 
         protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
         {
             base.OnTemplateApplied(e);
 
-            this._nextButton = e.NameScope.Find<RepeatButton>("PART_NextButton");
+            this._nextButton = this.Find<RepeatButton>("PART_NextButton", e);
             this._nextButton.Click += _nextButton_Click;
-            this._previousButton = e.NameScope.Find<RepeatButton>("PART_PreviousButton");
+            this._previousButton = this.Find<RepeatButton>("PART_PreviousButton", e);
             this._previousButton.Click += _previousButton_Click;
+
+            this._buttonPanel = this.Find<global::Avalonia.Controls.Grid>("PART_ButtonPanel", e);
         }
 
         private void _nextButton_Click(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)

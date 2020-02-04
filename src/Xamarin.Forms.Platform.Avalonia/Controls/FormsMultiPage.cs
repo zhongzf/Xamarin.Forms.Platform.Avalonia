@@ -63,8 +63,16 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             this.LayoutUpdated += OnLayoutUpdated;
 
-            SelectedItemProperty.Changed.AddClassHandler<FormsMultiPage>((x, e) => x.OnSelectedItemChanged(e));
             SetValue(FormsMultiPage.ItemsSourceProperty, new ObservableCollection<object>());
+        }
+
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if(e.Property == SelectedItemProperty)
+            {
+                OnSelectedItemChanged(e);
+            }
         }
 
         protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)

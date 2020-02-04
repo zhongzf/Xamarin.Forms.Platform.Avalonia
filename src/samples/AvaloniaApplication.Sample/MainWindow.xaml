@@ -51,11 +51,7 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <Border Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid ClipToBounds="True"
-                  Name="PART_Container">
+            <Grid Name="PART_Container">
 
               <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
@@ -75,7 +71,6 @@
                               HorizontalAlignment="Left" />
               </Grid>
             </Grid>
-          </Border>
         </ControlTemplate>
       </Setter>
     </Style>
