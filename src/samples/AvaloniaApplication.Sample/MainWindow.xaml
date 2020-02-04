@@ -20,11 +20,7 @@
       <Setter Property="TitleBarTextColor" Value="{DynamicResource DefaultTitleBarTextColor}"/>
       <Setter Property="Template">
         <ControlTemplate>
-          <Grid Name="PART_Container">
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+          <Grid Name="PART_Container" RowDefinitions="Auto,*">
 
             <TabControl Name="PART_TabControl" Items="{TemplateBinding ItemsSource}" SelectedItem="{TemplateBinding SelectedItem, Mode=TwoWay}" Height="40">
               <TabControl.ItemTemplate>
@@ -35,16 +31,16 @@
               <TabControl.ContentTemplate>
                 <DataTemplate>
                   <Grid>
-                  </Grid>                  
+                  </Grid>
                 </DataTemplate>
               </TabControl.ContentTemplate>
             </TabControl>
-            
-                    <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
-                      Transition="Left"
-                      ContentLoader="{TemplateBinding ContentLoader}"
-                      Source="{TemplateBinding SelectedItem}" />
-            
+
+            <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+              Transition="Left"
+              ContentLoader="{TemplateBinding ContentLoader}"
+              Source="{TemplateBinding SelectedItem}" />
+
           </Grid>
         </ControlTemplate>
       </Setter>
