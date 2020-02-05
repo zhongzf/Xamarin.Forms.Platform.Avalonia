@@ -117,17 +117,26 @@
                   VerticalAlignment="{TemplateBinding VerticalAlignment}"
                   Background="{TemplateBinding Background}" >
 
-            <Grid ColumnDefinitions="300,8,*">
-              <Grid x:Name="PART_GridMaster" Grid.Column="0">
+            <Grid Name="PART_Container" ColumnDefinitions="300,8,*">
+              <Grid x:Name="PART_GridMaster" Grid.Column="0" IsVisible="{TemplateBinding IsPresented}">
                 <controls:FormsContentControl Grid.Column="0" Name="PART_Master"
                           ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding MasterPage}" />
               </Grid>
-              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1" />
+              <GridSplitter x:Name="PART_GridSplitter" Width="8" Grid.Column="1" IsVisible="{TemplateBinding IsPresented}" />
               <Grid x:Name="PART_GridDetailContent" Grid.Column="2">
                 <controls:FormsContentControl Grid.Column="1" Name="PART_Detail_Content"
                           ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding DetailPage}" />
               </Grid>
             </Grid>
+            
+              <i:Interaction.Behaviors>
+                <ia:DataTriggerBehavior Binding="{Binding IsPresented}" Value="False">
+                  <ia:ChangePropertyAction TargetObject="{Binding #PART_Container.ColumnDefinitions[0]}" PropertyName="Width" Value="0"/>
+                </ia:DataTriggerBehavior>
+                <ia:DataTriggerBehavior Binding="{Binding IsPresented}" Value="True">
+                  <ia:ChangePropertyAction TargetObject="{Binding #PART_Container.ColumnDefinitions[0]}" PropertyName="Width" Value="300"/>
+                </ia:DataTriggerBehavior>
+              </i:Interaction.Behaviors>
 
           </Border>
         </ControlTemplate>
@@ -276,6 +285,11 @@
       </Setter>
     </Style>
 
+    <Style Selector="controls|FormsWindowButtonCommands /template/ Button#PART_Close:pointerover">
+      <Setter Property="Background" Value="Red" />
+    </Style>
+
+
 
     <Style Selector="controls|FormsCollectionView">
       <Setter Property="Template">
@@ -393,6 +407,7 @@
       </Setter>
     </Style>
 
+    
     <Style Selector="Button.AppBar">
       <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
       <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
@@ -417,6 +432,7 @@
       <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
     </Style>
 
+    
     <Style Selector="controls|FormsTransitioningContentControl">
       <Setter Property="HorizontalContentAlignment" Value="Stretch" />
       <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -883,104 +899,5 @@
                  FontSize="26"
                  Foreground="Black"/>
     </DataTemplate>
-
-    <Style x:Key="BaseLightWindowButtonStyle" Selector="Button">
-      <Setter Property="Foreground"
-              Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=(TextElement.Foreground)}" />
-      <Setter Property="Background"
-              Value="{DynamicResource TransparentWhiteBrush}" />
-      <Setter Property="HorizontalContentAlignment"
-              Value="Center" />
-      <Setter Property="VerticalContentAlignment"
-              Value="Center" />
-      <Setter Property="Padding"
-              Value="1" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Grid Background="{TemplateBinding Background}">
-            <ContentPresenter Name="contentPresenter"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Margin="{TemplateBinding Padding}"
-                              Opacity="1.0" />
-          </Grid>
-        </ControlTemplate>
-      </Setter>
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
-          <ia:ChangePropertyAction TargetObject="{Binding #contentPresenter}" PropertyName="Background" Value="{DynamicResource SemiTransparentWhiteBrush}"/>
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Style>
-
-
-    <Style x:Key="LightOtherWindowButtonStyle" Selector="Button">
-      <Setter Property="Padding"
-              Value="14, 5" />
-    </Style>
-
-    <Style x:Key="LightCommandWindowButtonStyle" Selector="Button">
-      <Setter Property="Width"
-              Value="45" />
-      <Setter Property="Padding"
-              Value="14, 5" />
-    </Style>
-
-
-
-    <Style x:Key="LightRedCommandWindowButtonStyle" Selector="Button">
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
-          <ia:ChangePropertyAction PropertyName="Background" Value="Red"/>
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Style>
-
-    <Style x:Key="AppBarButtonStyle" Selector="controls|FormsAppBar">
-      <Setter Property="Foreground"
-              Value="White" />
-      <Setter Property="Width"
-              Value="72" />
-      <Setter Property="Padding"
-              Value="8, 5" />
-    </Style>
-
-
-    <Style x:Key="BaseLightWindowToggleButtonStyle" Selector="Button">
-      <Setter Property="Foreground"
-              Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=(TextElement.Foreground)}" />
-      <Setter Property="Background"
-              Value="{DynamicResource TransparentWhiteBrush}" />
-      <Setter Property="HorizontalContentAlignment"
-              Value="Center" />
-      <Setter Property="VerticalContentAlignment"
-              Value="Center" />
-      <Setter Property="Padding"
-              Value="1" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Grid Background="{TemplateBinding Background}">
-            <ContentPresenter Name="contentPresenter"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Margin="{TemplateBinding Padding}"
-                              Opacity="1.0" />
-          </Grid>
-        </ControlTemplate>
-      </Setter>
-      <i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior Binding="IsPointerOver" Value="True">
-          <ia:ChangePropertyAction PropertyName="Background" Value="{DynamicResource SemiTransparentWhiteBrush}"/>
-        </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-    </Style>
-
-    <Style x:Key="AppBarToggleButtonStyle" Selector="controls|FormsAppBarButton">
-      <Setter Property="Width"
-              Value="72" />
-      <Setter Property="Padding"
-              Value="8, 5" />
-    </Style>
-
   </Application.Resources>
 </Application>
