@@ -5,152 +5,189 @@ using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Xamarin.Forms.Platform.Avalonia.Interfaces;
+using System.Linq;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
     public class FormsMasterDetailPage : FormsPage
     {
-		FormsContentControl lightMasterContentControl;
-		FormsContentControl lightDetailContentControl;
+        FormsContentControl lightMasterContentControl;
+        FormsContentControl lightDetailContentControl;
 
-		public static readonly StyledProperty<object> MasterPageProperty = AvaloniaProperty.Register<FormsMasterDetailPage, object>(nameof(MasterPage));
-		public static readonly StyledProperty<object> DetailPageProperty = AvaloniaProperty.Register<FormsMasterDetailPage, object>(nameof(DetailPage));
-		public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMasterDetailPage, IContentLoader>(nameof(ContentLoader));
-		public static readonly StyledProperty<bool> IsPresentedProperty = AvaloniaProperty.Register<FormsMasterDetailPage, bool>(nameof(IsPresented));
+        global::Avalonia.Controls.Grid container;
 
-		public object MasterPage
-		{
-			get { return (object)GetValue(MasterPageProperty); }
-			set { SetValue(MasterPageProperty, value); }
-		}
+        public static readonly StyledProperty<object> MasterPageProperty = AvaloniaProperty.Register<FormsMasterDetailPage, object>(nameof(MasterPage));
+        public static readonly StyledProperty<object> DetailPageProperty = AvaloniaProperty.Register<FormsMasterDetailPage, object>(nameof(DetailPage));
+        public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMasterDetailPage, IContentLoader>(nameof(ContentLoader));
+        public static readonly StyledProperty<bool> IsPresentedProperty = AvaloniaProperty.Register<FormsMasterDetailPage, bool>(nameof(IsPresented));
 
-		public object DetailPage
-		{
-			get { return (object)GetValue(DetailPageProperty); }
-			set { SetValue(DetailPageProperty, value); }
-		}
+        public object MasterPage
+        {
+            get { return (object)GetValue(MasterPageProperty); }
+            set { SetValue(MasterPageProperty, value); }
+        }
 
-		public bool IsPresented
-		{
-			get { return (bool)GetValue(IsPresentedProperty); }
-			set { SetValue(IsPresentedProperty, value); }
-		}
+        public object DetailPage
+        {
+            get { return (object)GetValue(DetailPageProperty); }
+            set { SetValue(DetailPageProperty, value); }
+        }
 
-		public IContentLoader ContentLoader
-		{
-			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
-			set { SetValue(ContentLoaderProperty, value); }
-		}
+        public bool IsPresented
+        {
+            get { return (bool)GetValue(IsPresentedProperty); }
+            set { SetValue(IsPresentedProperty, value); }
+        }
 
-		public FormsMasterDetailPage()
-		{
-		}
+        public IContentLoader ContentLoader
+        {
+            get { return (IContentLoader)GetValue(ContentLoaderProperty); }
+            set { SetValue(ContentLoaderProperty, value); }
+        }
 
-		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
-		{
-			base.OnTemplateApplied(e);
+        public FormsMasterDetailPage()
+        {
+            IsPresentedProperty.Changed.AddClassHandler<FormsMasterDetailPage>((x, e) => x.OnIsPresentedChanged(e));
+        }
 
-			lightMasterContentControl = e.NameScope.Find<FormsContentControl>("PART_Master") as FormsContentControl;
-			lightDetailContentControl = e.NameScope.Find<FormsContentControl>("PART_Detail_Content") as FormsContentControl;
-		}
+        protected double? oldColumnDefinitions;
 
-		public override string GetTitle()
-		{
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				return page.GetTitle();
-			}
-			return this.Title;
-		}
+        protected virtual void OnIsPresentedChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            if (this.container != null)
+            {
+                if ((bool)e.NewValue)
+                {
+                    if ((this.container.ColumnDefinitions[0].Width.Value <= 0) && (this.oldColumnDefinitions ?? 0) > 0)
+                    {
+                        this.container.ColumnDefinitions[0].Width = new global::Avalonia.Controls.GridLength((double)this.oldColumnDefinitions);
+                    }
+                }
+                else
+                {
+                    var oldWidth = this.container.ColumnDefinitions.FirstOrDefault().Width.Value;
+                    if(oldWidth > 0)
+                    {
+                        this.oldColumnDefinitions = oldWidth;
+                    }
+                    this.container.ColumnDefinitions[0].Width = new global::Avalonia.Controls.GridLength(0);
+                }
+            }
+        }
 
-		public override Brush GetTitleBarBackgroundColor()
-		{
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				return page.GetTitleBarBackgroundColor();
-			}
-			return this.TitleBarBackgroundColor;
-		}
+        protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+        {
+            base.OnTemplateApplied(e);
 
-		public override Brush GetTitleBarTextColor()
-		{
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				return page.GetTitleBarTextColor();
-			}
-			return this.TitleBarTextColor;
-		}
+            lightMasterContentControl = e.NameScope.Find<FormsContentControl>("PART_Master") as FormsContentControl;
+            lightDetailContentControl = e.NameScope.Find<FormsContentControl>("PART_Detail_Content") as FormsContentControl;
 
-		public override IEnumerable<Control> GetPrimaryTopBarCommands()
-		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.PrimaryTopBarCommands);
+            container = this.Find<global::Avalonia.Controls.Grid>("PART_Container", e);
+            this.oldColumnDefinitions = this.container.ColumnDefinitions.FirstOrDefault().Width.Value;
+            if (!this.IsPresented)
+            {
+                this.container.ColumnDefinitions[0].Width = new global::Avalonia.Controls.GridLength(0);
+            }
+        }
 
-			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-			{
-				frameworkElements.AddRange(masterPage.GetPrimaryTopBarCommands());
-			}
+        public override string GetTitle()
+        {
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                return page.GetTitle();
+            }
+            return this.Title;
+        }
 
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
-			}
-			return frameworkElements;
-		}
+        public override Brush GetTitleBarBackgroundColor()
+        {
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                return page.GetTitleBarBackgroundColor();
+            }
+            return this.TitleBarBackgroundColor;
+        }
 
-		public override IEnumerable<Control> GetSecondaryTopBarCommands()
-		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.SecondaryTopBarCommands);
+        public override Brush GetTitleBarTextColor()
+        {
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                return page.GetTitleBarTextColor();
+            }
+            return this.TitleBarTextColor;
+        }
 
-			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-			{
-				frameworkElements.AddRange(masterPage.GetSecondaryTopBarCommands());
-			}
+        public override IEnumerable<Control> GetPrimaryTopBarCommands()
+        {
+            List<Control> frameworkElements = new List<Control>();
+            frameworkElements.AddRange(this.PrimaryTopBarCommands);
 
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
-			}
+            if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+            {
+                frameworkElements.AddRange(masterPage.GetPrimaryTopBarCommands());
+            }
 
-			return frameworkElements;
-		}
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
+            }
+            return frameworkElements;
+        }
 
-		public override IEnumerable<Control> GetPrimaryBottomBarCommands()
-		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.PrimaryBottomBarCommands);
+        public override IEnumerable<Control> GetSecondaryTopBarCommands()
+        {
+            List<Control> frameworkElements = new List<Control>();
+            frameworkElements.AddRange(this.SecondaryTopBarCommands);
 
-			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-			{
-				frameworkElements.AddRange(masterPage.GetPrimaryBottomBarCommands());
-			}
+            if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+            {
+                frameworkElements.AddRange(masterPage.GetSecondaryTopBarCommands());
+            }
 
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
-			}
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
+            }
 
-			return frameworkElements;
-		}
+            return frameworkElements;
+        }
 
-		public override IEnumerable<Control> GetSecondaryBottomBarCommands()
-		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+        public override IEnumerable<Control> GetPrimaryBottomBarCommands()
+        {
+            List<Control> frameworkElements = new List<Control>();
+            frameworkElements.AddRange(this.PrimaryBottomBarCommands);
 
-			if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
-			{
-				frameworkElements.AddRange(masterPage.GetSecondaryBottomBarCommands());
-			}
+            if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+            {
+                frameworkElements.AddRange(masterPage.GetPrimaryBottomBarCommands());
+            }
 
-			if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
-			{
-				frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
-			}
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
+            }
 
-			return frameworkElements;
-		}
-	}
+            return frameworkElements;
+        }
+
+        public override IEnumerable<Control> GetSecondaryBottomBarCommands()
+        {
+            List<Control> frameworkElements = new List<Control>();
+            frameworkElements.AddRange(this.SecondaryBottomBarCommands);
+
+            if (lightMasterContentControl != null && lightMasterContentControl.Content is FormsPage masterPage)
+            {
+                frameworkElements.AddRange(masterPage.GetSecondaryBottomBarCommands());
+            }
+
+            if (lightDetailContentControl != null && lightDetailContentControl.Content is FormsPage page)
+            {
+                frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
+            }
+
+            return frameworkElements;
+        }
+    }
 }
