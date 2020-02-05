@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Threading;
 using ReactiveUI;
 using System;
 using System.Linq;
@@ -74,6 +75,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             {
                 this.SelectedIndex -= 1;
                 FormsContentControl.Transition = TransitionType.Right;
+                DispatcherTimer.RunOnce(() => FormsContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
             }
         }
 
@@ -88,6 +90,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             {
                 this.SelectedIndex += 1;
                 FormsContentControl.Transition = TransitionType.Left;
+                DispatcherTimer.RunOnce(() => FormsContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
             }
         }
 
