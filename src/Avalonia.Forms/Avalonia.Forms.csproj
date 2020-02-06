@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Remove="Themes\AppBar.xaml" />
+    <AvaloniaResource Remove="Themes\AppBarButton.xaml" />
+    <AvaloniaResource Remove="Themes\ApplicationWindow.xaml" />
+    <AvaloniaResource Remove="Themes\DefaultTheme.xaml" />
+    <AvaloniaResource Remove="Themes\ElementIcon.xaml" />
+    <AvaloniaResource Remove="Themes\Global.xaml" />
+    <AvaloniaResource Remove="Themes\TransitioningContentControl.xaml" />
+    <AvaloniaResource Remove="Themes\WindowButtons.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Themes\AppBar.xaml" />
+    <None Remove="Themes\AppBarButton.xaml" />
+    <None Remove="Themes\ApplicationWindow.xaml" />
+    <None Remove="Themes\DefaultTheme.xaml" />
+    <None Remove="Themes\ElementIcon.xaml" />
+    <None Remove="Themes\Global.xaml" />
+    <None Remove="Themes\TransitioningContentControl.xaml" />
+    <None Remove="Themes\WindowButtons.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.9.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Themes\AppBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\TransitioningContentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\ElementIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\Global.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\ApplicationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\AppBarButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\WindowButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Themes\DefaultTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
