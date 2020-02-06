@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.Controls.Templates;
+using Avalonia.Forms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Interfaces;
 using AList = Avalonia.Controls.ListBox;
 using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
 
@@ -15,7 +16,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 {
 	public class TableViewDataTemplateSelector : IDataTemplateSelector
 	{
-		public global::Avalonia.Markup.Xaml.Templates.DataTemplate SelectTemplate(object item, AvaloniaObject container)
+		public IDataTemplate SelectTemplate(object item, object container)
 		{
 			if (item is Cell)
 			{

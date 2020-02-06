@@ -1,11 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Forms.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
-using Xamarin.Forms.Platform.Avalonia.Interfaces;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

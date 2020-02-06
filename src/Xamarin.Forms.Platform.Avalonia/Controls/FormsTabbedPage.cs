@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Forms.Controls;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-	public class FormsTabbedPage : FormsMultiPage
+	public class FormsTabbedPage : MultiContentPage
 	{
 		public static readonly StyledProperty<Brush> BarBackgroundColorProperty = AvaloniaProperty.Register<FormsTabbedPage, Brush>(nameof(BarBackgroundColor));
 		public static readonly StyledProperty<Brush> BarTextColorProperty = AvaloniaProperty.Register<FormsTabbedPage, Brush>(nameof(BarTextColor));

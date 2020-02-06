@@ -41,7 +41,7 @@ namespace Avalonia.Forms.Interfaces
         {
             get
             {
-                return (global::Avalonia.Application.Current as IClassicDesktopStyleApplicationLifetime)?.MainWindow as ApplicationWindow;
+                return (Application.Current as IClassicDesktopStyleApplicationLifetime)?.MainWindow as ApplicationWindow;
             }
         }
 

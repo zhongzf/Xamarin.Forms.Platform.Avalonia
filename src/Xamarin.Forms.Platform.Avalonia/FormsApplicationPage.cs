@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Forms.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,13 +10,14 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class FormsApplicationPage : FormsWindow
+    public class FormsApplicationPage : ApplicationWindow
     {
         protected Application Application { get; private set; }
         protected Platform Platform { get; private set; }
 
         public FormsApplicationPage()
         {
+			this.DataContext = this;
             //System.Windows.Application.Current.Startup += OnLaunching;
             //System.Windows.Application.Current.Exit += OnClosing;
 

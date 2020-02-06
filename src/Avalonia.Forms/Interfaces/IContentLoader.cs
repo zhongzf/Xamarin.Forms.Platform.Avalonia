@@ -17,7 +17,7 @@ namespace Avalonia.Forms.Interfaces
 	{
 		public Task<object> LoadContentAsync(Control parent, object oldContent, object newContent, CancellationToken cancellationToken)
 		{
-			if (!global::Avalonia.Application.Current.CheckAccess())
+			if (!Application.Current.CheckAccess())
 			{
 				throw new InvalidOperationException("UIThreadRequired");
 			}

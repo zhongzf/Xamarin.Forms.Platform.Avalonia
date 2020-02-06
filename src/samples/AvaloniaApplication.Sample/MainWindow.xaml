@@ -2,74 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
-        xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
-        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaApplication.Sample.MainWindow"
         Title="AvaloniaApplication.Sample">
-
-  <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
-
-      <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="20" VerticalAlignment="Center"
-            IsVisible="{Binding HasBackButtonModal}"
-            Background="{DynamicResource CommandBarBackgroundColor}">
-
-        <Button Name="PART_Previous_Modal" Focusable="False"
-                IsVisible="{Binding HasBackButtonModal}"
-                HorizontalAlignment="Left">
-          <controls:FormsSymbolIcon Symbol="ChevronFlipLeftLegacy" FontSize="18"  />
-        </Button>
-
-        <TextBlock Name="PART_System_Title" Margin="15,0,0,0" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="14" Opacity="1" Foreground="{DynamicResource CommandBarTextColor}"/>
-
-        <controls:FormsWindowButtonCommands Name="PART_WindowButtonCommands"
-                                            IsVisible="{Binding !HasSystemDecorations}"
-                           Focusable="False" HorizontalAlignment="Right"
-                           VerticalAlignment="Center" Opacity="1"
-                           UseLayoutRounding="True"
-                           Height="20"
-                           Foreground="{DynamicResource CommandBarTextColor}"/>
-      </Grid>
-
-      <controls:FormsAppBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
-                            DataContext="{Binding}"
-                            IsVisible="{Binding HasNavigationBar}"
-                            Foreground="{Binding TitleBarTextColor}">
-
-        <Grid>
-          <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
-            <Button Name="PART_Hamburger" Focusable="False" Classes="AppBar">
-              <controls:FormsSymbolIcon Symbol="GlobalNavigationButton" FontSize="16"  />
-            </Button>
-
-            <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}" Classes="AppBar">
-              <StackPanel Orientation="Horizontal">
-                <controls:FormsSymbolIcon Symbol="ChevronFlipLeftLegacy"  />
-                <TextBlock Margin="5,0,0,0" Text="{Binding BackButtonTitle}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"  />
-              </StackPanel>
-            </Button>
-          </StackPanel>
-
-          <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"  />
-        </Grid>
-
-      </controls:FormsAppBar>
-
-      <controls:FormsContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />
-
-      <controls:FormsTransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" IsVisible="{Binding HasModalPage}" />
-
-      <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000" IsVisible="{Binding HasContentDialog}">
-        <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
-      </Grid>
-
-      <controls:FormsAppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomAppBar}"  Background="{Binding TitleBarBackgroundColor}" />
-
-    </Grid>
-  </Border>
-
 </Window>

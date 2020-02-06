@@ -1,25 +1,27 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Forms.Controls;
+using Avalonia.Forms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using Xamarin.Forms.Platform.Avalonia.Interfaces;
+using ASelectionChangedEventArgs = Avalonia.Forms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
     public class FormsMultiView : UserControl
     {
-        public FormsTransitioningContentControl FormsContentControl { get; private set; }
+        public TransitioningContentControl ContentControl { get; private set; }
 
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event EventHandler<ASelectionChangedEventArgs> SelectionChanged;
 
-        public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiPage, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
-        public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiPage, ObservableCollection<object>>(nameof(ItemsSource));
-        public static readonly StyledProperty<object> SelectedItemProperty = AvaloniaProperty.Register<FormsMultiPage, object>(nameof(SelectedItem));
-        public static readonly StyledProperty<int> SelectedIndexProperty = AvaloniaProperty.Register<FormsMultiPage, int>(nameof(SelectedIndex), 0);
+        public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiView, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
+        public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiView, ObservableCollection<object>>(nameof(ItemsSource));
+        public static readonly StyledProperty<object> SelectedItemProperty = AvaloniaProperty.Register<FormsMultiView, object>(nameof(SelectedItem));
+        public static readonly StyledProperty<int> SelectedIndexProperty = AvaloniaProperty.Register<FormsMultiView, int>(nameof(SelectedIndex), 0);
 
         public IContentLoader ContentLoader
         {
@@ -80,7 +82,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             if (ItemsSource == null) return;
             SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
-            SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
+            SelectionChanged?.Invoke(this, new ASelectionChangedEventArgs(oldValue, newValue));
         }
 
         protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)
@@ -91,7 +93,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             base.OnTemplateApplied(e);
 
-            FormsContentControl = e.NameScope.Find<FormsTransitioningContentControl>("PART_Multi_Content") as FormsTransitioningContentControl;
+            ContentControl = e.NameScope.Find<TransitioningContentControl>("PART_Multi_Content");
         }
     }
 }

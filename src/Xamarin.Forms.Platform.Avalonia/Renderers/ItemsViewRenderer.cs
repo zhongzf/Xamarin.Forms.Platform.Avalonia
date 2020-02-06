@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using ASelectionChangedEventArgs = Xamarin.Forms.Platform.Avalonia.Controls.SelectionChangedEventArgs;
+using ASelectionChangedEventArgs = Avalonia.Forms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

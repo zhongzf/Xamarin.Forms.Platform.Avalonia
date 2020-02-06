@@ -5,10 +5,13 @@
 					   xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
              xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
+             xmlns:forms="clr-namespace:Avalonia.Forms.Controls;assembly=Avalonia.Forms"
              x:Class="AvaloniaApplication.Sample.App">
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+
+    <StyleInclude Source="resm:Avalonia.Forms.Themes.DefaultTheme.xaml?assembly=Avalonia.Forms"/>
 
     <Style Selector="controls|FormsTabbedPage">
       <Setter Property="Background" Value="Transparent" />
@@ -39,7 +42,7 @@
                 </TabControl.ContentTemplate>
               </TabControl>
 
-              <controls:FormsTransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
+              <forms:TransitioningContentControl Grid.Row="1" Name="PART_Multi_Content"
                 Transition="Left"
                 ContentLoader="{TemplateBinding ContentLoader}"
                 Source="{TemplateBinding SelectedItem}" />
@@ -60,7 +63,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
-              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+              <forms:TransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
                         ContentLoader="{TemplateBinding ContentLoader}"
                         Source="{TemplateBinding SelectedItem}" />
@@ -96,7 +99,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
-              <controls:FormsTransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
+              <forms:TransitioningContentControl Name="PART_Navigation_Content" Transition="Normal"
                 ContentLoader="{TemplateBinding ContentLoader}" Source="{TemplateBinding CurrentPage}" />
 
             </Grid>
@@ -134,152 +137,6 @@
       </Setter>
     </Style>
 
-    <Style Selector="controls|FormsSymbolIcon">
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
-      <Setter Property="VerticalAlignment" Value="Stretch"/>
-      <Setter Property="FontSize" Value="22"/>
-      <Setter Property="Template">
-        <ControlTemplate>
-          <TextBlock Text="{Binding Symbol, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource SymbolToValue}}"
-                     FontSize="{TemplateBinding FontSize}"
-                     FontFamily="Segoe MDL2 Assets"/>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsPathIcon">
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
-      <Setter Property="VerticalAlignment" Value="Stretch"/>
-      <Setter Property="Height" Value="24"/>
-      <Setter Property="Width" Value="24"/>
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Viewbox>
-            <Path Data="{Binding Data, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-              Fill="{TemplateBinding Foreground}"
-              Stretch="Fill" />
-          </Viewbox>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsBitmapIcon">
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
-      <Setter Property="VerticalAlignment" Value="Stretch"/>
-      <Setter Property="Height" Value="22.4"/>
-      <Setter Property="Width" Value="22.4"/>
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Image Source="{Binding UriSource, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsAppBar">
-      <Setter Property="Background" Value="{DynamicResource AccentColor}"/>
-      <Setter Property="HorizontalAlignment" Value="Stretch"/>
-      <Setter Property="VerticalAlignment" Value="Stretch"/>
-      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-      <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-      <Setter Property="Padding" Value="0" />
-      <Setter Property="Height" Value="32" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Grid  VerticalAlignment="Stretch" Background="{TemplateBinding Background}">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <ContentPresenter Grid.ColumnSpan="3"
-                            Name="PART_ContentPresenter"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Content="{TemplateBinding Content}"
-                            Padding="{TemplateBinding Padding}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-
-            <ItemsControl Name="PART_Command" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Items="{TemplateBinding PrimaryCommands}">
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <StackPanel Orientation="Horizontal"  Focusable="False" UseLayoutRounding="True"/>
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
-            <ToggleButton Name="PART_More" Grid.Column="2" Classes="AppBar" IsVisible="{Binding HasTopAppBar}">
-              <controls:FormsSymbolIcon Symbol="More" FontSize="16" />
-            </ToggleButton>
-          </Grid>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsAppBarButton" >
-      <Setter Property="Width"
-              Value="72" />
-      <Setter Property="Padding"
-              Value="8, 5" />
-      <Setter Property="Background"
-              Value="{DynamicResource TransparentWhiteBrush}" />
-      <Setter Property="HorizontalContentAlignment"
-              Value="Center" />
-      <Setter Property="VerticalContentAlignment"
-              Value="Center" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Grid Background="{TemplateBinding Background}">
-            <StackPanel VerticalAlignment="Center" >
-              <ContentPresenter Content="{TemplateBinding Icon}" HorizontalAlignment="Center" />
-              <TextBlock Margin="0,6,0,0" FontFamily="Calibri"  FontSize="12"
-                     Text="{TemplateBinding Label}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-            </StackPanel>
-          </Grid>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsWindowButtonCommands">
-      <Setter Property="VerticalAlignment"
-              Value="Center" />
-      <Setter Property="Template">
-        <ControlTemplate>
-          <StackPanel Orientation="Horizontal">
-            <Button x:Name="PART_Min"
-                    Focusable="False"
-                    IsEnabled="True">
-              <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
-                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-            </Button>
-            <Button x:Name="PART_Max"
-                    Focusable="False"
-                    IsEnabled="True">
-              <!-- normal state -->
-              <Path x:Name="PART_MaxPath"
-                    Width="10"
-                    Height="10"
-                    Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
-                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-            </Button>
-            <Button x:Name="PART_Close"
-                    Focusable="False">
-              <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
-                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-            </Button>
-          </StackPanel>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsWindowButtonCommands /template/ Button#PART_Close:pointerover">
-      <Setter Property="Background" Value="Red" />
-    </Style>
-
-
 
     <Style Selector="controls|FormsCollectionView">
       <Setter Property="Template">
@@ -289,7 +146,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
-              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+              <forms:TransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
                         ContentLoader="{TemplateBinding ContentLoader}"
                         Source="{TemplateBinding SelectedItem}" />
@@ -308,7 +165,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
-              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+              <forms:TransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
                         ContentLoader="{TemplateBinding ContentLoader}"
                         Source="{TemplateBinding SelectedItem}" />
@@ -327,7 +184,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}">
             <Grid Name="PART_Container">
 
-              <controls:FormsTransitioningContentControl Name="PART_Multi_Content"
+              <forms:TransitioningContentControl Name="PART_Multi_Content"
                         Transition="Left"
                         ContentLoader="{TemplateBinding ContentLoader}"
                         Source="{TemplateBinding SelectedItem}" />
@@ -397,364 +254,9 @@
       </Setter>
     </Style>
 
-
-    <Style Selector="Button.AppBar">
-      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
-      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
-    </Style>
-
-    <Style Selector="Button.AppBar:pointerover">
-      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
-      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
-    </Style>
-
-    <Style Selector="ToggleButton.AppBar">
-      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
-      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
-    </Style>
-
-    <Style Selector="ToggleButton.AppBar:pointerover">
-      <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundLightColor}" />
-      <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundLightColor}" />
-      <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
-    </Style>
-
-
-    <Style Selector="controls|FormsTransitioningContentControl">
-      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-      <Setter Property="VerticalContentAlignment" Value="Stretch" />
-      <Setter Property="Transition" Value="Default" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate>
-            <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}">
-              <Grid>
-                <ContentPresenter Name="PreviousContentPresentationSite"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                Content="{x:Null}"
-                                Padding="{TemplateBinding Padding}"
-                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
-                  <ContentPresenter.RenderTransform>
-                    <TransformGroup>
-                      <ScaleTransform />
-                      <SkewTransform />
-                      <RotateTransform />
-                      <TranslateTransform />
-                    </TransformGroup>
-                  </ContentPresenter.RenderTransform>
-                </ContentPresenter>
-
-                <ContentPresenter Name="CurrentContentPresentationSite"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                Content="{TemplateBinding Content}"
-                                Padding="{TemplateBinding Padding}"
-                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
-                  <ContentPresenter.RenderTransform>
-                    <TransformGroup>
-                      <ScaleTransform />
-                      <SkewTransform />
-                      <RotateTransform />
-                      <TranslateTransform />
-                    </TransformGroup>
-                  </ContentPresenter.RenderTransform>
-                </ContentPresenter>
-              </Grid>
-            </Border>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Default] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Default] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Normal] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Setter Property="IsVisible" Value="True"/>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Up] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="TranslateTransform.Y" Value="30"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-            <Setter Property="TranslateTransform.Y" Value="0"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Up] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-            <Setter Property="TranslateTransform.Y" Value="0"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="TranslateTransform.Y" Value="-30"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Down] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="TranslateTransform.Y" Value="-40"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-            <Setter Property="TranslateTransform.Y" Value="0"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Down] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-            <Setter Property="TranslateTransform.Y" Value="0"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="TranslateTransform.Y" Value="40"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Right] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-        </Animation>
-        <Animation Duration="00:00:00.200" Easing="BounceEaseOut">
-          <KeyFrame Cue="0%">
-            <Setter Property="TranslateTransform.X" Value="-30"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-        </Animation>
-
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Right] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-        </Animation>
-        <Animation Duration="00:00:00.200" Easing="BounceEaseOut">
-          <KeyFrame Cue="0%">
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="TranslateTransform.X" Value="30"/>
-          </KeyFrame>
-        </Animation>
-
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Left] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-        </Animation>
-        <Animation Duration="00:00:00.200" Easing="BounceEaseOut">
-          <KeyFrame Cue="0%">
-            <Setter Property="TranslateTransform.X" Value="30"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-        </Animation>
-
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=Left] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-        </Animation>
-        <Animation Duration="00:00:00.200" Easing="BounceEaseOut">
-          <KeyFrame Cue="0%">
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="TranslateTransform.X" Value="-30"/>
-          </KeyFrame>
-        </Animation>
-
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=RightReplace] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-        </Animation>
-        <Animation Duration="00:00:00.200" Easing="BounceEaseOut">
-          <KeyFrame Cue="0%">
-            <Setter Property="TranslateTransform.X" Value="-40"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-        </Animation>
-
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=RightReplace] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=LeftReplace] /template/ ContentPresenter#CurrentContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="False"/>
-            <Setter Property="TranslateTransform.X" Value="40"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="True"/>
-            <Setter Property="TranslateTransform.X" Value="0"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
-
-    <Style Selector="controls|FormsTransitioningContentControl[Transition=LeftReplace] /template/ ContentPresenter#PreviousContentPresentationSite">
-      <Style.Animations>
-        <Animation Duration="00:00:00.200">
-          <KeyFrame Cue="0%">
-            <Setter Property="IsVisible" Value="True"/>
-          </KeyFrame>
-          <KeyFrame Cue="100%">
-            <Setter Property="IsVisible" Value="False"/>
-          </KeyFrame>
-        </Animation>
-      </Style.Animations>
-    </Style>
   </Application.Styles>
 
   <Application.Resources>
-    <!-- Default Global Color -->
-    <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
-    <SolidColorBrush x:Key="AccentColor" Color="#3498db" />
-
-    <!-- Default Command Bar Color -->
-    <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
-    <SolidColorBrush x:Key="CommandBarBackgroundLightColor" Color="#78bae7" />
-    <SolidColorBrush x:Key="CommandBarTextColor" Color="White" />
-
-    <!-- Default Title Bar Color -->
-    <SolidColorBrush x:Key="DefaultTitleBarBackgroundColor" Color="#3498db" />
-    <SolidColorBrush x:Key="DefaultTitleBarTextColor" Color="White" />
-
-    <!-- Default Tabbed Bar Color -->
-    <SolidColorBrush x:Key="DefaultTabbedBarBackgroundColor" Color="#3498db" />
-    <SolidColorBrush x:Key="DefaultTabbedBarTextColor" Color="White" />
-
-    <system:Double x:Key="FontSizeSmall">18</system:Double>
-    <system:Double x:Key="FontSizeNormal">20</system:Double>
-    <system:Double x:Key="FontSizeMedium">22</system:Double>
-    <system:Double x:Key="FontSizeMediumLarge">25</system:Double>
-    <system:Double x:Key="FontSizeLarge">32</system:Double>
-    <system:Double x:Key="FontSizeExtraLarge">42</system:Double>
-    <system:Double x:Key="FontSizeExtraExtraLarge">72</system:Double>
-    <system:Double x:Key="FontSizeHuge">186</system:Double>
-    <system:Double x:Key="FontSizeBody">14</system:Double>
-    <system:Double x:Key="FontSizeCaption">12</system:Double>
-    <system:Double x:Key="FontSizeHeader">46</system:Double>
-    <system:Double x:Key="FontSizeSubtitle">20</system:Double>
-    <system:Double x:Key="FontSizeTitle">24</system:Double>
-
-    <FontFamily x:Key="FontFamilyNormal">Segoe UI</FontFamily>
-    <FontFamily x:Key="FontFamilySemiBold">Segoe UI</FontFamily>
-
     <converters:HeightConverter x:Key="HeightConverter"/>
     <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
     <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
@@ -762,8 +264,6 @@
     <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
     <converters:ColorConverter x:Key="ColorConverter" />
     <converters:ImageConverter x:Key="ImageConverter" />
-    <converters:SymbolToValueConverter x:Key="SymbolToValue" />
-
 
     <DataTemplate x:Key="CellTemplate">
       <controls:CellControl Cell="{Binding}" Margin="5,0,0,0"
@@ -781,9 +281,7 @@
             </MultiBinding>
           </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock
-           Text="{Binding Text}"
-           IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
+        <TextBlock Text="{Binding Text}">
           <TextBlock.Foreground>
             <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
@@ -796,10 +294,7 @@
 
     <DataTemplate x:Key="TextCell">
       <StackPanel>
-        <TextBlock
-          Text="{Binding Text}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
-
+        <TextBlock Text="{Binding Text}" FontSize="{StaticResource FontSizeNormal}">
           <TextBlock.Foreground>
             <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
@@ -808,9 +303,7 @@
           </TextBlock.Foreground>
         </TextBlock>
 
-        <TextBlock
-          Text="{Binding Detail}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
+        <TextBlock Text="{Binding Detail}" FontSize="{StaticResource FontSizeExtraExtraSmall}">
           <TextBlock.Foreground>
             <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
@@ -850,7 +343,7 @@
 
         <TextBlock Grid.Column="1" Grid.Row="0"
           Text="{Binding Text}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}">
           <TextBlock.Foreground>
             <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
@@ -861,7 +354,7 @@
 
         <TextBlock Grid.Column="1" Grid.Row="1"
           Text="{Binding Detail}"
-          IsVisible="{Binding Text,RelativeSource={RelativeSource Self}, Converter={StaticResource CollapseWhenEmpty}}">
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}">
           <TextBlock.Foreground>
             <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>

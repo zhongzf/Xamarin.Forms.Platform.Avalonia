@@ -23,5 +23,9 @@
     <PackageReference Include="ReactiveUI" Version="11.1.23" />
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.187-pre2" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Avalonia.Forms\Avalonia.Forms.csproj" />
+  </ItemGroup>
 
 </Project>

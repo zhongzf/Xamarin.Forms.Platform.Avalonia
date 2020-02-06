@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Forms.Controls;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (this.SelectedIndex > 0)
             {
                 this.SelectedIndex -= 1;
-                FormsContentControl.Transition = TransitionType.Right;
+                ContentControl.Transition = TransitionType.Right;
             }
         }
 
@@ -76,7 +77,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (this.SelectedIndex < this.ItemsSource.Count - 1)
             {
                 this.SelectedIndex += 1;
-                FormsContentControl.Transition = TransitionType.Left;
+                ContentControl.Transition = TransitionType.Left;
             }
         }
 

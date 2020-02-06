@@ -5,7 +5,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class NavigationPageRenderer : VisualPageRenderer<NavigationPage, FormsLightNavigationPage>
+	public class NavigationPageRenderer : VisualPageRenderer<NavigationPage, FormsNavigationPage>
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<NavigationPage> e)
 		{
@@ -22,7 +22,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new FormsLightNavigationPage(Element));
+					SetNativeControl(new FormsNavigationPage(Element));
 				}
 
 				// Update control property 

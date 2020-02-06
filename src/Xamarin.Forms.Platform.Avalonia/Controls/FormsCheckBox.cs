@@ -11,7 +11,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
 	public class FormsCheckBox : ACheckBox, IStyleable
 	{
-		public static readonly StyledProperty<Brush> TintBrushProperty = AvaloniaProperty.Register<FormsPage, Brush>(nameof(TintBrush));
+		public static readonly StyledProperty<Brush> TintBrushProperty = AvaloniaProperty.Register<FormsCheckBox, Brush>(nameof(TintBrush));
 
 		static FormsCheckBox()
 		{

@@ -1,9 +1,9 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Forms.Controls;
+using Avalonia.Media;
 using System;
 using System.Globalization;
 using System.IO;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Enums;
 
 namespace Xamarin.Forms.Platform.Avalonia.Converters
 {
@@ -14,11 +14,11 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 			if (value is FileImageSource imageSource)
 			{
 				if (Enum.TryParse(imageSource.File, true, out Symbol symbol))
-					return new FormsSymbolIcon() { Symbol = symbol };
+					return new SymbolIcon() { Symbol = symbol };
 				else if (TryParseGeometry(imageSource.File, out Geometry geometry))
-					return new FormsPathIcon() { Data = geometry };
+					return new PathIcon() { Data = geometry };
 				else if (Path.GetExtension(imageSource.File) != null)
-					return new FormsBitmapIcon() { UriSource = new Uri(imageSource.File, UriKind.RelativeOrAbsolute) };
+					return new BitmapIcon() { UriSource = new Uri(imageSource.File, UriKind.RelativeOrAbsolute) };
 			}
 
 			return null;

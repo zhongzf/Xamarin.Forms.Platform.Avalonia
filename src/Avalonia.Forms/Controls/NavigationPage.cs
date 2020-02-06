@@ -167,57 +167,25 @@ namespace Avalonia.Forms.Controls
 			}
 			return false;
 		}
-
+		
 		public override IEnumerable<Control> GetPrimaryTopBarCommands()
 		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.PrimaryTopBarCommands);
-
-			if (ContentControl != null && ContentControl.Content is DynamicContentPage page)
-			{
-				frameworkElements.AddRange(page.GetPrimaryTopBarCommands());
-			}
-
-			return frameworkElements;
+			return PrimaryTopBarCommands.Merge(ContentControl, page => page.GetPrimaryTopBarCommands());
 		}
 
 		public override IEnumerable<Control> GetSecondaryTopBarCommands()
 		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.SecondaryTopBarCommands);
-
-			if (ContentControl != null && ContentControl.Content is DynamicContentPage page)
-			{
-				frameworkElements.AddRange(page.GetSecondaryTopBarCommands());
-			}
-
-			return frameworkElements;
+			return SecondaryTopBarCommands.Merge(ContentControl, page => page.GetSecondaryTopBarCommands());
 		}
 
 		public override IEnumerable<Control> GetPrimaryBottomBarCommands()
 		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.PrimaryBottomBarCommands);
-
-			if (ContentControl != null && ContentControl.Content is DynamicContentPage page)
-			{
-				frameworkElements.AddRange(page.GetPrimaryBottomBarCommands());
-			}
-
-			return frameworkElements;
+			return PrimaryBottomBarCommands.Merge(ContentControl, page => page.GetPrimaryBottomBarCommands());
 		}
 
 		public override IEnumerable<Control> GetSecondaryBottomBarCommands()
 		{
-			List<Control> frameworkElements = new List<Control>();
-			frameworkElements.AddRange(this.SecondaryBottomBarCommands);
-
-			if (ContentControl != null && ContentControl.Content is DynamicContentPage page)
-			{
-				frameworkElements.AddRange(page.GetSecondaryBottomBarCommands());
-			}
-
-			return frameworkElements;
+			return SecondaryBottomBarCommands.Merge(ContentControl, page => page.GetSecondaryBottomBarCommands());
 		}
 
 		public bool GetHasBackButton()

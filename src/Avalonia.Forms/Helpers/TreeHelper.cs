@@ -2,6 +2,7 @@
 using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.VisualTree;
 using System.Collections.Generic;
 
 namespace Avalonia.Forms.Helpers
@@ -13,7 +14,7 @@ namespace Avalonia.Forms.Helpers
     /// </summary>
     public static class TreeHelper
     {
-        public static IAvaloniaReadOnlyList<global::Avalonia.VisualTree.IVisual> GetVisualChildren(global::Avalonia.VisualTree.IVisual parent)
+        public static IAvaloniaReadOnlyList<IVisual> GetVisualChildren(IVisual parent)
         {
             return parent.VisualChildren;
         }
@@ -27,8 +28,8 @@ namespace Avalonia.Forms.Helpers
         /// <returns>The first parent item that matches the submitted
         /// type parameter. If not matching item can be found, a null
         /// reference is being returned.</returns>
-        public static T TryFindParent<T>(this global::Avalonia.VisualTree.IVisual child)
-            where T : class, global::Avalonia.VisualTree.IVisual
+        public static T TryFindParent<T>(this IVisual child)
+            where T : class, IVisual
         {
             //get parent item
             var parentObject = GetParentObject(child);
@@ -50,8 +51,8 @@ namespace Avalonia.Forms.Helpers
         /// <returns>The first parent item that matches the submitted type parameter. 
         /// If not matching item can be found, 
         /// a null parent is being returned.</returns>
-        public static T FindChild<T>(this global::Avalonia.VisualTree.IVisual parent, string childName)
-           where T : class, global::Avalonia.VisualTree.IVisual
+        public static T FindChild<T>(this IVisual parent, string childName)
+           where T : class, IVisual
         {
             // Confirm parent and childName are valid. 
             if (parent == null) return default(T);
@@ -103,7 +104,7 @@ namespace Avalonia.Forms.Helpers
         /// <param name="child">The item to be processed.</param>
         /// <returns>The submitted item's parent, if available. Otherwise
         /// null.</returns>
-        public static global::Avalonia.VisualTree.IVisual GetParentObject(this global::Avalonia.VisualTree.IVisual child)
+        public static IVisual GetParentObject(this IVisual child)
         {
             if (child == null) return null;
 
@@ -139,7 +140,7 @@ namespace Avalonia.Forms.Helpers
         /// source is already of the requested type, it will not be included in the result.</param>
         /// <param name="forceUsingTheVisualTreeHelper">Sometimes it's better to search in the VisualTree (e.g. in tests)</param>
         /// <returns>All descendants of <paramref name="source"/> that match the requested type.</returns>
-        public static IEnumerable<T> FindChildren<T>(this global::Avalonia.VisualTree.IVisual source, bool forceUsingTheVisualTreeHelper = false) where T : global::Avalonia.VisualTree.IVisual
+        public static IEnumerable<T> FindChildren<T>(this IVisual source, bool forceUsingTheVisualTreeHelper = false) where T : IVisual
         {
             if (source != null)
             {
@@ -170,7 +171,7 @@ namespace Avalonia.Forms.Helpers
         /// <param name="parent">The item to be processed.</param>
         /// <param name="forceUsingTheVisualTreeHelper">Sometimes it's better to search in the VisualTree (e.g. in tests)</param>
         /// <returns>The submitted item's child elements, if available.</returns>
-        public static IEnumerable<global::Avalonia.VisualTree.IVisual> GetChildObjects(this global::Avalonia.VisualTree.IVisual parent, bool forceUsingTheVisualTreeHelper = false)
+        public static IEnumerable<IVisual> GetChildObjects(this IVisual parent, bool forceUsingTheVisualTreeHelper = false)
         {
             if (parent == null) yield break;
 
@@ -203,7 +204,7 @@ namespace Avalonia.Forms.Helpers
         /// <param name="reference">The main element which is used to perform
         /// hit testing.</param>
         /// <param name="point">The position to be evaluated on the origin.</param>
-        public static T TryFindFromPoint<T>(InputElement reference, global::Avalonia.Point point) where T : class, global::Avalonia.VisualTree.IVisual
+        public static T TryFindFromPoint<T>(InputElement reference, Point point) where T : class, IVisual
         {
             var element = reference.InputHitTest(point);
             if (element == null)
@@ -217,7 +218,7 @@ namespace Avalonia.Forms.Helpers
             return TryFindParent<T>(element);
         }
 
-        public static IEnumerable<T> FindVisualChildren<T>(this global::Avalonia.VisualTree.IVisual parent) where T : global::Avalonia.VisualTree.IVisual
+        public static IEnumerable<T> FindVisualChildren<T>(this IVisual parent) where T : IVisual
         {
             var visualChildren = GetVisualChildren(parent);
             for (int i = 0; i < visualChildren.Count; i++)
@@ -235,7 +236,7 @@ namespace Avalonia.Forms.Helpers
             }
         }
 
-        public static T FindVisualChild<T>(this global::Avalonia.VisualTree.IVisual parent) where T : class, global::Avalonia.VisualTree.IVisual
+        public static T FindVisualChild<T>(this IVisual parent) where T : class, IVisual
         {
             var child = default(T);
 

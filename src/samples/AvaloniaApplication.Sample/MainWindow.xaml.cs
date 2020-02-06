@@ -13,7 +13,6 @@ namespace AvaloniaApplication.Sample
 #if DEBUG
             this.AttachDevTools();
 #endif
-            this.DataContext = this;
 
             Xamarin.Forms.Forms.Init();
             LoadApplication(new FormsGallery.App());

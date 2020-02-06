@@ -1,14 +1,15 @@
-﻿using System.Collections.Specialized;
+﻿using Avalonia.Forms.Controls;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using ASelectionChangedEventArgs = Xamarin.Forms.Platform.Avalonia.Controls.SelectionChangedEventArgs;
+using ASelectionChangedEventArgs = Avalonia.Forms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
 	public class VisualMultiPageRenderer<TElement, TContainer, TNativeElement> : VisualPageRenderer<TElement, TNativeElement>
 		where TElement : MultiPage<TContainer>
-		where TNativeElement : FormsMultiPage
+		where TNativeElement : MultiContentPage
 		where TContainer : Page
 	{
 

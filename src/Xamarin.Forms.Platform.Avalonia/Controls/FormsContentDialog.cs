@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
+using Avalonia.Forms.Controls;
 using Avalonia.Styling;
 using ReactiveUI;
 using System;
@@ -162,10 +163,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		public async Task<LightContentDialogResult> ShowAsync()
 		{
-			if ((global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is FormsWindow window)
+			if ((global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is ApplicationWindow window)
 			{
 				window.Show();
-				LightContentDialogOpenedEventArgs lightContentDialogOpenedEventArgs = new LightContentDialogOpenedEventArgs();
+                LightContentDialogOpenedEventArgs lightContentDialogOpenedEventArgs = new LightContentDialogOpenedEventArgs();
 				Opened?.Invoke(this, lightContentDialogOpenedEventArgs);
 			}
 
@@ -187,10 +188,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 			LightContentDialogClosingEventArgs lightContentDialogClosingEventArgs = new LightContentDialogClosingEventArgs(contentDialogResult);
 			Closing?.Invoke(this, lightContentDialogClosingEventArgs);
 
-			if (!lightContentDialogClosingEventArgs.Cancel && (global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is FormsWindow window)
+			if (!lightContentDialogClosingEventArgs.Cancel && (global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is ApplicationWindow window)
 			{
 				window.Hide();
-				LightContentDialogClosedEventArgs lightContentDialogClosedEventArgs = new LightContentDialogClosedEventArgs(contentDialogResult);
+                LightContentDialogClosedEventArgs lightContentDialogClosedEventArgs = new LightContentDialogClosedEventArgs(contentDialogResult);
 				Closed?.Invoke(this, lightContentDialogClosedEventArgs);
 				return true;
 			}

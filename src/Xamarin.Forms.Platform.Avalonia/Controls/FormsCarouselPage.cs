@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Forms.Controls;
 using Avalonia.Threading;
 using ReactiveUI;
 using System;
@@ -11,7 +12,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsCarouselPage : FormsMultiPage
+    public class FormsCarouselPage : MultiContentPage
     {
         public ReactiveCommand<Unit, Unit> NextCommand { get; }
         public ReactiveCommand<Unit, Unit> PreviousCommand { get; }
@@ -74,8 +75,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (this.SelectedIndex > 0)
             {
                 this.SelectedIndex -= 1;
-                FormsContentControl.Transition = TransitionType.Right;
-                DispatcherTimer.RunOnce(() => FormsContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
+                ContentControl.Transition = TransitionType.Right;
+                DispatcherTimer.RunOnce(() => ContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
             }
         }
 
@@ -89,8 +90,8 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (this.SelectedIndex < this.ItemsSource.Count - 1)
             {
                 this.SelectedIndex += 1;
-                FormsContentControl.Transition = TransitionType.Left;
-                DispatcherTimer.RunOnce(() => FormsContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
+                ContentControl.Transition = TransitionType.Left;
+                DispatcherTimer.RunOnce(() => ContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
             }
         }
 

@@ -8,12 +8,13 @@ using System.Reactive.Linq;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 using Xamarin.Forms.Platform.Avalonia.Converters;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
+using Avalonia.Forms.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
 	public class VisualPageRenderer<TElement, TNativeElement> : ViewRenderer<TElement, TNativeElement>
 		where TElement : Page
-		where TNativeElement : FormsPage
+		where TNativeElement : DynamicContentPage
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<TElement> e)
 		{
@@ -100,11 +101,11 @@ namespace Xamarin.Forms.Platform.Avalonia
 					Converter = new IconConveter()
 				};
 
-				var appBar = new FormsAppBarButton() 
+				var appBar = new AppBarButton() 
 				{ 
 					DataContext = item, 
-					[!FormsAppBarButton.IconProperty] = iconBinding,
-					[!FormsAppBarButton.LabelProperty] = new global::Avalonia.Data.Binding(nameof(item.Text)),
+					[!AppBarButton.IconProperty] = iconBinding,
+					[!AppBarButton.LabelProperty] = new global::Avalonia.Data.Binding(nameof(item.Text)),
 				};
 
 				appBar.Click += (sender, e) =>
