@@ -1,5 +1,7 @@
-﻿using Avalonia.Controls.Presenters;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Text;
 
 namespace Avalonia.Forms.Controls
 {
-    public class RoundButton : Avalonia.Controls.Button
+    public class RoundButton : Button, IStyleable
     {
 		public static readonly StyledProperty<int> CornerRadiusProperty = AvaloniaProperty.Register<RoundButton, int>(nameof(CornerRadius));
 
@@ -15,6 +17,8 @@ namespace Avalonia.Forms.Controls
 		{
 			CornerRadiusProperty.Changed.AddClassHandler<RoundButton>((x, e) => x.OnCornerRadiusPropertyChanged(e));
 		}
+
+		Type IStyleable.StyleKey => typeof(Button);
 
 		public int CornerRadius
 		{

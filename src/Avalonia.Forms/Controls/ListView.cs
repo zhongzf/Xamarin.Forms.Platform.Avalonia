@@ -13,16 +13,19 @@ namespace Avalonia.Forms.Controls
 {
     public class ListView : ListBox, IStyleable
     {
-        Type IStyleable.StyleKey => typeof(ListBox);
-
         public static readonly StyledProperty<object> ItemTemplateSelectorProperty = AvaloniaProperty.Register<ListView, object>(nameof(ItemTemplateSelector));
+
+        static ListView()
+        {
+        }
+
+        Type IStyleable.StyleKey => typeof(ListBox);
 
         public object ItemTemplateSelector
         {
             get { return GetValue(ItemTemplateSelectorProperty); }
             set { SetValue(ItemTemplateSelectorProperty, value); }
         }
-
 
         public ListView()
         {
