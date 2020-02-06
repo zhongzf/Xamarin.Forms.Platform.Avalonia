@@ -38,8 +38,14 @@ namespace Avalonia.Forms.Controls
 
         public DynamicContentControl()
         {
+            LayoutUpdated += OnLayoutUpdated;
         }
-        
+
+        protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            ContentLoader.OnSizeContentChanged(this, Source);
+        }
+
         private void OnSourcePropertyChanged(AvaloniaPropertyChangedEventArgs e)
         {
             OnSourceChanged(e.OldValue, e.NewValue);

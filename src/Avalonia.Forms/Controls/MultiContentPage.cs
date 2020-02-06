@@ -140,5 +140,10 @@ namespace Avalonia.Forms.Controls
             SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
             SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
         }
+
+        protected override void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            ContentLoader?.OnSizeContentChanged(this, SelectedItem);
+        }
     }
 }

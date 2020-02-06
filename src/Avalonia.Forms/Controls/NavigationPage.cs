@@ -45,7 +45,6 @@ namespace Avalonia.Forms.Controls
 			ContentControl = e.NameScope.Find<TransitioningContentControl>("PART_Navigation_Content");
 		}
 
-
 		#region INavigation
 		public int StackDepth
 		{
@@ -209,6 +208,11 @@ namespace Avalonia.Forms.Controls
 		public virtual void OnBackButtonPressed()
 		{
 			Pop();
+		}
+
+		protected override void OnLayoutUpdated(object sender, EventArgs e)
+		{
+			ContentLoader.OnSizeContentChanged(this, CurrentPage);
 		}
 	}
 }

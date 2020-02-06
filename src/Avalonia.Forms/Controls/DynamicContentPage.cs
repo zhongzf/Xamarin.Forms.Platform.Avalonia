@@ -124,8 +124,22 @@ namespace Avalonia.Forms.Controls
 
 			AttachedToVisualTree += (sender, e) => Appearing();
 			DetachedFromVisualTree += (sender, e) => Disappearing();
+
+			LayoutUpdated += OnLayoutUpdated;
 		}
 
+		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		{
+		}
+
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if (e.Property == TitleProperty || e.Property == HasBackButtonProperty || e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
+			{
+				ParentWindow?.SynchronizeAppBar();
+			}
+		}
 
 		protected virtual void Appearing()
 		{

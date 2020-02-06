@@ -11,7 +11,10 @@ namespace Avalonia.Forms.Interfaces
     public interface IContentLoader
     {
         Task<object> LoadContentAsync(Control parent, object oldContent, object newContent, CancellationToken cancellationToken);
-    }
+		
+		// TODO: 
+		void OnSizeContentChanged(Control parent, object content);
+	}
 
 	public class DefaultContentLoader : IContentLoader
 	{
@@ -45,6 +48,9 @@ namespace Avalonia.Forms.Interfaces
 			}
 			return null;
 		}
-	}
 
+		public void OnSizeContentChanged(Control parent, object content)
+		{
+		}
+	}
 }

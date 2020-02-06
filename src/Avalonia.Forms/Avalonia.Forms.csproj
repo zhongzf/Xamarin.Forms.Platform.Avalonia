@@ -2,6 +2,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <PackageId>Avalonia.Forms</PackageId>
+    <Title>Avalonia.Forms</Title>
+    <Version>0.7.0</Version>
+    <Company>RaisingStudio</Company>
+    <Authors>zhongzf</Authors>
+    <PackageProjectUrl>https://github.com/zhongzf/Xamarin.Forms.Platform.Avalonia</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zhongzf/Xamarin.Forms.Platform.Avalonia</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/zhongzf/Xamarin.Forms.Platform.Avalonia/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>© 2020 RaisingStudio</Copyright>
+    <Description>Avalonia base controls for Xamarin Forms platform.</Description>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>

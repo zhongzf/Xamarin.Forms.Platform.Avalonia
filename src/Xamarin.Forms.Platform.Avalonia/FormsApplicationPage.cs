@@ -22,16 +22,16 @@ namespace Xamarin.Forms.Platform.Avalonia
             //System.Windows.Application.Current.Exit += OnClosing;
 
             //MessagingCenter.Send(this, WPFDeviceInfo.BWPorientationChangedName, this.ToDeviceOrientation());
-            this.LayoutUpdated += FormsApplicationPage_LayoutUpdated;
+            this.LayoutUpdated += OnLayoutUpdated;
 
 			this.ContentLoader = new FormsContentLoader();
         }
 
-        private void FormsApplicationPage_LayoutUpdated(object sender, EventArgs e)
-        {
+		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		{
 		}
 
-        public void LoadApplication(Application application)
+		public void LoadApplication(Application application)
         {
             Application.Current = application;
             application.PropertyChanged += ApplicationOnPropertyChanged;

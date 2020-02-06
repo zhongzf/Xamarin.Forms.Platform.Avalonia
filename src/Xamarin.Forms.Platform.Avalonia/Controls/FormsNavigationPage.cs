@@ -28,6 +28,6 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             {
                 NavigationPage.PopAsync();
             }
-        }
+        }        
     }
 }

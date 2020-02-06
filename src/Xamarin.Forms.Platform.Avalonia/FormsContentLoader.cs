@@ -46,15 +46,6 @@ namespace Xamarin.Forms.Platform.Avalonia
             }
         }
 
-        public void OnSizeContentChanged(Rect parentBounds, object page)
-        {
-            VisualElement visualElement = page as VisualElement;
-            if (visualElement != null)
-            {
-                CreateOrResizeContent(parentBounds, visualElement);
-            }
-        }
-
         private object CreateOrResizeContent(Control parent, VisualElement visualElement)
         {
             //if (Debugger.IsAttached)
