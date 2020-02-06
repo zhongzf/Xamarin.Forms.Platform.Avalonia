@@ -4,6 +4,7 @@ using Avalonia.Forms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Avalonia.Forms.Controls
@@ -29,7 +30,7 @@ namespace Avalonia.Forms.Controls
 
         static MultiContentPage()
         {
-
+            SelectedItemProperty.Changed.AddClassHandler<MultiContentPage>((x, e) => x.OnSelectedItemPropertyChanged(e));
         }
 
         public ObservableCollection<object> ItemsSource
@@ -127,5 +128,17 @@ namespace Avalonia.Forms.Controls
             return frameworkElements;
         }
 
+
+        private void OnSelectedItemPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+        {
+            OnSelectedItemChanged(e.OldValue, e.NewValue);
+        }
+
+        protected virtual void OnSelectedItemChanged(object oldValue, object newValue)
+        {
+            if (ItemsSource == null) return;
+            SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
+            SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(oldValue, newValue));
+        }
     }
 }
