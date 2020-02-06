@@ -1,14 +1,14 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Forms.Controls;
-using Avalonia.Forms.Interfaces;
+using AvaloniaForms.Controls;
+using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using ASelectionChangedEventArgs = Avalonia.Forms.Controls.SelectionChangedEventArgs;
+using ASelectionChangedEventArgs = AvaloniaForms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {

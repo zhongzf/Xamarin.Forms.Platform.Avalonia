@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.Templates;
-using Avalonia.Forms.Interfaces;
+using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Forms.Controls;
+using AvaloniaForms.Controls;
 using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsNavigationPage : global::Avalonia.Forms.Controls.NavigationPage
+    public class FormsNavigationPage : global::AvaloniaForms.Controls.NavigationPage
     {
         NavigationPage NavigationPage;
 

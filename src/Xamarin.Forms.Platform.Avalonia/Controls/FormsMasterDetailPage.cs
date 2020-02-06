@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsMasterDetailPage : global::Avalonia.Forms.Controls.MasterDetailPage
+    public class FormsMasterDetailPage : global::AvaloniaForms.Controls.MasterDetailPage
     {
     }
 }

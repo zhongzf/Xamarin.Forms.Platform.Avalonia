@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 using Xamarin.Forms.Platform.Avalonia.Converters;
 using Xamarin.Forms.Platform.Avalonia.Extensions;
-using Avalonia.Forms.Controls;
+using AvaloniaForms.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Forms.Controls;
+using AvaloniaForms.Controls;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;

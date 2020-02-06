@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Forms.Controls;
+using AvaloniaForms.Controls;
 using Avalonia.Styling;
 using System;
 using System.Threading;

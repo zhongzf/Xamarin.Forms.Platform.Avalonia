@@ -5,13 +5,13 @@
 					   xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
              xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
-             xmlns:forms="clr-namespace:Avalonia.Forms.Controls;assembly=Avalonia.Forms"
+             xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
              x:Class="AvaloniaApplication.Sample.App">
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
 
-    <StyleInclude Source="resm:Avalonia.Forms.Themes.DefaultTheme.xaml?assembly=Avalonia.Forms"/>
+    <StyleInclude Source="resm:AvaloniaForms.Themes.DefaultTheme.xaml?assembly=AvaloniaForms"/>
 
     <Style Selector="controls|FormsTabbedPage">
       <Setter Property="Background" Value="Transparent" />

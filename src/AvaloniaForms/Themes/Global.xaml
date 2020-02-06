@@ -1,0 +1,45 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+        xmlns:converters="clr-namespace:AvaloniaForms.Converters;assembly=AvaloniaForms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <!-- Default Global Color -->
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
+    <SolidColorBrush x:Key="AccentColor" Color="#3498db" />
+
+    <!-- Default Command Bar Color -->
+    <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="CommandBarBackgroundLightColor" Color="#78bae7" />
+    <SolidColorBrush x:Key="CommandBarTextColor" Color="White" />
+
+    <!-- Default Title Bar Color -->
+    <SolidColorBrush x:Key="DefaultTitleBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="DefaultTitleBarTextColor" Color="White" />
+
+    <!-- Default Tabbed Bar Color -->
+    <SolidColorBrush x:Key="DefaultTabbedBarBackgroundColor" Color="#3498db" />
+    <SolidColorBrush x:Key="DefaultTabbedBarTextColor" Color="White" />
+
+    <system:Double x:Key="FontSizeExtraExtraSmall">12</system:Double>
+    <system:Double x:Key="FontSizeExtraSmall">15</system:Double>
+    <system:Double x:Key="FontSizeSmall">18</system:Double>
+    <system:Double x:Key="FontSizeNormal">20</system:Double>
+    <system:Double x:Key="FontSizeMedium">22</system:Double>
+    <system:Double x:Key="FontSizeMediumLarge">25</system:Double>
+    <system:Double x:Key="FontSizeLarge">32</system:Double>
+    <system:Double x:Key="FontSizeExtraLarge">42</system:Double>
+    <system:Double x:Key="FontSizeExtraExtraLarge">72</system:Double>
+    <system:Double x:Key="FontSizeHuge">186</system:Double>
+    <system:Double x:Key="FontSizeBody">14</system:Double>
+    <system:Double x:Key="FontSizeCaption">12</system:Double>
+    <system:Double x:Key="FontSizeHeader">46</system:Double>
+    <system:Double x:Key="FontSizeSubtitle">20</system:Double>
+    <system:Double x:Key="FontSizeTitle">24</system:Double>
+
+    <FontFamily x:Key="FontFamilyNormal">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontFamilySemiBold">Segoe UI</FontFamily>
+
+    <converters:SymbolToValueConverter x:Key="SymbolToValue" />
+  </Styles.Resources>
+</Styles>

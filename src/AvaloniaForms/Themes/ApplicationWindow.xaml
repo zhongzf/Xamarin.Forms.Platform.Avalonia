@@ -1,0 +1,78 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style Selector="forms|ApplicationWindow">
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="BorderWindow" Background="{Binding Background}" BorderBrush="{DynamicResource CommandBarBackgroundColor}" BorderThickness="1" >
+          <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+            <Grid Name="PART_CommandsBar"  Grid.Row="0" Height="24" VerticalAlignment="Center"
+                  IsVisible="{Binding HasBackButtonModal}"
+                  Background="{DynamicResource CommandBarBackgroundColor}">
+
+              <Button Name="PART_Previous_Modal" Focusable="False"
+                      IsVisible="{Binding HasBackButtonModal}"
+                      HorizontalAlignment="Left">
+                <forms:SymbolIcon Symbol="ChevronFlipLeftLegacy" FontSize="12"  />
+              </Button>
+
+              <TextBlock Name="PART_System_Title" Margin="15,0,0,0" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                         FontSize="14" Opacity="1" Foreground="{DynamicResource CommandBarTextColor}"/>
+
+              <forms:WindowButtons Name="PART_WindowButtonCommands"
+                                                  IsVisible="{Binding !HasSystemDecorations}"
+                                 Focusable="False" HorizontalAlignment="Right"
+                                 VerticalAlignment="Center" Opacity="1"
+                                 UseLayoutRounding="True"
+                                 Height="20"
+                                 Foreground="{DynamicResource CommandBarTextColor}"/>
+            </Grid>
+
+            <forms:AppBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
+                                  IsVisible="{Binding HasNavigationBar}"
+                                  Foreground="{Binding TitleBarTextColor}">
+
+              <Grid>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Height="30"  Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Center" UseLayoutRounding="True">
+                  <Button Name="PART_Hamburger" Focusable="False">
+                    <forms:SymbolIcon Symbol="GlobalNavigationButton" FontSize="16"  />
+                  </Button>
+
+                  <Button Name="PART_Previous" Focusable="False" IsEnabled="True" IsVisible="{Binding HasBackButton}">
+                    <StackPanel Orientation="Horizontal">
+                      <forms:SymbolIcon Symbol="ChevronFlipLeftLegacy"  />
+                      <TextBlock Margin="5,0,0,0" Text="{Binding BackButtonTitle}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"  />
+                    </StackPanel>
+                  </Button>
+                </StackPanel>
+
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"  />
+              </Grid>
+
+            </forms:AppBar>
+
+            <forms:DynamicContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />
+
+            <forms:TransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" IsVisible="{Binding HasModalPage}" />
+
+            <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000" IsVisible="{Binding HasContentDialog}">
+              <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
+            </Grid>
+
+            <forms:AppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomAppBar}"  Background="{Binding TitleBarBackgroundColor}" />
+
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="forms|ApplicationWindow /template/ Button, forms|AppBar /template/ Button:pointerover">
+    <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />
+  </Style>
+
+</Styles>
