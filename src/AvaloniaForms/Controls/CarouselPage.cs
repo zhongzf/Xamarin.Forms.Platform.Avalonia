@@ -68,7 +68,7 @@ namespace AvaloniaForms.Controls
             {
                 this.SelectedIndex -= 1;
                 ContentControl.Transition = TransitionType.Right;
-                DispatcherTimer.RunOnce(() => ContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
+                ResetTransition();
             }
         }
 
@@ -83,7 +83,7 @@ namespace AvaloniaForms.Controls
             {
                 this.SelectedIndex += 1;
                 ContentControl.Transition = TransitionType.Left;
-                DispatcherTimer.RunOnce(() => ContentControl.Transition = TransitionType.Default, TimeSpan.FromSeconds(0.2));
+                ResetTransition();
             }
         }
 
@@ -96,6 +96,14 @@ namespace AvaloniaForms.Controls
             {
                 this.SelectedItem = items.ElementAt((int)e.NewValue);
             }
+        }
+
+        protected virtual void ResetTransition()
+        {
+            DispatcherTimer.RunOnce(() =>
+            {
+                ContentControl.Transition = TransitionType.Default;
+            }, TimeSpan.FromSeconds(0.2));
         }
     }
 }

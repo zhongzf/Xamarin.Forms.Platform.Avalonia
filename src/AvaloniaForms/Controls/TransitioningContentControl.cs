@@ -122,7 +122,7 @@ namespace AvaloniaForms.Controls
 
         private void OnTransitionPropertyChanged(AvaloniaPropertyChangedEventArgs e)
         {
-            if(IsTransitioning)
+            if (IsTransitioning)
             {
                 AbortTransition();
             }
@@ -143,7 +143,6 @@ namespace AvaloniaForms.Controls
         }
 
         #region Transition
-
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "newContent", Justification = "Should be used in the future.")]
         private void StartTransition(object oldContent, object newContent)
         {
@@ -155,10 +154,7 @@ namespace AvaloniaForms.Controls
             if (previousContentPresentationSite != null)
             {
                 this.previousContentPresentationSite.Content = oldContent;
-                DispatcherTimer.RunOnce(() => { 
-                    this.previousContentPresentationSite.Content = null;
-                    TransitionCompleted?.Invoke(this, EventArgs.Empty);
-                }, TimeSpan.FromSeconds(0.2));
+                ResetTransition();
             }
 
             // and start a new transition
@@ -216,6 +212,16 @@ namespace AvaloniaForms.Controls
                     return "LeftReplaceTransition";
             }
         }
+
+        protected virtual void ResetTransition()
+        {
+            DispatcherTimer.RunOnce(() =>
+            {
+                this.previousContentPresentationSite.Content = null;
+                TransitionCompleted?.Invoke(this, EventArgs.Empty);
+            }, TimeSpan.FromSeconds(0.2));
+        }
+
         #endregion
     }
 }
