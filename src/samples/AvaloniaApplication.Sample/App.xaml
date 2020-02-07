@@ -11,8 +11,6 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
 
-    <StyleInclude Source="resm:AvaloniaForms.Themes.DefaultTheme.xaml?assembly=AvaloniaForms"/>
-
     <Style Selector="controls|FormsCollectionView">
       <Setter Property="Template">
         <ControlTemplate>

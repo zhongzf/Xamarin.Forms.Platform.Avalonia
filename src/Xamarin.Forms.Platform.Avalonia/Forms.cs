@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
+using AvaloniaForms.Themes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,51 +11,62 @@ using Xamarin.Forms.Platform.Avalonia;
 
 namespace Xamarin.Forms
 {
-	public static class Forms
-	{
-		public static bool IsInitialized { get; private set; }
+    public static class Forms
+    {
+        public static bool IsInitialized { get; private set; }
 
-		static bool FlagsSet { get; set; }
+        static bool FlagsSet { get; set; }
 
-		static IReadOnlyList<string> s_flags;
-		public static IReadOnlyList<string> Flags => s_flags ?? (s_flags = new List<string>().AsReadOnly());
+        static IReadOnlyList<string> s_flags;
+        public static IReadOnlyList<string> Flags => s_flags ?? (s_flags = new List<string>().AsReadOnly());
 
-		public static void Init(IEnumerable<Assembly> rendererAssemblies = null)
-		{
-			if (IsInitialized)
-				return;
+        public static void Init<T>(IEnumerable<Assembly> rendererAssemblies = null) where T : Application, new()
+        {
+            Init(null, rendererAssemblies);
+            Application.Current = new T();
+        }
 
-			Log.Listeners.Add(new DelegateLogListener((c, m) => Console.WriteLine("[{0}] {1}", m, c)));
-			Registrar.ExtraAssemblies = rendererAssemblies?.ToArray();
+        public static void Init(Type applicationType = null, IEnumerable<Assembly> rendererAssemblies = null)
+        {
+            if (IsInitialized)
+                return;
 
-			Device.SetTargetIdiom(TargetIdiom.Desktop);
-			Device.PlatformServices = new AvaloniaPlatformServices();
-			Device.Info = new AvaloniaDeviceInfo();
-			ExpressionSearch.Default = new AvaloniaExpressionSearch();
+            Log.Listeners.Add(new DelegateLogListener((c, m) => Console.WriteLine("[{0}] {1}", m, c)));
+            Registrar.ExtraAssemblies = rendererAssemblies?.ToArray();
 
-			Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
+            Device.SetTargetIdiom(TargetIdiom.Desktop);
+            Device.PlatformServices = new AvaloniaPlatformServices();
+            Device.Info = new AvaloniaDeviceInfo();
+            ExpressionSearch.Default = new AvaloniaExpressionSearch();
 
-			Ticker.SetDefault(new AvaloniaTicker());
-			Device.SetIdiom(TargetIdiom.Desktop);
-			Device.SetFlags(s_flags);
+            Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
 
-			IsInitialized = true;
-		}
+            Ticker.SetDefault(new AvaloniaTicker());
+            Device.SetIdiom(TargetIdiom.Desktop);
+            Device.SetFlags(s_flags);
 
-		public static void SetFlags(params string[] flags)
-		{
-			if (FlagsSet)
-			{
-				return;
-			}
+            IsInitialized = true;
 
-			if (IsInitialized)
-			{
-				throw new InvalidOperationException($"{nameof(SetFlags)} must be called before {nameof(Init)}");
-			}
+            if (applicationType != null)
+            {
+                Application.Current = Activator.CreateInstance(applicationType) as Application;
+            }
+        }
 
-			s_flags = flags.ToList().AsReadOnly();
-			FlagsSet = true;
-		}
-	}
+        public static void SetFlags(params string[] flags)
+        {
+            if (FlagsSet)
+            {
+                return;
+            }
+
+            if (IsInitialized)
+            {
+                throw new InvalidOperationException($"{nameof(SetFlags)} must be called before {nameof(Init)}");
+            }
+
+            s_flags = flags.ToList().AsReadOnly();
+            FlagsSet = true;
+        }
+    }
 }
