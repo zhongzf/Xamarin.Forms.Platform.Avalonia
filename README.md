@@ -29,7 +29,7 @@ Install-Package Xamarin.Forms.Platform.Avalonia
 ```cs
 using Xamarin.Forms.Platform.Avalonia;
 ```
-4. Change the base class of MainWindow to **FormsApplicationPage**, and add **Forms.Init()** and **LoadApplication()** method call, '**FormsGallery.App**' in the code should be the name of your Xamarin.Forms App:
+6. Change the base class of MainWindow to **FormsApplicationPage**, and add **Forms.Init()** and **LoadApplication()** method call, '**FormsGallery.App**' in the code should be the name of your Xamarin.Forms App:
 ```cs
     public class MainWindow : FormsApplicationPage
     {
