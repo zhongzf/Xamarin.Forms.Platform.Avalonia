@@ -155,7 +155,10 @@ namespace AvaloniaForms.Controls
             if (previousContentPresentationSite != null)
             {
                 this.previousContentPresentationSite.Content = oldContent;
-                DispatcherTimer.RunOnce(() => this.previousContentPresentationSite.Content = null, TimeSpan.FromSeconds(0.2));
+                DispatcherTimer.RunOnce(() => { 
+                    this.previousContentPresentationSite.Content = null;
+                    TransitionCompleted?.Invoke(this, EventArgs.Empty);
+                }, TimeSpan.FromSeconds(0.2));
             }
 
             // and start a new transition
