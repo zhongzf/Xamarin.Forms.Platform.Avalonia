@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Platform.Avalonia.Converters
+namespace AvaloniaForms.Converters
 {
 	public sealed class CaseConverter : global::Avalonia.Data.Converters.IValueConverter
 	{

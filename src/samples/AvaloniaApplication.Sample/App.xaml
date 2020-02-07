@@ -134,9 +134,6 @@
   <Application.Resources>
     <converters:HeightConverter x:Key="HeightConverter"/>
     <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
-    <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
-    <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
-    <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
     <converters:ColorConverter x:Key="ColorConverter" />
     <converters:ImageConverter x:Key="ImageConverter" />
 

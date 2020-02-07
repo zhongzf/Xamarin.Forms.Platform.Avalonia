@@ -41,5 +41,8 @@
     <FontFamily x:Key="FontFamilySemiBold">Segoe UI</FontFamily>
 
     <converters:SymbolToValueConverter x:Key="SymbolToValue" />
+    <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
+    <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
+    <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
   </Styles.Resources>
 </Styles>

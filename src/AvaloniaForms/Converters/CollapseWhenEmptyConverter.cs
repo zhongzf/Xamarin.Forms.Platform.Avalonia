@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Xamarin.Forms.Platform.Avalonia.Converters
+namespace AvaloniaForms.Converters
 {
 	public sealed class CollapseWhenEmptyConverter : global::Avalonia.Data.Converters.IValueConverter
 	{

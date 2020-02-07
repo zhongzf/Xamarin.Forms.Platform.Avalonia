@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>AvaloniaForms</PackageId>
     <Title>AvaloniaForms</Title>
-    <Version>0.7.0</Version>
+    <Version>0.7.1</Version>
     <Company>RaisingStudio</Company>
     <Authors>zhongzf</Authors>
     <PackageProjectUrl>https://github.com/zhongzf/Xamarin.Forms.Platform.Avalonia</PackageProjectUrl>
