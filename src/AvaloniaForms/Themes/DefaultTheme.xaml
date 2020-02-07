@@ -7,5 +7,9 @@
   <StyleInclude Source="resm:AvaloniaForms.Themes.AppBar.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.WindowButtons.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.TransitioningContentControl.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.CarouselPage.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.TabbedPage.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.MasterDetailPage.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.NavigationPage.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.ApplicationWindow.xaml?assembly=AvaloniaForms"/>
 </Styles>

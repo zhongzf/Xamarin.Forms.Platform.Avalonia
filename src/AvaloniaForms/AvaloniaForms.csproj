@@ -28,9 +28,13 @@
     <AvaloniaResource Remove="Themes\AppBar.xaml" />
     <AvaloniaResource Remove="Themes\AppBarButton.xaml" />
     <AvaloniaResource Remove="Themes\ApplicationWindow.xaml" />
+    <AvaloniaResource Remove="Themes\CarouselPage.xaml" />
     <AvaloniaResource Remove="Themes\DefaultTheme.xaml" />
     <AvaloniaResource Remove="Themes\ElementIcon.xaml" />
     <AvaloniaResource Remove="Themes\Global.xaml" />
+    <AvaloniaResource Remove="Themes\MasterDetailPage.xaml" />
+    <AvaloniaResource Remove="Themes\NavigationPage.xaml" />
+    <AvaloniaResource Remove="Themes\TabbedPage.xaml" />
     <AvaloniaResource Remove="Themes\TransitioningContentControl.xaml" />
     <AvaloniaResource Remove="Themes\WindowButtons.xaml" />
   </ItemGroup>
@@ -38,16 +42,37 @@
     <None Remove="Themes\AppBar.xaml" />
     <None Remove="Themes\AppBarButton.xaml" />
     <None Remove="Themes\ApplicationWindow.xaml" />
+    <None Remove="Themes\CarouselPage.xaml" />
     <None Remove="Themes\DefaultTheme.xaml" />
     <None Remove="Themes\ElementIcon.xaml" />
     <None Remove="Themes\Global.xaml" />
+    <None Remove="Themes\MasterDetailPage.xaml" />
+    <None Remove="Themes\NavigationPage.xaml" />
+    <None Remove="Themes\TabbedPage.xaml" />
     <None Remove="Themes\TransitioningContentControl.xaml" />
     <None Remove="Themes\WindowButtons.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.0" />
+    <PackageReference Include="ReactiveUI" Version="11.1.23" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Themes\MasterDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\NavigationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\TabbedPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\CarouselPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Themes\AppBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

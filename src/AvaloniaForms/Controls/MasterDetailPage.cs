@@ -8,10 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Avalonia.Styling;
 
 namespace AvaloniaForms.Controls
 {
-    public class MasterDetailPage : DynamicContentPage
+    public class MasterDetailPage : DynamicContentPage, IStyleable
     {
         public static readonly StyledProperty<object> MasterPageProperty = AvaloniaProperty.Register<MasterDetailPage, object>(nameof(MasterPage));
         public static readonly StyledProperty<object> DetailPageProperty = AvaloniaProperty.Register<MasterDetailPage, object>(nameof(DetailPage));
@@ -21,6 +22,8 @@ namespace AvaloniaForms.Controls
         {
             IsPresentedProperty.Changed.AddClassHandler<MasterDetailPage>((x, e) => x.OnIsPresentedPropertyChanged(e));
         }
+
+        Type IStyleable.StyleKey => typeof(MasterDetailPage);
 
         public object MasterPage
         {

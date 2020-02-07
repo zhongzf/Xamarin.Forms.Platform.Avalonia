@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Styling;
 using AvaloniaForms.Extensions;
 using AvaloniaForms.Interfaces;
 using System;
@@ -11,13 +12,15 @@ using System.Text;
 
 namespace AvaloniaForms.Controls
 {
-    public class NavigationPage : DynamicContentPage, INavigation
-    {
+    public class NavigationPage : DynamicContentPage, INavigation, IStyleable
+	{
 		public static readonly StyledProperty<object> CurrentPageProperty = AvaloniaProperty.Register<NavigationPage, object>(nameof(CurrentPage));
 
 		static NavigationPage()
 		{
 		}
+
+		Type IStyleable.StyleKey => typeof(NavigationPage);
 
 		public TransitioningContentControl ContentControl { get; private set; }
 

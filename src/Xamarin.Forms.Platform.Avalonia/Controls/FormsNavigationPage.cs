@@ -12,7 +12,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsNavigationPage : global::AvaloniaForms.Controls.NavigationPage
+    public class FormsNavigationPage : AvaloniaForms.Controls.NavigationPage
     {
         NavigationPage NavigationPage;
 

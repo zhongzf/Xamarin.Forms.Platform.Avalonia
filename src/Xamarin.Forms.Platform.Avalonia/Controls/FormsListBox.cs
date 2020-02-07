@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsListBox : global::AvaloniaForms.Controls.ListView
+    public class FormsListBox : AvaloniaForms.Controls.ListView
     {
     }
 }
