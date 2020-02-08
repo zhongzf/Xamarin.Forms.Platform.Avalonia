@@ -15,7 +15,7 @@ using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
-    public class FormsContentDialog : ContentControl, ILightContentDialog
+    public class FormsContentDialog : ContentDialog, ILightContentDialog
 	{
 		TaskCompletionSource<LightContentDialogResult> tcs;
 
@@ -119,7 +119,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			base.OnTemplateApplied(e);
 
-			this._primaryButton = this.Find<global::Avalonia.Controls.Button>("PART_NextButton", e);
+			this._primaryButton = this.Find<global::Avalonia.Controls.Button>("PART_PrimaryButton", e);
 			this._primaryButton.Click += _primaryButton_Click;
 			this._secondaryButton = this.Find<global::Avalonia.Controls.Button>("PART_SecondaryButton", e);
 			this._secondaryButton.Click += _secondaryButton_Click;
@@ -132,7 +132,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 		private void _secondaryButton_Click(object sender, EventArgs e)
 		{
-			
+			OnSecondaryButtonRoutedExecuted();
 		}
 
 		private void OnPrimaryButtonRoutedExecuted()
@@ -165,7 +165,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 		{
 			if ((global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is ApplicationWindow window)
 			{
-				window.Show();
+				window.ShowContentDialog(this);
                 LightContentDialogOpenedEventArgs lightContentDialogOpenedEventArgs = new LightContentDialogOpenedEventArgs();
 				Opened?.Invoke(this, lightContentDialogOpenedEventArgs);
 			}
@@ -190,7 +190,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
 			if (!lightContentDialogClosingEventArgs.Cancel && (global::Avalonia.Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow is ApplicationWindow window)
 			{
-				window.Hide();
+				window.HideContentDialog();
                 LightContentDialogClosedEventArgs lightContentDialogClosedEventArgs = new LightContentDialogClosedEventArgs(contentDialogResult);
 				Closed?.Invoke(this, lightContentDialogClosedEventArgs);
 				return true;

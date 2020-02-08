@@ -31,11 +31,13 @@ using Xamarin.Forms.Platform.Avalonia;
 [assembly: ExportRenderer(typeof(Frame), typeof(FrameRenderer))]
 [assembly: ExportRenderer(typeof(ListView), typeof(ListViewRenderer))]
 //[assembly: ExportRenderer(typeof(OpenGLView), typeof(OpenGLViewRenderer))]
+//[assembly: ExportRenderer(typeof(MediaElement), typeof(MediaElementRenderer))]
 [assembly: ExportRenderer(typeof(ImageButton), typeof(ImageButtonRenderer))]
 
 // Control doesn't exist natively in WPF Platform
 [assembly: ExportRenderer(typeof(TableView), typeof(TableViewRenderer))]
 [assembly: ExportRenderer(typeof(TimePicker), typeof(TimePickerRenderer))]
+//**[assembly: ExportRenderer(typeof(NativeViewWrapper), typeof(NativeViewWrapperRenderer))]
 
 //ImageSources
 [assembly: ExportImageSourceHandler(typeof(FileImageSource), typeof(FileImageSourceHandler))]

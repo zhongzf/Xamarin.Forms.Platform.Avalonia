@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Avalonia.Controls.Presenters;
 
 namespace AvaloniaForms.Controls
 {
@@ -51,7 +52,9 @@ namespace AvaloniaForms.Controls
 		Button previousButton;
 		Button previousModalButton;
 		Button hamburgerButton;
-		
+
+		public ContentPresenter ContentDialogContentPresenter { get; private set; }
+
 		public Brush TitleBarBackgroundColor
 		{
 			get { return (Brush)GetValue(TitleBarBackgroundColorProperty); }
@@ -192,6 +195,8 @@ namespace AvaloniaForms.Controls
 			{
 				hamburgerButton.Click += OmHamburgerButtonClick;
 			}
+
+			ContentDialogContentPresenter = e.NameScope.Find<ContentPresenter>("PART_ContentDialog_ContentPresenter");
 		}
 
 
@@ -225,11 +230,19 @@ namespace AvaloniaForms.Controls
 		{
 			this.CurrentContentDialog = contentDialog;
 			this.HasContentDialog = true;
+			if (ContentDialogContentPresenter.Content == null)
+			{
+				ContentDialogContentPresenter.Content = contentDialog;
+			}
 		}
 
 		public void HideContentDialog()
 		{
 			this.CurrentContentDialog = null;
+			if(ContentDialogContentPresenter.Content != null)
+			{
+				ContentDialogContentPresenter.Content = null;
+			}
 			this.HasContentDialog = false;
 		}
 

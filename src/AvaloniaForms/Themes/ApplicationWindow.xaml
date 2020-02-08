@@ -58,7 +58,7 @@
             <forms:TransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" IsVisible="{Binding HasModalPage}" />
 
             <Grid Name="PART_Popup" Grid.Row="1" Grid.RowSpan="3" Background="#99000000" IsVisible="{Binding HasContentDialog}">
-              <ContentPresenter Content="{Binding CurrentContentDialog}" VerticalAlignment="Center"/>
+              <ContentPresenter Name="PART_ContentDialog_ContentPresenter" VerticalAlignment="Center"/>
             </Grid>
 
             <forms:AppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomAppBar}"  Background="{Binding TitleBarBackgroundColor}" />

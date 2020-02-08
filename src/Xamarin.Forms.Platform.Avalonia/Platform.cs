@@ -41,6 +41,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				busyCount = Math.Max(0, enabled ? busyCount + 1 : busyCount - 1);
 			});
+
+			MessagingCenter.Subscribe<Page, AlertArguments>(this, Page.AlertSignalName, OnPageAlert);
+			MessagingCenter.Subscribe<Page, ActionSheetArguments>(this, Page.ActionSheetSignalName, OnPageActionSheet);
 		}
 
 		async void OnPageAlert(Page sender, AlertArguments options)
