@@ -55,4 +55,4 @@ using Xamarin.Forms.Platform.Avalonia;
 
 <img width='300' src='https://raw.githubusercontent.com/zhongzf/Xamarin.Forms.Platform.Avalonia/develop/doc/images/screenshot.png'>
 
-<img width='300' src='https://img2018.cnblogs.com/common/3141/202002/3141-20200208110927763-1933008771.png'>
+<img width='300' src='https://raw.githubusercontent.com/zhongzf/Xamarin.Forms.Platform.Avalonia/develop/doc/images/FormsGallery.png'>
