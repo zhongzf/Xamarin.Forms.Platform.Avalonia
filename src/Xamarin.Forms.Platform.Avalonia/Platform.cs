@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AvaloniaForms.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,7 +77,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			var dialogResult = await dialog.ShowAsync();
 
-			options.SetResult(dialogResult == LightContentDialogResult.Primary);
+			options.SetResult(dialogResult == ContentDialogResult.Primary);
 		}
 
 
@@ -128,12 +129,12 @@ namespace Xamarin.Forms.Platform.Avalonia
 				dialog.PrimaryButtonText = options.Destruction;
 			}
 
-			LightContentDialogResult result = await dialog.ShowAsync();
-			if (result == LightContentDialogResult.Secondary)
+			var result = await dialog.ShowAsync();
+			if (result == ContentDialogResult.Secondary)
 			{
 				options.SetResult(options.Cancel);
 			}
-			else if (result == LightContentDialogResult.Primary)
+			else if (result == ContentDialogResult.Primary)
 			{
 				options.SetResult(options.Destruction);
 			}

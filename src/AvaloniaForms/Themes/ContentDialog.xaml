@@ -1,0 +1,50 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style Selector="forms|ContentDialog">
+    <Setter Property="Width" Value="500" />
+    <Setter Property="TitleTemplate" Value="{DynamicResource TitleDefaultTemplate}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border BorderBrush="{DynamicResource AccentColor}" Background="#FFF2F2F2" BorderThickness="2">
+          <Grid Margin="24">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" MinHeight="150" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- title -->
+            <ContentControl Name="Title"
+                        Content="{TemplateBinding Title}"
+                        ContentTemplate="{TemplateBinding TitleTemplate}">
+            </ContentControl>
+
+            <!-- content -->
+            <ContentPresenter Name="Content" Margin="0,20"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    Grid.Row="1" >
+            </ContentPresenter>
+
+            <!-- buttons -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+              <Button Name="PART_PrimaryButton" Content="{TemplateBinding PrimaryButtonText}"
+                          Height="50"
+                          MinWidth="140"
+                          Margin="4,0,0,0"
+                          BorderBrush="Transparent"
+                        IsVisible="{TemplateBinding IsPrimaryButtonEnabled}" />
+              <Button Name="PART_SecondaryButton" Content="{TemplateBinding SecondaryButtonText}"
+                          Height="50"
+                          MinWidth="140"
+                          Margin="4,0,0,0"
+                          BorderBrush="Transparent"
+                        IsVisible="{TemplateBinding IsSecondaryButtonEnabled}" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

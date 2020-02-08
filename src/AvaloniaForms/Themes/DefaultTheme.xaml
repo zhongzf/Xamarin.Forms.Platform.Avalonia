@@ -11,5 +11,6 @@
   <StyleInclude Source="resm:AvaloniaForms.Themes.TabbedPage.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.MasterDetailPage.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.NavigationPage.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.ContentDialog.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.ApplicationWindow.xaml?assembly=AvaloniaForms"/>
 </Styles>
