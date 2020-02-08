@@ -33,12 +33,12 @@ namespace Xamarin.Forms.Platform.Avalonia
             base.OnElementChanged(e);
         }
 
-        protected override void Appearing()
-        {
-            base.Appearing();
+        //protected override void Appearing()
+        //{
+        //    base.Appearing();
 
-            OnPagesChanged(Element.ItemsSource, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
+        //    OnPagesChanged(Element.ItemsSource, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        //}
 
         void OnPagesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

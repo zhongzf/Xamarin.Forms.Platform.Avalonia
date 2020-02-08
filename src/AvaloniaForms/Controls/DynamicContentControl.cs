@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace AvaloniaForms.Controls
 {
     public class DynamicContentControl : ContentControl, IStyleable
-    {        
+    {
         public static readonly StyledProperty<object> SourceProperty = AvaloniaProperty.Register<DynamicContentControl, object>(nameof(Source));
         public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<DynamicContentControl, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
-        
+
         static DynamicContentControl()
         {
             SourceProperty.Changed.AddClassHandler<DynamicContentControl>((x, e) => x.OnSourcePropertyChanged(e));
@@ -80,7 +80,21 @@ namespace AvaloniaForms.Controls
                     }
                     else
                     {
-                        this.Content = t.Result;
+                        if (t.Result is IControl control)
+                        {
+                            if (control.Parent != null)
+                            {
+                                this.Content = control.Parent;
+                            }
+                            else
+                            {
+                                this.Content = control;
+                            }
+                        }
+                        else
+                        {
+                            this.Content = t.Result;
+                        }
                     }
                 }
                 finally

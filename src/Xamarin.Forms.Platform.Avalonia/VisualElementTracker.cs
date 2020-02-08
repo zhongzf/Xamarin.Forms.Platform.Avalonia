@@ -26,6 +26,7 @@ namespace Xamarin.Forms.Platform.Avalonia
     public class VisualElementTracker<TElement, TNativeElement> : VisualElementTracker where TElement : VisualElement where TNativeElement : Control
     {
         bool _disposed;
+        Control _container;
         TNativeElement _control;
         TElement _element;
 
@@ -350,6 +351,20 @@ namespace Xamarin.Forms.Platform.Avalonia
         void UpdateVisibility()
         {
             Control.IsVisible = Element.IsVisible;
+        }
+
+        public Control Container
+        {
+            get { return _container; }
+            set
+            {
+                if (_container == value)
+                    return;
+
+                _container = value;
+
+                UpdateNativeControl();
+            }
         }
 
         public override void Dispose()

@@ -71,6 +71,8 @@ namespace Xamarin.Forms.Platform.Avalonia
             get { return Element; }
         }
 
+        public Control ContainerElement => throw new NotImplementedException();
+
         public Control GetNativeElement()
         {
             return Control;

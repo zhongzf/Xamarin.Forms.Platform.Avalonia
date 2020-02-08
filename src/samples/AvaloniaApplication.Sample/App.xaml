@@ -11,25 +11,6 @@
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
     <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
 
-    <Style Selector="controls|FormsCollectionView">
-      <Setter Property="Template">
-        <ControlTemplate>
-          <Border Background="{TemplateBinding Background}"
-                  BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid Name="PART_Container">
-
-              <forms:TransitioningContentControl Name="PART_Multi_Content"
-                        Transition="Left"
-                        ContentLoader="{TemplateBinding ContentLoader}"
-                        Source="{TemplateBinding SelectedItem}" />
-
-            </Grid>
-          </Border>
-        </ControlTemplate>
-      </Setter>
-    </Style>
-
     <Style Selector="controls|FormsSwipeView">
       <Setter Property="Template">
         <ControlTemplate>

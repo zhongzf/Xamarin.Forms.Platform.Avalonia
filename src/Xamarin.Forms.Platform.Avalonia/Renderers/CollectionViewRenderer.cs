@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class CollectionViewRenderer : ItemsViewRenderer<CollectionView, FormsCollectionView>
+    public class CollectionViewRenderer : ViewRenderer<CollectionView, FormsCollectionView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CollectionView> e)
         {
@@ -18,6 +18,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                 }
 
                 // TODO:
+                UpdateItemSource();
             }
 
             base.OnElementChanged(e);
@@ -29,5 +30,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             // TODO:
         }
-    }
+
+		void UpdateItemSource()
+		{
+            Control.Items = Element.ItemsSource;
+		}
+	}
 }
