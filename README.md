@@ -15,7 +15,7 @@ Avalonia is a WPF-inspired cross-platform XAML-based UI framework providing a fl
 Read more about the framework at https://avaloniaui.net.
 
 
-## Getting Started
+## Getting Started （[中文说明](https://www.cnblogs.com/zhongzf/p/12275783.html))
 
 1. Creating a new Avalonia project, read more about it at http://avaloniaui.net/docs/quickstart/create-new-project.
 
@@ -54,3 +54,5 @@ using Xamarin.Forms.Platform.Avalonia;
 ## Screenshot
 
 <img width='300' src='https://raw.githubusercontent.com/zhongzf/Xamarin.Forms.Platform.Avalonia/develop/doc/images/screenshot.png'>
+
+<img width='300' src='https://img2018.cnblogs.com/common/3141/202002/3141-20200208110927763-1933008771.png'>
