@@ -15,7 +15,7 @@ Avalonia is a WPF-inspired cross-platform XAML-based UI framework providing a fl
 Read more about the framework at https://avaloniaui.net.
 
 
-## Getting Started （[中文说明](https://www.cnblogs.com/zhongzf/p/12275783.html))
+## Getting Started ([中文说明](https://www.cnblogs.com/zhongzf/p/12275783.html))
 
 1. Creating a new Avalonia project, read more about it at http://avaloniaui.net/docs/quickstart/create-new-project.
 
