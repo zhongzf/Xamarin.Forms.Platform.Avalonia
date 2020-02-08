@@ -1,10 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using AvaloniaForms.Controls;
-using Avalonia.Styling;
-using System;
-using System.Linq;
+﻿using AvaloniaForms.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
