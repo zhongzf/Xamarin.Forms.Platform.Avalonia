@@ -9,45 +9,60 @@ using System.Text;
 namespace AvaloniaForms.Controls
 {
     public class AppBar : ContentControl
-	{
-		public static readonly StyledProperty<IEnumerable<Control>> PrimaryCommandsProperty = AvaloniaProperty.Register<AppBar, IEnumerable<Control>>(nameof(PrimaryCommands));
-		public static readonly StyledProperty<IEnumerable<Control>> SecondaryCommandsProperty = AvaloniaProperty.Register<AppBar, IEnumerable<Control>>(nameof(SecondaryCommands));
+    {
+        public event EventHandler<object> Closing;
+        public event EventHandler<object> Closed;
+        public event EventHandler<object> Opened;
+        public event EventHandler<object> Opening;
 
-		static AppBar()
+        public AppBar()
+        {
+			LayoutUpdated += OnLayoutUpdated;
+		}
+
+		#region Loaded & Unloaded
+		public event EventHandler<EventArgs> Loaded;
+		public event EventHandler<EventArgs> Unloaded;
+
+		protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+		{
+			OnLoaded(e);
+			Appearing();
+		}
+
+		protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+		{
+			OnUnloaded(e);
+			Disappearing();
+		}
+
+		protected virtual void OnLoaded(EventArgs e) { Loaded?.Invoke(this, e); }
+		protected virtual void OnUnloaded(EventArgs e) { Unloaded?.Invoke(this, e); }
+		#endregion
+
+		#region Appearing & Disappearing
+		protected virtual void Appearing()
 		{
 		}
 
-		ToggleButton btnMore;
-
-		public IEnumerable<Control> PrimaryCommands
-		{
-			get { return (IEnumerable<Control>)GetValue(PrimaryCommandsProperty); }
-			set { SetValue(PrimaryCommandsProperty, value); }
-		}
-
-		public IEnumerable<Control> SecondaryCommands
-		{
-			get { return (IEnumerable<Control>)GetValue(SecondaryCommandsProperty); }
-			set { SetValue(SecondaryCommandsProperty, value); }
-		}
-
-		public AppBar()
+		protected virtual void Disappearing()
 		{
 		}
+        #endregion
 
-		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+        #region LayoutUpdated & SizeChanged
+        public event EventHandler<EventArgs> SizeChanged;
+		protected virtual void OnSizeChanged(EventArgs e) { SizeChanged?.Invoke(this, e); }
+
+		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
 		{
-			base.OnTemplateApplied(e);
-
-			btnMore = e.NameScope.Find<ToggleButton>("PART_More");
+			OnSizeChanged(e);
 		}
+		#endregion
 
-		public void Reset()
-		{
-			if (btnMore != null)
-			{
-				btnMore.IsChecked = false;
-			}
-		}
-	}
+		protected virtual void OnClosed(object e) { Closed?.Invoke(this, e); }
+        protected virtual void OnClosing(object e) { Closing?.Invoke(this, e); }
+        protected virtual void OnOpened(object e) { Opened?.Invoke(this, e); }
+        protected virtual void OnOpening(object e) { Opening?.Invoke(this, e); }
+    }
 }

@@ -46,8 +46,8 @@ namespace AvaloniaForms.Controls
 
 		Type IStyleable.StyleKey => typeof(ApplicationWindow);
 
-		AppBar topAppBar;
-        AppBar bottomAppBar;
+		CommandBar topAppBar;
+		CommandBar bottomAppBar;
 
 		Button previousButton;
 		Button previousModalButton;
@@ -177,8 +177,8 @@ namespace AvaloniaForms.Controls
 		{
 			base.OnTemplateApplied(e);
 
-			topAppBar = e.NameScope.Find<AppBar>("PART_TopAppBar");
-			bottomAppBar = e.NameScope.Find<AppBar>("PART_BottomAppBar");
+			topAppBar = e.NameScope.Find<CommandBar>("PART_TopAppBar");
+			bottomAppBar = e.NameScope.Find<CommandBar>("PART_BottomAppBar");
 
 			previousButton = e.NameScope.Find<Button>("PART_Previous");
 			if (previousButton != null)

@@ -1,7 +1,7 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Style Selector="forms|AppBar">
+  <Style Selector="forms|CommandBar">
     <Setter Property="Background" Value="{DynamicResource AccentColor}"/>
     <Setter Property="HorizontalAlignment" Value="Stretch"/>
     <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -45,7 +45,7 @@
     </Setter>
   </Style>
 
-  <Style Selector="forms|AppBar /template/ ToggleButton, forms|AppBar /template/ ToggleButton:pointerover">
+  <Style Selector="forms|CommandBar /template/ ToggleButton, forms|AppBar /template/ ToggleButton:pointerover">
     <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
     <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
     <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />

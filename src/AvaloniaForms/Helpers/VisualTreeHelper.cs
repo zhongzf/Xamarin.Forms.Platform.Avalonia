@@ -3,7 +3,9 @@ using Avalonia.Collections;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.VisualTree;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AvaloniaForms.Helpers
 {
@@ -12,7 +14,7 @@ namespace AvaloniaForms.Helpers
     /// This class was obtained from Philip Sumi (a fellow WPF Disciples blog)
     /// http://www.hardcodet.net/uploads/2009/06/UIHelper.cs
     /// </summary>
-    public static class TreeHelper
+    public static class VisualTreeHelper
     {
         public static IAvaloniaReadOnlyList<IVisual> GetVisualChildren(IVisual parent)
         {
@@ -93,6 +95,16 @@ namespace AvaloniaForms.Helpers
             }
 
             return foundChild;
+        }
+
+        public static object GetChild(AvaloniaObject element, int i)
+        {
+            return GetChildObjects(element as IVisual)?.Skip(i).Take(1);
+        }
+
+        public static int GetChildrenCount(AvaloniaObject element)
+        {
+            return GetVisualChildren(element as IVisual)?.Count ?? 0;
         }
 
         /// <summary>

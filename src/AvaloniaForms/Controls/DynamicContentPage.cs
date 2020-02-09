@@ -123,25 +123,30 @@ namespace AvaloniaForms.Controls
 			this.SetValue(DynamicContentPage.PrimaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 			this.SetValue(DynamicContentPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 
-			AttachedToVisualTree += (sender, e) => Appearing();
-			DetachedFromVisualTree += (sender, e) => Disappearing();
-
 			LayoutUpdated += OnLayoutUpdated;
 		}
 
-		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		#region Loaded & Unloaded
+		public event EventHandler<EventArgs> Loaded;
+		public event EventHandler<EventArgs> Unloaded;
+
+		protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
 		{
+			OnLoaded(e);
+			Appearing();
 		}
 
-		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
 		{
-			base.OnPropertyChanged(e);
-			if (e.Property == TitleProperty || e.Property == HasBackButtonProperty || e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
-			{
-				ParentWindow?.SynchronizeAppBar();
-			}
+			OnUnloaded(e);
+			Disappearing();
 		}
 
+		protected virtual void OnLoaded(EventArgs e) { Loaded?.Invoke(this, e); }
+		protected virtual void OnUnloaded(EventArgs e) { Unloaded?.Invoke(this, e); }
+		#endregion
+
+		#region Appearing & Disappearing
 		protected virtual void Appearing()
 		{
 			this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
@@ -159,6 +164,27 @@ namespace AvaloniaForms.Controls
 			this.PrimaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
 			this.SecondaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
 		}
+		#endregion
+
+		#region LayoutUpdated & SizeChanged
+		public event EventHandler<EventArgs> SizeChanged;
+		protected virtual void OnSizeChanged(EventArgs e) { SizeChanged?.Invoke(this, e); }
+
+		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		{
+			OnSizeChanged(e);
+		}
+		#endregion
+
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if (e.Property == TitleProperty || e.Property == HasBackButtonProperty || e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
+			{
+				ParentWindow?.SynchronizeAppBar();
+			}
+		}
+
 
 		private void Commands_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
