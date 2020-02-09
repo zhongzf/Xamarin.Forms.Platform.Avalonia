@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Platform.Avalonia
         {
             if (Platform == null)
             {
-                Platform = new Platform(this);
+                Platform = new AvaloniaPlatform(this);
             }
             if (Application == null)
             {

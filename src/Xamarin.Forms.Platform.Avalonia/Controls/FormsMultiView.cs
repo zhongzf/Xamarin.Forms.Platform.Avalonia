@@ -1,8 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using AvaloniaForms;
 using AvaloniaForms.Controls;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

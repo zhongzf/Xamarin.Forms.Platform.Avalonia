@@ -15,339 +15,344 @@ namespace AvaloniaForms.Controls
 {
     public class ApplicationWindow : Window, IStyleable
     {
-		public static readonly StyledProperty<object> StartupPageProperty = AvaloniaProperty.Register<ApplicationWindow, object>(nameof(StartupPage));
+        public static readonly StyledProperty<object> StartupPageProperty = AvaloniaProperty.Register<ApplicationWindow, object>(nameof(StartupPage));
 
-		public static readonly StyledProperty<object> CurrentModalPageProperty = AvaloniaProperty.Register<ApplicationWindow, object>(nameof(CurrentModalPage));
-		public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<ApplicationWindow, IContentLoader>(nameof(ContentLoader));
-		public static readonly StyledProperty<string> CurrentTitleProperty = AvaloniaProperty.Register<ApplicationWindow, string>(nameof(CurrentTitle));
-		public static readonly StyledProperty<bool> HasBackButtonProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBackButton));
-		public static readonly StyledProperty<bool> HasBackButtonModalProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBackButtonModal));
-		public static readonly StyledProperty<bool> HasNavigationBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasNavigationBar));
-		public static readonly StyledProperty<string> BackButtonTitleProperty = AvaloniaProperty.Register<ApplicationWindow, string>(nameof(BackButtonTitle));
+        public static readonly StyledProperty<object> CurrentModalPageProperty = AvaloniaProperty.Register<ApplicationWindow, object>(nameof(CurrentModalPage));
+        public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<ApplicationWindow, IContentLoader>(nameof(ContentLoader));
+        public static readonly StyledProperty<string> CurrentTitleProperty = AvaloniaProperty.Register<ApplicationWindow, string>(nameof(CurrentTitle));
+        public static readonly StyledProperty<bool> HasBackButtonProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBackButton));
+        public static readonly StyledProperty<bool> HasBackButtonModalProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBackButtonModal));
+        public static readonly StyledProperty<bool> HasNavigationBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasNavigationBar));
+        public static readonly StyledProperty<string> BackButtonTitleProperty = AvaloniaProperty.Register<ApplicationWindow, string>(nameof(BackButtonTitle));
 
-		public static readonly StyledProperty<Brush> TitleBarBackgroundColorProperty = AvaloniaProperty.Register<ApplicationWindow, Brush>(nameof(TitleBarBackgroundColor));
-		public static readonly StyledProperty<Brush> TitleBarTextColorProperty = AvaloniaProperty.Register<ApplicationWindow, Brush>(nameof(TitleBarTextColor));
+        public static readonly StyledProperty<Brush> TitleBarBackgroundColorProperty = AvaloniaProperty.Register<ApplicationWindow, Brush>(nameof(TitleBarBackgroundColor));
+        public static readonly StyledProperty<Brush> TitleBarTextColorProperty = AvaloniaProperty.Register<ApplicationWindow, Brush>(nameof(TitleBarTextColor));
 
-		public static readonly StyledProperty<bool> HasContentDialogProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasContentDialog));
-		public static readonly StyledProperty<bool> HasModalPageProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasModalPage));
+        public static readonly StyledProperty<bool> HasContentDialogProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasContentDialog));
+        public static readonly StyledProperty<bool> HasModalPageProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasModalPage));
 
-		public static readonly StyledProperty<bool> HasTopAppBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasTopAppBar));
-		public static readonly StyledProperty<bool> HasBottomAppBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBottomAppBar));
+        public static readonly StyledProperty<bool> HasTopAppBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasTopAppBar));
+        public static readonly StyledProperty<bool> HasBottomAppBarProperty = AvaloniaProperty.Register<ApplicationWindow, bool>(nameof(HasBottomAppBar));
 
-		public static readonly StyledProperty<NavigationPage> CurrentNavigationPageProperty = AvaloniaProperty.Register<ApplicationWindow, NavigationPage>(nameof(CurrentNavigationPage));
-		public static readonly StyledProperty<MasterDetailPage> CurrentMasterDetailPageProperty = AvaloniaProperty.Register<ApplicationWindow, MasterDetailPage>(nameof(CurrentMasterDetailPage));
-		public static readonly StyledProperty<ContentDialog> CurrentContentDialogProperty = AvaloniaProperty.Register<ApplicationWindow, ContentDialog>(nameof(CurrentContentDialog));
-        
-		static ApplicationWindow()
-		{
-		}
+        public static readonly StyledProperty<NavigationPage> CurrentNavigationPageProperty = AvaloniaProperty.Register<ApplicationWindow, NavigationPage>(nameof(CurrentNavigationPage));
+        public static readonly StyledProperty<MasterDetailPage> CurrentMasterDetailPageProperty = AvaloniaProperty.Register<ApplicationWindow, MasterDetailPage>(nameof(CurrentMasterDetailPage));
+        public static readonly StyledProperty<ContentDialog> CurrentContentDialogProperty = AvaloniaProperty.Register<ApplicationWindow, ContentDialog>(nameof(CurrentContentDialog));
 
-		Type IStyleable.StyleKey => typeof(ApplicationWindow);
+        static ApplicationWindow()
+        {
+        }
 
-		CommandBar topAppBar;
-		CommandBar bottomAppBar;
+        Type IStyleable.StyleKey => typeof(ApplicationWindow);
 
-		Button previousButton;
-		Button previousModalButton;
-		Button hamburgerButton;
+        CommandBar topAppBar;
+        CommandBar bottomAppBar;
 
-		public ContentPresenter ContentDialogContentPresenter { get; private set; }
+        Button previousButton;
+        Button previousModalButton;
+        Button hamburgerButton;
 
-		public Brush TitleBarBackgroundColor
-		{
-			get { return (Brush)GetValue(TitleBarBackgroundColorProperty); }
-			private set { SetValue(TitleBarBackgroundColorProperty, value); }
-		}
+        public ContentPresenter ContentDialogContentPresenter { get; private set; }
 
-		public Brush TitleBarTextColor
-		{
-			get { return (Brush)GetValue(TitleBarTextColorProperty); }
-			private set { SetValue(TitleBarTextColorProperty, value); }
-		}
+        public Brush TitleBarBackgroundColor
+        {
+            get { return (Brush)GetValue(TitleBarBackgroundColorProperty); }
+            private set { SetValue(TitleBarBackgroundColorProperty, value); }
+        }
 
-		public object StartupPage
-		{
-			get { return (object)GetValue(StartupPageProperty); }
-			set { SetValue(StartupPageProperty, value); }
-		}
+        public Brush TitleBarTextColor
+        {
+            get { return (Brush)GetValue(TitleBarTextColorProperty); }
+            private set { SetValue(TitleBarTextColorProperty, value); }
+        }
 
-		public string CurrentTitle
-		{
-			get { return (string)GetValue(CurrentTitleProperty); }
-			private set { SetValue(CurrentTitleProperty, value); }
-		}
+        public object StartupPage
+        {
+            get { return (object)GetValue(StartupPageProperty); }
+            set { SetValue(StartupPageProperty, value); }
+        }
 
-		public bool HasBackButton
-		{
-			get { return (bool)GetValue(HasBackButtonProperty); }
-			private set { SetValue(HasBackButtonProperty, value); }
-		}
+        public string CurrentTitle
+        {
+            get { return (string)GetValue(CurrentTitleProperty); }
+            private set { SetValue(CurrentTitleProperty, value); }
+        }
 
-		public bool HasBackButtonModal
-		{
-			get { return (bool)GetValue(HasBackButtonModalProperty); }
-			private set { SetValue(HasBackButtonModalProperty, value); }
-		}
+        public bool HasBackButton
+        {
+            get { return (bool)GetValue(HasBackButtonProperty); }
+            private set { SetValue(HasBackButtonProperty, value); }
+        }
 
-		public bool HasNavigationBar
-		{
-			get { return (bool)GetValue(HasNavigationBarProperty); }
-			private set { SetValue(HasNavigationBarProperty, value); }
-		}
+        public bool HasBackButtonModal
+        {
+            get { return (bool)GetValue(HasBackButtonModalProperty); }
+            private set { SetValue(HasBackButtonModalProperty, value); }
+        }
 
-		public string BackButtonTitle
-		{
-			get { return (string)GetValue(BackButtonTitleProperty); }
-			private set { SetValue(BackButtonTitleProperty, value); }
-		}
+        public bool HasNavigationBar
+        {
+            get { return (bool)GetValue(HasNavigationBarProperty); }
+            private set { SetValue(HasNavigationBarProperty, value); }
+        }
 
-		public object CurrentModalPage
-		{
-			get { return (object)GetValue(CurrentModalPageProperty); }
-			private set { SetValue(CurrentModalPageProperty, value); }
-		}
+        public string BackButtonTitle
+        {
+            get { return (string)GetValue(BackButtonTitleProperty); }
+            private set { SetValue(BackButtonTitleProperty, value); }
+        }
 
-		public IContentLoader ContentLoader
-		{
-			get { return (IContentLoader)GetValue(ContentLoaderProperty); }
-			set { SetValue(ContentLoaderProperty, value); }
-		}
+        public object CurrentModalPage
+        {
+            get { return (object)GetValue(CurrentModalPageProperty); }
+            private set { SetValue(CurrentModalPageProperty, value); }
+        }
 
-		public bool HasContentDialog
-		{
-			get { return (bool)GetValue(HasContentDialogProperty); }
-			private set { SetValue(HasContentDialogProperty, value); }
-		}
+        public IContentLoader ContentLoader
+        {
+            get { return (IContentLoader)GetValue(ContentLoaderProperty); }
+            set { SetValue(ContentLoaderProperty, value); }
+        }
 
-		public bool HasModalPage
-		{
-			get { return (bool)GetValue(HasModalPageProperty); }
-			private set { SetValue(HasModalPageProperty, value); }
-		}
+        public bool HasContentDialog
+        {
+            get { return (bool)GetValue(HasContentDialogProperty); }
+            private set { SetValue(HasContentDialogProperty, value); }
+        }
 
-		public bool HasTopAppBar
-		{
-			get { return (bool)GetValue(HasTopAppBarProperty); }
-			private set { SetValue(HasTopAppBarProperty, value); }
-		}
+        public bool HasModalPage
+        {
+            get { return (bool)GetValue(HasModalPageProperty); }
+            private set { SetValue(HasModalPageProperty, value); }
+        }
 
-		public bool HasBottomAppBar
-		{
-			get { return (bool)GetValue(HasBottomAppBarProperty); }
-			private set { SetValue(HasBottomAppBarProperty, value); }
-		}
+        public bool HasTopAppBar
+        {
+            get { return (bool)GetValue(HasTopAppBarProperty); }
+            private set { SetValue(HasTopAppBarProperty, value); }
+        }
 
-
-		public ContentDialog CurrentContentDialog
-		{
-			get { return GetValue(CurrentContentDialogProperty); }
-			set { SetValue(CurrentContentDialogProperty, value); }
-		}
-
-		public NavigationPage CurrentNavigationPage
-		{
-			get { return GetValue(CurrentNavigationPageProperty); }
-			private set { SetValue(CurrentNavigationPageProperty, value); }
-		}
-
-		public MasterDetailPage CurrentMasterDetailPage
-		{
-			get { return GetValue(CurrentMasterDetailPageProperty); }
-			private set { SetValue(CurrentMasterDetailPageProperty, value); }
-		}
+        public bool HasBottomAppBar
+        {
+            get { return (bool)GetValue(HasBottomAppBarProperty); }
+            private set { SetValue(HasBottomAppBarProperty, value); }
+        }
 
 
-		public ApplicationWindow()
-		{
-			this.Opened += (sender, e) => Appearing();
-			this.Closed += (sender, e) => Disappearing();
-		}
+        public ContentDialog CurrentContentDialog
+        {
+            get { return GetValue(CurrentContentDialogProperty); }
+            set { SetValue(CurrentContentDialogProperty, value); }
+        }
 
-		protected virtual void Appearing()
-		{
-		}
+        public NavigationPage CurrentNavigationPage
+        {
+            get { return GetValue(CurrentNavigationPageProperty); }
+            private set { SetValue(CurrentNavigationPageProperty, value); }
+        }
 
-		protected virtual void Disappearing()
-		{
-		}
-
-		protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
-		{
-			base.OnTemplateApplied(e);
-
-			topAppBar = e.NameScope.Find<CommandBar>("PART_TopAppBar");
-			bottomAppBar = e.NameScope.Find<CommandBar>("PART_BottomAppBar");
-
-			previousButton = e.NameScope.Find<Button>("PART_Previous");
-			if (previousButton != null)
-			{
-				previousButton.Click += OnPreviousButtonClick;
-			}
-			previousModalButton = e.NameScope.Find<Button>("PART_Previous_Modal");
-			if (previousButton != null)
-			{
-				previousModalButton.Click += OnPreviousModalButtonClick;
-			}
-			hamburgerButton = e.NameScope.Find<Button>("PART_Hamburger");
-			if (hamburgerButton != null)
-			{
-				hamburgerButton.Click += OmHamburgerButtonClick;
-			}
-
-			ContentDialogContentPresenter = e.NameScope.Find<ContentPresenter>("PART_ContentDialog_ContentPresenter");
-		}
+        public MasterDetailPage CurrentMasterDetailPage
+        {
+            get { return GetValue(CurrentMasterDetailPageProperty); }
+            private set { SetValue(CurrentMasterDetailPageProperty, value); }
+        }
 
 
-		protected virtual void OmHamburgerButtonClick(object sender, RoutedEventArgs e)
-		{
-			if (CurrentMasterDetailPage != null)
-			{
-				CurrentMasterDetailPage.IsPresented = !CurrentMasterDetailPage.IsPresented;
-			}
-		}
+        public ApplicationWindow()
+        {
+            this.Opened += (sender, e) => Appearing();
+            this.Closed += (sender, e) => Disappearing();
+        }
 
-		protected virtual void OnPreviousModalButtonClick(object sender, RoutedEventArgs e)
-		{
-			OnBackSystemButtonPressed();
-		}
+        public void SetStartupPage(object page)
+        {
+            this.StartupPage = page;
+        }
 
-		protected virtual void OnPreviousButtonClick(object sender, RoutedEventArgs e)
-		{
-			if (CurrentNavigationPage != null && CurrentNavigationPage.StackDepth > 1)
-			{
-				CurrentNavigationPage.OnBackButtonPressed();
-			}
-		}
+        protected virtual void Appearing()
+        {
+        }
 
-		public virtual void OnBackSystemButtonPressed()
-		{
-			PopModal();
-		}
+        protected virtual void Disappearing()
+        {
+        }
 
-		public void ShowContentDialog(ContentDialog contentDialog)
-		{
-			this.CurrentContentDialog = contentDialog;
-			this.HasContentDialog = true;
-			if (ContentDialogContentPresenter.Content == null)
-			{
-				ContentDialogContentPresenter.Content = contentDialog;
-			}
-		}
+        protected override void OnTemplateApplied(TemplateAppliedEventArgs e)
+        {
+            base.OnTemplateApplied(e);
 
-		public void HideContentDialog()
-		{
-			this.CurrentContentDialog = null;
-			if(ContentDialogContentPresenter.Content != null)
-			{
-				ContentDialogContentPresenter.Content = null;
-			}
-			this.HasContentDialog = false;
-		}
+            topAppBar = e.NameScope.Find<CommandBar>("PART_TopAppBar");
+            bottomAppBar = e.NameScope.Find<CommandBar>("PART_BottomAppBar");
 
-		public ObservableCollection<object> InternalChildren { get; } = new ObservableCollection<object>();
+            previousButton = e.NameScope.Find<Button>("PART_Previous");
+            if (previousButton != null)
+            {
+                previousButton.Click += OnPreviousButtonClick;
+            }
+            previousModalButton = e.NameScope.Find<Button>("PART_Previous_Modal");
+            if (previousButton != null)
+            {
+                previousModalButton.Click += OnPreviousModalButtonClick;
+            }
+            hamburgerButton = e.NameScope.Find<Button>("PART_Hamburger");
+            if (hamburgerButton != null)
+            {
+                hamburgerButton.Click += OmHamburgerButtonClick;
+            }
 
-		public void PushModal(object page)
-		{
-			PushModal(page, true);
-		}
+            ContentDialogContentPresenter = e.NameScope.Find<ContentPresenter>("PART_ContentDialog_ContentPresenter");
+        }
 
-		public void PushModal(object page, bool animated)
-		{
-			InternalChildren.Add(page);
-			this.CurrentModalPage = InternalChildren.Last();
-			this.HasModalPage = true;
-			this.HasBackButtonModal = true;
-		}
 
-		public object PopModal()
-		{
-			return PopModal(true);
-		}
+        protected virtual void OmHamburgerButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (CurrentMasterDetailPage != null)
+            {
+                CurrentMasterDetailPage.IsPresented = !CurrentMasterDetailPage.IsPresented;
+            }
+        }
 
-		public object PopModal(bool animated)
-		{
-			if (InternalChildren.Count < 1)
-			{
-				return null;
-			}
+        protected virtual void OnPreviousModalButtonClick(object sender, RoutedEventArgs e)
+        {
+            OnBackSystemButtonPressed();
+        }
 
-			var modal = InternalChildren.Last();
+        protected virtual void OnPreviousButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (CurrentNavigationPage != null && CurrentNavigationPage.StackDepth > 1)
+            {
+                CurrentNavigationPage.OnBackButtonPressed();
+            }
+        }
 
-			if (InternalChildren.Remove(modal))
-			{
-				CurrentModalPage = InternalChildren.LastOrDefault();
-			}
-			this.HasBackButtonModal = InternalChildren.Count >= 1;
-			this.HasModalPage = InternalChildren.Count >= 1;
+        public virtual void OnBackSystemButtonPressed()
+        {
+            PopModal();
+        }
 
-			return modal;
-		}
+        public void ShowContentDialog(ContentDialog contentDialog)
+        {
+            this.CurrentContentDialog = contentDialog;
+            this.HasContentDialog = true;
+            if (ContentDialogContentPresenter.Content == null)
+            {
+                ContentDialogContentPresenter.Content = contentDialog;
+            }
+        }
 
-		public void SynchronizeAppBar()
-		{
-			IEnumerable<DynamicContentPage> childrens = this.FindVisualChildren<DynamicContentPage>();
+        public void HideContentDialog()
+        {
+            this.CurrentContentDialog = null;
+            if (ContentDialogContentPresenter.Content != null)
+            {
+                ContentDialogContentPresenter.Content = null;
+            }
+            this.HasContentDialog = false;
+        }
 
-			CurrentTitle = childrens.FirstOrDefault()?.GetTitle();
-			HasNavigationBar = childrens.FirstOrDefault()?.GetHasNavigationBar() ?? false;
-			CurrentNavigationPage = childrens.OfType<NavigationPage>()?.FirstOrDefault();
-			CurrentMasterDetailPage = childrens.OfType<MasterDetailPage>()?.FirstOrDefault();
-			var page = childrens.FirstOrDefault();
-			if (page != null)
-			{
-				TitleBarBackgroundColor = page.GetTitleBarBackgroundColor();
-				TitleBarTextColor = page.GetTitleBarTextColor();
-			}
-			else
-			{
-				ClearValue(TitleBarBackgroundColorProperty);
-				ClearValue(TitleBarTextColorProperty);
-			}
+        public ObservableCollection<object> InternalChildren { get; } = new ObservableCollection<object>();
 
-			if (hamburgerButton != null)
-			{
-				hamburgerButton.IsVisible = CurrentMasterDetailPage != null;
-			}
+        public void PushModal(object page)
+        {
+            PushModal(page, true);
+        }
 
-			if (CurrentNavigationPage != null)
-			{
-				HasBackButton = CurrentNavigationPage.GetHasBackButton();
-				BackButtonTitle = CurrentNavigationPage.GetBackButtonTitle();
+        public void PushModal(object page, bool animated)
+        {
+            InternalChildren.Add(page);
+            this.CurrentModalPage = InternalChildren.Last();
+            this.HasModalPage = true;
+            this.HasBackButtonModal = true;
+        }
 
-			}
-			else
-			{
-				HasBackButton = false;
-				BackButtonTitle = "";
-			}
-		}
+        public object PopModal()
+        {
+            return PopModal(true);
+        }
 
-		public void SynchronizeToolbarCommands()
-		{
-			IEnumerable<DynamicContentPage> childrens = this.FindVisualChildren<DynamicContentPage>();
+        public object PopModal(bool animated)
+        {
+            if (InternalChildren.Count < 1)
+            {
+                return null;
+            }
 
-			var page = childrens.FirstOrDefault();
-			if (page == null) return;
+            var modal = InternalChildren.Last();
 
-			if (topAppBar != null)
-			{
-				topAppBar.PrimaryCommands = page.GetPrimaryTopBarCommands();
-				topAppBar.SecondaryCommands = page.GetSecondaryTopBarCommands();
-				topAppBar.Reset();
+            if (InternalChildren.Remove(modal))
+            {
+                CurrentModalPage = InternalChildren.LastOrDefault();
+            }
+            this.HasBackButtonModal = InternalChildren.Count >= 1;
+            this.HasModalPage = InternalChildren.Count >= 1;
 
-				// TODO:
-				HasTopAppBar = false;
-			}
+            return modal;
+        }
 
-			if (bottomAppBar != null)
-			{
-				bottomAppBar.PrimaryCommands = page.GetPrimaryBottomBarCommands();
-				bottomAppBar.SecondaryCommands = page.GetSecondaryBottomBarCommands();
-				bottomAppBar.Content = childrens.LastOrDefault(x => x.ContentBottomBar != null)?.ContentBottomBar;
-				bottomAppBar.Reset();
+        public void SynchronizeAppBar()
+        {
+            IEnumerable<DynamicContentPage> childrens = this.FindVisualChildren<DynamicContentPage>();
 
-				// TODO:
-				HasBottomAppBar = bottomAppBar.PrimaryCommands.Count() > 0 || bottomAppBar.SecondaryCommands.Count() > 0 || bottomAppBar.Content != null;
-			}
-		}
-	}
+            CurrentTitle = childrens.FirstOrDefault()?.GetTitle();
+            HasNavigationBar = childrens.FirstOrDefault()?.GetHasNavigationBar() ?? false;
+            CurrentNavigationPage = childrens.OfType<NavigationPage>()?.FirstOrDefault();
+            CurrentMasterDetailPage = childrens.OfType<MasterDetailPage>()?.FirstOrDefault();
+            var page = childrens.FirstOrDefault();
+            if (page != null)
+            {
+                TitleBarBackgroundColor = page.GetTitleBarBackgroundColor();
+                TitleBarTextColor = page.GetTitleBarTextColor();
+            }
+            else
+            {
+                ClearValue(TitleBarBackgroundColorProperty);
+                ClearValue(TitleBarTextColorProperty);
+            }
+
+            if (hamburgerButton != null)
+            {
+                hamburgerButton.IsVisible = CurrentMasterDetailPage != null;
+            }
+
+            if (CurrentNavigationPage != null)
+            {
+                HasBackButton = CurrentNavigationPage.GetHasBackButton();
+                BackButtonTitle = CurrentNavigationPage.GetBackButtonTitle();
+
+            }
+            else
+            {
+                HasBackButton = false;
+                BackButtonTitle = "";
+            }
+        }
+
+        public void SynchronizeToolbarCommands()
+        {
+            IEnumerable<DynamicContentPage> childrens = this.FindVisualChildren<DynamicContentPage>();
+
+            var page = childrens.FirstOrDefault();
+            if (page == null) return;
+
+            if (topAppBar != null)
+            {
+                topAppBar.PrimaryCommands = page.GetPrimaryTopBarCommands();
+                topAppBar.SecondaryCommands = page.GetSecondaryTopBarCommands();
+                topAppBar.Reset();
+
+                // TODO:
+                HasTopAppBar = false;
+            }
+
+            if (bottomAppBar != null)
+            {
+                bottomAppBar.PrimaryCommands = page.GetPrimaryBottomBarCommands();
+                bottomAppBar.SecondaryCommands = page.GetSecondaryBottomBarCommands();
+                bottomAppBar.Content = childrens.LastOrDefault(x => x.ContentBottomBar != null)?.ContentBottomBar;
+                bottomAppBar.Reset();
+
+                // TODO:
+                HasBottomAppBar = bottomAppBar.PrimaryCommands.Count() > 0 || bottomAppBar.SecondaryCommands.Count() > 0 || bottomAppBar.Content != null;
+            }
+        }
+    }
 }

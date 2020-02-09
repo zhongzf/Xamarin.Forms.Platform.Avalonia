@@ -1,4 +1,5 @@
-﻿using AvaloniaForms.Controls;
+﻿using AvaloniaForms;
+using AvaloniaForms.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,14 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class Platform : BindableObject, INavigation
+    public abstract class Platform : BindableObject, INavigation
 #pragma warning disable CS0618 // Type or member is obsolete
 		, IPlatform
 #pragma warning restore CS0618 // Type or member is obsolete
 	{
-		readonly FormsApplicationPage _page;
+		readonly global::Avalonia.Controls.ContentControl _page;
+		ApplicationWindow ParentWindow => _page?.GetParentWindow() as ApplicationWindow;
+
 		Page Page { get; set; }
 
 		public IReadOnlyList<Page> NavigationStack
@@ -26,13 +29,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 		{
 			get
 			{
-				return _page.InternalChildren.Cast<Page>().ToList();
+				return ParentWindow?.InternalChildren.Cast<Page>().ToList();
 			}
 		}
 
 		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), typeof(Platform), default(IVisualElementRenderer));
 
-		internal Platform(FormsApplicationPage page)
+		internal Platform(global::Avalonia.Controls.ContentControl page)
 		{
 			_page = page;
 
@@ -43,6 +46,11 @@ namespace Xamarin.Forms.Platform.Avalonia
 				busyCount = Math.Max(0, enabled ? busyCount + 1 : busyCount - 1);
 			});
 
+			SubscribeAlertsAndActionSheets();
+		}
+
+		internal void SubscribeAlertsAndActionSheets()
+		{
 			MessagingCenter.Subscribe<Page, AlertArguments>(this, Page.AlertSignalName, OnPageAlert);
 			MessagingCenter.Subscribe<Page, ActionSheetArguments>(this, Page.ActionSheetSignalName, OnPageActionSheet);
 		}
@@ -79,7 +87,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			options.SetResult(dialogResult == ContentDialogResult.Primary);
 		}
-
 
 		async void OnPageActionSheet(Page sender, ActionSheetArguments options)
 		{
@@ -187,7 +194,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			Page = newRoot;
 
-			_page.StartupPage = Page;
+			ParentWindow?.SetStartupPage(Page);
 			Application.Current.NavigationProxy.Inner = this;
 		}
 
@@ -255,7 +262,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			page.Platform = this;
 #pragma warning restore CS0618 // Type or member is obsolete
 
-			_page.PushModal(page, animated);
+			ParentWindow?.PushModal(page, animated);
 			tcs.SetResult(true);
 			return tcs.Task;
 		}
@@ -263,7 +270,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		Task<Page> INavigation.PopModalAsync(bool animated)
 		{
 			var tcs = new TaskCompletionSource<Page>();
-			var page = _page.PopModal(animated) as Page;
+			var page = ParentWindow?.PopModal(animated) as Page;
 			tcs.SetResult(page);
 			return tcs.Task;
 		}

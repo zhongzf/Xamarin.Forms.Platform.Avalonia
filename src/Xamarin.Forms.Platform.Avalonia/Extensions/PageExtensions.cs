@@ -19,7 +19,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 				var formsApplicationPage = new FormsApplicationPage();
 				formsApplicationPage.LoadApplication(app);
-				var platform = new Platform(formsApplicationPage);
+				var platform = new AvaloniaPlatform(formsApplicationPage);
 				platform.SetPage(view);
 			}
 
