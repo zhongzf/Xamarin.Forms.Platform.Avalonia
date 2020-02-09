@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace AvaloniaForms.Extensions
+namespace AvaloniaForms
 {
 	public static class ObjectExtensions
 	{

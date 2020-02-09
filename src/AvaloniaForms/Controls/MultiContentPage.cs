@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

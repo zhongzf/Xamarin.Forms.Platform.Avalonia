@@ -1,8 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using AvaloniaForms.Extensions;
-using AvaloniaForms.Interfaces;
 using Avalonia.Media;
 using System;
 using System.Collections.Generic;

@@ -2,12 +2,11 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Generators;
 using AvaloniaForms.Controls;
-using AvaloniaForms.Generators;
-using AvaloniaForms.Interfaces;
 using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AvaloniaForms.Controls.Generators;
 
 namespace AvaloniaForms.Controls
 {

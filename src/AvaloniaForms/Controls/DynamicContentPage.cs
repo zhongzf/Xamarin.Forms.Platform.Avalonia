@@ -1,7 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using AvaloniaForms.Helpers;
-using AvaloniaForms.Interfaces;
 using Avalonia.Media;
 using Avalonia.Styling;
 using System;
@@ -114,7 +112,7 @@ namespace AvaloniaForms.Controls
 			}
 		}
 
-		public ApplicationWindow ParentWindow => DefaultNavigation.ParentWindow;
+		public ApplicationWindow ParentWindow => this.GetParentWindow() as ApplicationWindow;
 
 		public DynamicContentPage()
 		{

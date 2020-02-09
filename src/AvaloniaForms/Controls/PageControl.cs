@@ -4,8 +4,6 @@ using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using AvaloniaForms.Helpers;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

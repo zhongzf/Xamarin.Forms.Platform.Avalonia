@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AvaloniaForms.Interfaces
+namespace AvaloniaForms
 {
 	internal interface IToolbarProvider
 	{

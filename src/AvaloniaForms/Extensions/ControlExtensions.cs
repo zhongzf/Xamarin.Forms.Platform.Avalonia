@@ -3,14 +3,13 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Media;
-using AvaloniaForms.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AvaloniaForms.Extensions
+namespace AvaloniaForms
 {
     public static class ControlExtensions
     {
@@ -139,6 +138,16 @@ namespace AvaloniaForms.Extensions
                         yield return subChild;
                 }
             }
+        }
+
+        public static TopLevel GetParentWindow(this IControl control)
+        {
+            var topLevel = control;
+            while(topLevel != null && !(topLevel is TopLevel))
+            {
+                topLevel = topLevel.Parent;
+            }
+            return topLevel as TopLevel;
         }
     }
 }

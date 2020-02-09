@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AvaloniaForms.Extensions
+namespace AvaloniaForms
 {
     public static class CommandsExtensions
     {

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AvaloniaForms.Helpers
+namespace AvaloniaForms
 {
     /// <summary>
     /// Helper methods for UI-related tasks.

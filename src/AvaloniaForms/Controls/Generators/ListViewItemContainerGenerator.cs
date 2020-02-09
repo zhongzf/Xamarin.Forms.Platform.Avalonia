@@ -3,12 +3,11 @@ using Avalonia.Controls;
 using Avalonia.Controls.Generators;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AvaloniaForms.Generators
+namespace AvaloniaForms.Controls.Generators
 {
     public class ListViewItemContainerGenerator<T> : ItemContainerGenerator<T> where T : class, IControl, new()
     {

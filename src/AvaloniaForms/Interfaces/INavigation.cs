@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AvaloniaForms.Interfaces
+namespace AvaloniaForms
 {
     public interface INavigation
     {
@@ -38,7 +38,7 @@ namespace AvaloniaForms.Interfaces
 
     public class DefaultNavigation : INavigation
     {
-        public static ApplicationWindow ParentWindow
+        public static ApplicationWindow MainWindow
         {
             get
             {
@@ -68,7 +68,7 @@ namespace AvaloniaForms.Interfaces
 
         public void PopModal(bool animated)
         {
-            ParentWindow?.PopModal(animated);
+            MainWindow?.PopModal(animated);
         }
 
         public void PopToRoot()
@@ -98,7 +98,7 @@ namespace AvaloniaForms.Interfaces
 
         public void PushModal(object page, bool animated)
         {
-            ParentWindow?.PushModal(page, animated);
+            MainWindow?.PushModal(page, animated);
         }
 
         public void RemovePage(object page)

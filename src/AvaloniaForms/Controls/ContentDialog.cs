@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Primitives;
 using Avalonia.Markup.Xaml.Templates;
 using Avalonia.Styling;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -111,7 +110,7 @@ namespace AvaloniaForms.Controls
         public event EventHandler<ContentDialogButtonClickEventArgs> PrimaryButtonClick;
         public event EventHandler<ContentDialogButtonClickEventArgs> SecondaryButtonClick;
 
-        public ApplicationWindow ParentWindow => DefaultNavigation.ParentWindow;
+        public ApplicationWindow ParentWindow => this.GetParentWindow() as ApplicationWindow;
 
         public ContentDialog()
         {

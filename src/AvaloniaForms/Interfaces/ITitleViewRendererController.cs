@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AvaloniaForms.Interfaces
+namespace AvaloniaForms
 {
     public interface ITitleViewRendererController
     {

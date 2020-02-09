@@ -1,8 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using AvaloniaForms.Helpers;
-using AvaloniaForms.Interfaces;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Styling;
