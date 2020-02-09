@@ -10,19 +10,6 @@ using System.Text;
 
 namespace AvaloniaForms.Controls
 {
-    public class SelectionChangedEventArgs : EventArgs
-    {
-        public SelectionChangedEventArgs(object oldElement, object newElement)
-        {
-            OldElement = oldElement;
-            NewElement = newElement;
-        }
-
-        public object NewElement { get; private set; }
-
-        public object OldElement { get; private set; }
-    }
-
     public class MultiContentPage : DynamicContentPage
     {
         public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<MultiContentPage, ObservableCollection<object>>(nameof(ItemsSource));

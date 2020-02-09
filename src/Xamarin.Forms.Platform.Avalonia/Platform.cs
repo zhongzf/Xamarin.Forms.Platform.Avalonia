@@ -10,9 +10,9 @@ using Xamarin.Forms.Platform.Avalonia.Controls;
 namespace Xamarin.Forms.Platform.Avalonia
 {
     public class Platform : BindableObject, INavigation
-#pragma warning disable CS0618
+#pragma warning disable CS0618 // Type or member is obsolete
 		, IPlatform
-#pragma warning restore
+#pragma warning restore CS0618 // Type or member is obsolete
 	{
 		readonly FormsApplicationPage _page;
 		Page Page { get; set; }

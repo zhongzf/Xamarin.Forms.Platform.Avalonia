@@ -3,8 +3,6 @@ using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AControl = global::Avalonia.Controls.Primitives.TemplatedControl;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -235,9 +233,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         protected virtual void UpdateBackground()
         {
-            if (Control is AControl aControl)
+            if (Control is global::Avalonia.Controls.Primitives.TemplatedControl templatedControl)
             {
-                aControl?.UpdateDependencyColor(AControl.BackgroundProperty, Element.BackgroundColor);
+                templatedControl?.UpdateDependencyColor(global::Avalonia.Controls.Primitives.TemplatedControl.BackgroundProperty, Element.BackgroundColor);
             }
         }
 

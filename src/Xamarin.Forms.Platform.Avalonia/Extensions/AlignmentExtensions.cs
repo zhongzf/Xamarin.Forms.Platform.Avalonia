@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace Xamarin.Forms.Platform.Avalonia.Extensions
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	internal static class AlignmentExtensions
 	{

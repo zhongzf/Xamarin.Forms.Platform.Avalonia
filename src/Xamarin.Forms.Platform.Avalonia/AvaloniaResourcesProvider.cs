@@ -8,7 +8,7 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	internal class ResourcesProvider : ISystemResourcesProvider
+	internal class AvaloniaResourcesProvider : ISystemResourcesProvider
 	{
 		ResourceDictionary _dictionary;
 

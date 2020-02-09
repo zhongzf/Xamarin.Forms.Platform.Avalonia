@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Platform.Avalonia.Extensions
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	public static class VisualElementExtensions
 	{

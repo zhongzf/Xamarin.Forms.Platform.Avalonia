@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using ASelectionChangedEventArgs = AvaloniaForms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
@@ -16,7 +15,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
     {
         public TransitioningContentControl ContentControl { get; private set; }
 
-        public event EventHandler<ASelectionChangedEventArgs> SelectionChanged;
+        public event EventHandler<AvaloniaForms.SelectionChangedEventArgs> SelectionChanged;
 
         public static readonly StyledProperty<IContentLoader> ContentLoaderProperty = AvaloniaProperty.Register<FormsMultiView, IContentLoader>(nameof(ContentLoader), new DefaultContentLoader());
         public static readonly StyledProperty<ObservableCollection<object>> ItemsSourceProperty = AvaloniaProperty.Register<FormsMultiView, ObservableCollection<object>>(nameof(ItemsSource));
@@ -82,7 +81,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             if (ItemsSource == null) return;
             SelectedIndex = ItemsSource.Cast<object>().ToList().IndexOf(newValue);
-            SelectionChanged?.Invoke(this, new ASelectionChangedEventArgs(oldValue, newValue));
+            SelectionChanged?.Invoke(this, new AvaloniaForms.SelectionChangedEventArgs(oldValue, newValue));
         }
 
         protected virtual void OnContentLoaderLayoutUpdated(object sender, EventArgs e)

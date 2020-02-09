@@ -2,12 +2,10 @@
 using System.ComponentModel;
 using System.Windows;
 using Xamarin.Forms.Internals;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AProgressBar = Avalonia.Controls.ProgressBar;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class ProgressBarRenderer : ViewRenderer<ProgressBar, AProgressBar>
+	public class ProgressBarRenderer : ViewRenderer<ProgressBar, AvaloniaForms.Controls.ProgressBar>
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<ProgressBar> e)
 		{
@@ -15,7 +13,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new AProgressBar { Minimum = 0, Maximum = 1 });
+					SetNativeControl(new AvaloniaForms.Controls.ProgressBar { Minimum = 0, Maximum = 1 });
 					Control.PropertyChanged += Control_PropertyChanged;
 				}
 
@@ -47,7 +45,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateProgressColor()
 		{
-			Control.UpdateDependencyColor(AProgressBar.ForegroundProperty, Element.ProgressColor.IsDefault ? Color.DeepSkyBlue : Element.ProgressColor);
+			Control.UpdateDependencyColor(AvaloniaForms.Controls.ProgressBar.ForegroundProperty, Element.ProgressColor.IsDefault ? Color.DeepSkyBlue : Element.ProgressColor);
 		}
 
 		void UpdateProgress()

@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using System;
 
-namespace Xamarin.Forms.Platform.Avalonia.Extensions
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	public static class PageExtensions
 	{

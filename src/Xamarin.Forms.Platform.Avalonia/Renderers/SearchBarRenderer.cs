@@ -3,8 +3,6 @@ using Avalonia.Media;
 using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AControl = Avalonia.Controls.Control;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

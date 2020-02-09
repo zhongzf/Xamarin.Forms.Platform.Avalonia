@@ -3,7 +3,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using ASelectionChangedEventArgs = AvaloniaForms.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -57,7 +56,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.SelectedItem = Element.CurrentPage;
 		}
 		
-		private void Control_SelectionChanged(object sender, ASelectionChangedEventArgs e)
+		private void Control_SelectionChanged(object sender, AvaloniaForms.SelectionChangedEventArgs e)
 		{
 			Element.CurrentPage = e.NewElement as TContainer;
 		}

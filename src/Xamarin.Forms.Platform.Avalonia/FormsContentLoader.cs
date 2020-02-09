@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
+
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

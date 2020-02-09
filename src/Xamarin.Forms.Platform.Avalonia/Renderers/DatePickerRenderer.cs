@@ -4,12 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using ADatePicker = Avalonia.Controls.DatePicker;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class DatePickerRenderer : ViewRenderer<DatePicker, ADatePicker>
+	public class DatePickerRenderer : ViewRenderer<DatePicker, AvaloniaForms.Controls.DatePicker>
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
 		{
@@ -17,7 +15,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new ADatePicker());
+					SetNativeControl(new AvaloniaForms.Controls.DatePicker());
 					Control.SelectedDateChanged += OnNativeSelectedDateChanged;
 				}
 
@@ -62,7 +60,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateTextColor()
 		{
-			Control.UpdateDependencyColor(ADatePicker.ForegroundProperty, Element.TextColor);
+			Control.UpdateDependencyColor(AvaloniaForms.Controls.DatePicker.ForegroundProperty, Element.TextColor);
 		}
 
 		void OnNativeSelectedDateChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)

@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-
 namespace Xamarin.Forms.Platform.Avalonia
 {
 	public class VisualElementPackager : IDisposable

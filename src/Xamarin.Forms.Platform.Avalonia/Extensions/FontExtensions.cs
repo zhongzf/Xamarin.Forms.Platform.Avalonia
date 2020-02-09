@@ -17,46 +17,18 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (control is TemplatedControl self)
             {
                 self.FontSize = font.UseNamedSize ? GetFontSize(font.NamedSize) : font.FontSize;
-
-                //if (!string.IsNullOrEmpty(font.FontFamily))
-                //    self.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), font.FontFamily);
-                //else
-                //    self.FontFamily = (FontFamily)System.Windows.Application.Current.Resources["FontFamilySemiBold"];
-
-                if (font.FontAttributes.HasFlag(FontAttributes.Italic))
-                    self.FontStyle = FontStyle.Italic;
-                else
-                    self.FontStyle = FontStyle.Normal;
-
-                if (font.FontAttributes.HasFlag(FontAttributes.Bold))
-                    self.FontWeight = FontWeight.Bold;
-                else
-                    self.FontWeight = FontWeight.Normal;
+                //self.FontFamily = !string.IsNullOrEmpty(font.FontFamily) ? new FontFamily(font.FontFamily) : (FontFamily)WApplication.Current.Resources["ContentControlThemeFontFamily"];
+                self.FontStyle = font.FontAttributes.HasFlag(FontAttributes.Italic) ? FontStyle.Italic : FontStyle.Normal;
+                self.FontWeight = font.FontAttributes.HasFlag(FontAttributes.Bold) ? FontWeight.Bold : FontWeight.Normal;
             }
         }
 
         public static void ApplyFont(this TextBlock self, Font font)
         {
             self.FontSize = font.UseNamedSize ? GetFontSize(font.NamedSize) : font.FontSize;
-
-            //if (!string.IsNullOrEmpty(font.FontFamily))
-            //{
-            //    self.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), font.FontFamily);
-            //}
-            //else
-            //{
-            //    self.FontFamily = (FontFamily)System.Windows.Application.Current.Resources["FontFamilyNormal"];
-            //}
-
-            if (font.FontAttributes.HasFlag(FontAttributes.Italic))
-                self.FontStyle = FontStyle.Italic;
-            else
-                self.FontStyle = FontStyle.Normal;
-
-            if (font.FontAttributes.HasFlag(FontAttributes.Bold))
-                self.FontWeight = FontWeight.Bold;
-            else
-                self.FontWeight = FontWeight.Normal;
+            //self.FontFamily = !string.IsNullOrEmpty(font.FontFamily) ? new FontFamily(font.FontFamily) : (FontFamily)WApplication.Current.Resources["ContentControlThemeFontFamily"];
+            self.FontStyle = font.FontAttributes.HasFlag(FontAttributes.Italic) ? FontStyle.Italic : FontStyle.Normal;
+            self.FontWeight = font.FontAttributes.HasFlag(FontAttributes.Bold) ? FontWeight.Bold : FontWeight.Normal;
         }
 
 
@@ -65,38 +37,38 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (control is TemplatedControl self)
             {
                 self.FontSize = element.FontSize;
-
-                //if (!string.IsNullOrEmpty(element.FontFamily))
-                //    self.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), element.FontFamily);
-                //else
-                //    self.FontFamily = (FontFamily)System.Windows.Application.Current.Resources["FontFamilySemiBold"];
-
-                if (element.FontAttributes.HasFlag(FontAttributes.Italic))
-                    self.FontStyle = FontStyle.Italic;
-                else
-                    self.FontStyle = FontStyle.Normal;
-
-                if (element.FontAttributes.HasFlag(FontAttributes.Bold))
-                    self.FontWeight = FontWeight.Bold;
-                else
-                    self.FontWeight = FontWeight.Normal;
+                //self.FontFamily = !string.IsNullOrEmpty(element.FontFamily) ? new FontFamily(font.FontFamily) : (FontFamily)WApplication.Current.Resources["ContentControlThemeFontFamily"];
+                self.FontStyle = element.FontAttributes.HasFlag(FontAttributes.Italic) ? FontStyle.Italic : FontStyle.Normal;
+                self.FontWeight = element.FontAttributes.HasFlag(FontAttributes.Bold) ? FontWeight.Bold : FontWeight.Normal;
             }
         }
 
         internal static double GetFontSize(this NamedSize size)
         {
+            // These are values pulled from the mapped sizes on Windows Phone, WinRT has no equivalent sizes, only intents.
             switch (size)
             {
                 case NamedSize.Default:
+                    //return (double)WApplication.Current.Resources["ControlContentThemeFontSize"];
+                    return 20;
                 case NamedSize.Micro:
+                    return 15.667;
                 case NamedSize.Small:
+                    return 18.667;
                 case NamedSize.Medium:
-                // use normal instead of medium as this is the default
+                    return 22.667;
                 case NamedSize.Large:
-                    {
-                        // TODO:
-                        return 20;
-                    }
+                    return 32;
+                case NamedSize.Body:
+                    return 14;
+                case NamedSize.Caption:
+                    return 12;
+                case NamedSize.Header:
+                    return 46;
+                case NamedSize.Subtitle:
+                    return 20;
+                case NamedSize.Title:
+                    return 24;
                 default:
                     throw new ArgumentOutOfRangeException("size");
             }

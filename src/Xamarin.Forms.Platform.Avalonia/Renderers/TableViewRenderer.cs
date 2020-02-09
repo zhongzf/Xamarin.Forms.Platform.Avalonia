@@ -9,8 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using AList = Avalonia.Controls.ListBox;
-using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -71,7 +69,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		}
 
 	
-		private void Control_SelectionChanged(object sender, ASelectionChangedEventArgs e)
+		private void Control_SelectionChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)
 		{
 			foreach (object item in e.AddedItems)
 			{

@@ -68,6 +68,7 @@
     <converters:HeightConverter x:Key="HeightConverter"/>
     <converters:ViewToRendererConverter x:Key="ViewToRenderer"/>
     <converters:ColorConverter x:Key="ColorConverter" />
+    <converters:ColorMultiValueConverter x:Key="ColorMultiValueConverter" />
     <converters:ImageConverter x:Key="ImageConverter" />
 
     <DataTemplate x:Key="CellTemplate">
@@ -80,7 +81,7 @@
       <StackPanel>
         <TextBlock Text="{Binding Title, Converter={StaticResource LowerConverter}}" FontSize="24">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="TextColor"/>
             </MultiBinding>
@@ -88,7 +89,7 @@
         </TextBlock>
         <TextBlock Text="{Binding Text}">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="TextColor"/>
             </MultiBinding>
@@ -101,7 +102,7 @@
       <StackPanel>
         <TextBlock Text="{Binding Text}" FontSize="{StaticResource FontSizeNormal}">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="TextColor"/>
             </MultiBinding>
@@ -110,7 +111,7 @@
 
         <TextBlock Text="{Binding Detail}" FontSize="{StaticResource FontSizeExtraExtraSmall}">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="DetailColor"/>
             </MultiBinding>
@@ -150,7 +151,7 @@
           Text="{Binding Text}"
           IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="TextColor"/>
             </MultiBinding>
@@ -161,7 +162,7 @@
           Text="{Binding Detail}"
           IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}">
           <TextBlock.Foreground>
-            <MultiBinding Converter="{StaticResource ColorConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
+            <MultiBinding Converter="{StaticResource ColorMultiValueConverter}" ConverterParameter="{x:Static TextBlock.ForegroundProperty}">
               <Binding RelativeSource="{RelativeSource Self}"/>
               <Binding Path="DetailColor"/>
             </MultiBinding>

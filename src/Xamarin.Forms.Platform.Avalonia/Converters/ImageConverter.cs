@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Avalonia.Media.Imaging;
+using System;
 using System.Globalization;
 using Xamarin.Forms.Internals;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AImageSource = Avalonia.Media.Imaging.Bitmap;
 
 namespace Xamarin.Forms.Platform.Avalonia.Converters
 {
@@ -11,7 +10,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var task = (value as ImageSource)?.ToNativeImageSourceAsync();
-			return task?.AsAsyncValue() ?? AsyncValue<AImageSource>.Null;
+			return task?.AsAsyncValue() ?? AsyncValue<Bitmap>.Null;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

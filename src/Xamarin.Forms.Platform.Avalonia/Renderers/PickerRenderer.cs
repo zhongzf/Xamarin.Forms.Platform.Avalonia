@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -66,7 +64,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Control.SelectedIndex = Element.SelectedIndex;
 		}
 
-		private void OnControlSelectionChanged(object sender, ASelectionChangedEventArgs e)
+		private void OnControlSelectionChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)
 		{
 			if (Element != null)
 			{
