@@ -20,7 +20,9 @@ namespace Xamarin.Forms.Platform.Avalonia
             }
 
             if (!global::Avalonia.Application.Current.CheckAccess())
+            {
                 throw new InvalidOperationException("UIThreadRequired");
+            }
 
             var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
             return Task.Factory.StartNew(() => LoadContent(parent, newContent), cancellationToken, TaskCreationOptions.None, scheduler);

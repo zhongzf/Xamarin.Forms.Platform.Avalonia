@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		event EventHandler _controlChanging;
 		event EventHandler _controlChanged;
 		VisualElementTracker<TElement, TNativeElement> _tracker;
-		DynamicContentPage _containingPage; // Cache of containing page used for unfocusing
+		Control _containingPage; // Cache of containing page used for unfocusing
 		Control _control => Control as Control;
 
 		Canvas _backgroundLayer;
@@ -159,8 +159,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 		}
 
 		public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
-		public event EventHandler<PropertyChangedEventArgs> ElementPropertyChanged;
-
 		event EventHandler<PropertyChangedEventArgs> IVisualNativeElementRenderer.ElementPropertyChanged
 		{
 			add => _elementPropertyChanged += value;
@@ -356,7 +354,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				Children.Remove(oldControl);
 
-				//oldControl.Loaded -= OnControlLoaded;
+				// TODO:
+				//Control.AttachedToVisualTree -= Control_AttachedToVisualTree;
+				//Control.DetachedFromVisualTree -= Control_DetachedFromVisualTree;
 			}
 
 			UpdateTracker();
@@ -395,7 +395,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		private void Control_Loaded(object sender, RoutedEventArgs e)
 		{
-			Element.IsNativeStateConsistent = true;
+			OnControlLoaded(sender, e);
 			Appearing();
 		}
 
@@ -412,12 +412,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		protected virtual void Appearing()
 		{
-
 		}
 
 		protected virtual void Disappearing()
 		{
-
 		}
 		
 		protected virtual void UpdateBackgroundColor()
