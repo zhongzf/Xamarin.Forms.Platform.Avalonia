@@ -377,8 +377,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			Element.IsNativeStateConsistent = false;
 
-			Control.AttachedToVisualTree += Control_AttachedToVisualTree;
-			Control.DetachedFromVisualTree += Control_DetachedFromVisualTree;
+			Control.AttachedToVisualTree += OnAttachedToVisualTree;
+			Control.DetachedFromVisualTree += OnDetachedFromVisualTree;
 						
 			Children.Add(control);
 			UpdateBackgroundColor();
@@ -387,9 +387,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 		}
 
 
-		private void Control_AttachedToVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+		private void OnAttachedToVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
 		{
-			Control.AttachedToVisualTree -= Control_AttachedToVisualTree;
+			Control.AttachedToVisualTree -= OnAttachedToVisualTree;
 			Control_Loaded(sender, new RoutedEventArgs());
 		}
 
@@ -399,9 +399,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 			Appearing();
 		}
 
-		private void Control_DetachedFromVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+		private void OnDetachedFromVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
 		{
-			Control.DetachedFromVisualTree -= Control_DetachedFromVisualTree;
+			Control.DetachedFromVisualTree -= OnDetachedFromVisualTree;
 			Control_Unloaded(sender, new RoutedEventArgs());
 		}
 

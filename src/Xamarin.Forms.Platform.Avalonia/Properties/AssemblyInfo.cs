@@ -47,7 +47,7 @@ using Xamarin.Forms.Platform.Avalonia;
 
 
 // Form and subclasses
-[assembly: ExportRenderer(typeof(Page), typeof(PageRenderer))]
+[assembly: ExportRenderer(typeof(Page), typeof(ContentPageRenderer))]
 [assembly: ExportRenderer(typeof(TabbedPage), typeof(TabbedPageRenderer))]
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(NavigationPageRenderer))]
 [assembly: ExportRenderer(typeof(CarouselPage), typeof(CarouselPageRenderer))]

@@ -1,49 +1,82 @@
-﻿using System.ComponentModel;
-using Xamarin.Forms.Platform.Avalonia.Controls;
+﻿using Avalonia.Controls;
+using Avalonia.Interactivity;
+using System.Collections.ObjectModel;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class PageRenderer : VisualPageRenderer<Page, FormsContentPage>
-	{
-		VisualElement _currentView;
+    public partial class PageRenderer : VisualElementRenderer<Page, Control>
+    {
+        bool _disposed;
 
-		protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
-		{
-			if (e.NewElement != null)
-			{
-				if (Control == null) // construct and SetNativeControl and suscribe control event
-				{
-					SetNativeControl(new FormsContentPage());
-				}
+        bool _loaded;
 
-				// Update control property 
-				UpdateContent();
-			}
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing || _disposed)
+                return;
 
-			base.OnElementChanged(e);
-		}
-		
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
+            _disposed = true;
 
-			if(e.PropertyName == ContentPage.ContentProperty.PropertyName)
-				UpdateContent();
-		}
+            if (Element != null)
+            {
+                ReadOnlyCollection<Element> children = ((IElementController)Element).LogicalChildren;
+                for (var i = 0; i < children.Count; i++)
+                {
+                    var visualChild = children[i] as VisualElement;
+                    visualChild?.Cleanup();
+                }
+                Element?.SendDisappearing();
+            }
 
-		void UpdateContent()
-		{
-			ContentPage page = Element as ContentPage;
-			if (page != null)
-			{
-				if (_currentView != null)
-				{
-					_currentView.Cleanup(); // cleanup old view
-				}
+            base.Dispose();
+        }
 
-				_currentView = page.Content;
-				Control.Content = _currentView != null ? Platform.GetOrCreateRenderer(_currentView).GetNativeElement() : null;
-			}
-		}
-	}
+        protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
+        {
+            base.OnElementChanged(e);
+
+            e.OldElement?.SendDisappearing();
+
+            if (e.NewElement != null)
+            {
+                if (e.OldElement == null)
+                {
+                    AttachedToVisualTree += OnAttachedToVisualTree;
+                    Tracker = new BackgroundTracker<Control>(BackgroundProperty);
+                }
+
+                if (_loaded)
+                    e.NewElement.SendAppearing();
+            }
+        }
+
+        private void OnAttachedToVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+        {
+            OnLoaded(sender, new RoutedEventArgs());
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            var carouselPage = Element?.Parent as CarouselPage;
+            if (carouselPage != null && carouselPage.Children[0] != Element)
+            {
+                return;
+            }
+            _loaded = true;
+            DetachedFromVisualTree += OnDetachedFromVisualTree;
+            Element?.SendAppearing();
+        }
+
+        private void OnDetachedFromVisualTree(object sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+        {
+            OnUnloaded(sender, new RoutedEventArgs());
+        }
+
+        void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            DetachedFromVisualTree -= OnDetachedFromVisualTree;
+            _loaded = false;
+            Element?.SendDisappearing();
+        }
+    }
 }
