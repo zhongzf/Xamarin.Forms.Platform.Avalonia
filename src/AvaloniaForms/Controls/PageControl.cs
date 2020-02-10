@@ -2,8 +2,10 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AvaloniaForms.Controls
 {
-    public partial class PageControl : ContentControl, IToolbarProvider, ITitleViewRendererController
+    public partial class PageControl : ContentControl, IToolbarProvider, ITitleViewRendererController, IStyleable
     {
         public static readonly StyledProperty<bool> TitleVisibilityProperty = AvaloniaProperty.Register<PageControl, bool>(nameof(TitleVisibility));
         public static readonly StyledProperty<Brush> ToolbarBackgroundProperty = AvaloniaProperty.Register<PageControl, Brush>(nameof(ToolbarBackground));
@@ -26,6 +28,8 @@ namespace AvaloniaForms.Controls
         static PageControl()
         {
         }
+
+        Type IStyleable.StyleKey => typeof(PageControl);
 
         protected CommandBar _commandBar;
         public CommandBar CommandBar => _commandBar;
@@ -65,23 +69,23 @@ namespace AvaloniaForms.Controls
         }
 
         #region Loaded & Unloaded
-        public event EventHandler<EventArgs> Loaded;
-        public event EventHandler<EventArgs> Unloaded;
+        public event EventHandler<RoutedEventArgs> Loaded;
+        public event EventHandler<RoutedEventArgs> Unloaded;
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
-            OnLoaded(e);
+            OnLoaded(new RoutedEventArgs());
             Appearing();
         }
 
         protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
         {
-            OnUnloaded(e);
+            OnUnloaded(new RoutedEventArgs());
             Disappearing();
         }
 
-        protected virtual void OnLoaded(EventArgs e) { Loaded?.Invoke(this, e); }
-        protected virtual void OnUnloaded(EventArgs e) { Unloaded?.Invoke(this, e); }
+        protected virtual void OnLoaded(RoutedEventArgs e) { Loaded?.Invoke(this, e); }
+        protected virtual void OnUnloaded(RoutedEventArgs e) { Unloaded?.Invoke(this, e); }
         #endregion
 
         #region Appearing & Disappearing

@@ -35,6 +35,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		internal static readonly BindableProperty RendererProperty = BindableProperty.CreateAttached("Renderer", typeof(IVisualElementRenderer), typeof(Platform), default(IVisualElementRenderer));
 
+		internal static Platform Current => (DefaultNavigation.MainWindow as FormsApplicationPage)?.Platform;
+
 		internal Platform(global::Avalonia.Controls.ContentControl page)
 		{
 			_page = page;
@@ -48,6 +50,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 			SubscribeAlertsAndActionSheets();
 		}
+
+
+		internal void UpdateToolbarItems()
+		{
+			// TODO:
+		}
+
 
 		internal void SubscribeAlertsAndActionSheets()
 		{

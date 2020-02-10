@@ -15,8 +15,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 {
     public class FormsApplicationPage : ApplicationWindow
     {
-        protected Application Application { get; private set; }
-        protected Platform Platform { get; private set; }
+        public Application Application { get; private set; }
+        public Platform Platform { get; private set; }
 
         public FormsApplicationPage(Application application = null)
         {

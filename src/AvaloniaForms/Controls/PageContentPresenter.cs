@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.Presenters;
+using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,28 +14,28 @@ namespace AvaloniaForms.Controls
 			LayoutUpdated += OnLayoutUpdated;
 		}
 
-		#region Loaded & Unloaded
-		public event EventHandler<EventArgs> Loaded;
-		public event EventHandler<EventArgs> Unloaded;
+        #region Loaded & Unloaded
+        public event EventHandler<RoutedEventArgs> Loaded;
+        public event EventHandler<RoutedEventArgs> Unloaded;
 
-		protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-		{
-			OnLoaded(e);
-			Appearing();
-		}
+        protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnLoaded(new RoutedEventArgs());
+            Appearing();
+        }
 
-		protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
-		{
-			OnUnloaded(e);
-			Disappearing();
-		}
+        protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnUnloaded(new RoutedEventArgs());
+            Disappearing();
+        }
 
-		protected virtual void OnLoaded(EventArgs e) { Loaded?.Invoke(this, e); }
-		protected virtual void OnUnloaded(EventArgs e) { Unloaded?.Invoke(this, e); }
-		#endregion
+        protected virtual void OnLoaded(RoutedEventArgs e) { Loaded?.Invoke(this, e); }
+        protected virtual void OnUnloaded(RoutedEventArgs e) { Unloaded?.Invoke(this, e); }
+        #endregion
 
-		#region Appearing & Disappearing
-		protected virtual void Appearing()
+        #region Appearing & Disappearing
+        protected virtual void Appearing()
 		{
 		}
 
