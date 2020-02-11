@@ -2,6 +2,7 @@
 using Avalonia.Layout;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,28 +27,35 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 
             Element.IsInNativeLayout = true;
 
-            var stepX = 1;
-            var stepY = 1;
-            for (var i = 0; i < ElementController.LogicalChildren.Count; i++)
+            try
             {
-                var child = ElementController.LogicalChildren[i] as VisualElement;
-                if (child == null)
-                    continue;
-
-                var childRenderer = Platform.GetRenderer(child);
-                if (childRenderer == null)
-                    continue;
-
-                var childControl = childRenderer.GetNativeElement();
-                var childBounds = child.Bounds;
-                var childWidth = Math.Max(0, childBounds.Width);
-                var childHeight = Math.Max(0, childBounds.Height);
-                if (stepX != 1 && stepY != 1 && stepX != 0 && stepY != 0)
+                var stepX = 1;
+                var stepY = 1;
+                for (var i = 0; i < ElementController.LogicalChildren.Count; i++)
                 {
-                    childControl.Width = childWidth = Math.Ceiling(childWidth / stepX) * stepX;
-                    childControl.Height = childHeight = Math.Ceiling(childHeight / stepY) * stepY;
+                    var child = ElementController.LogicalChildren[i] as VisualElement;
+                    if (child == null)
+                        continue;
+
+                    var childRenderer = Platform.GetRenderer(child);
+                    if (childRenderer == null)
+                        continue;
+
+                    var childControl = childRenderer.GetNativeElement();
+                    var childBounds = child.Bounds;
+                    var childWidth = Math.Max(0, childBounds.Width);
+                    var childHeight = Math.Max(0, childBounds.Height);
+                    if (stepX != 1 && stepY != 1 && stepX != 0 && stepY != 0)
+                    {
+                        childControl.Width = childWidth = Math.Ceiling(childWidth / stepX) * stepX;
+                        childControl.Height = childHeight = Math.Ceiling(childHeight / stepY) * stepY;
+                    }
+                    childControl.Arrange(new global::Avalonia.Rect(childBounds.X, childBounds.Y, childWidth, childHeight));
                 }
-                childControl.Arrange(new global::Avalonia.Rect(childBounds.X, childBounds.Y, childWidth, childHeight));
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
 
             Element.IsInNativeLayout = false;

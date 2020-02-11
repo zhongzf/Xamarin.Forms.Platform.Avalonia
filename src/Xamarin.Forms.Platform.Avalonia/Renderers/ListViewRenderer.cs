@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using AList = Avalonia.Controls.ListBox;
-using ASelectionChangedEventArgs = Avalonia.Controls.SelectionChangedEventArgs;
-using AScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility;
 using Avalonia.Interactivity;
 using Avalonia.Input;
 using Xamarin.Forms.Platform.Avalonia.Controls;
@@ -28,8 +25,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 		}
 
 		ITemplatedItemsView<Cell> TemplatedItemsView => Element;
-		AScrollBarVisibility? _defaultHorizontalScrollVisibility;
-		AScrollBarVisibility? _defaultVerticalScrollVisibility;
+		global::Avalonia.Controls.Primitives.ScrollBarVisibility? _defaultHorizontalScrollVisibility;
+		global::Avalonia.Controls.Primitives.ScrollBarVisibility? _defaultVerticalScrollVisibility;
 		ScrollViewer _scrollViewer;
 
 		public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
@@ -182,13 +179,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 			switch (Element.VerticalScrollBarVisibility)
 			{
 				case (ScrollBarVisibility.Always):
-					ScrollViewer.SetVerticalScrollBarVisibility(Control, AScrollBarVisibility.Visible);
+					ScrollViewer.SetVerticalScrollBarVisibility(Control, global::Avalonia.Controls.Primitives.ScrollBarVisibility.Visible);
 					break;
 				case (ScrollBarVisibility.Never):
-					ScrollViewer.SetVerticalScrollBarVisibility(Control, AScrollBarVisibility.Hidden);
+					ScrollViewer.SetVerticalScrollBarVisibility(Control, global::Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden);
 					break;
 				case (ScrollBarVisibility.Default):
-					ScrollViewer.SetVerticalScrollBarVisibility(Control, (AScrollBarVisibility)_defaultVerticalScrollVisibility);
+					ScrollViewer.SetVerticalScrollBarVisibility(Control, (global::Avalonia.Controls.Primitives.ScrollBarVisibility)_defaultVerticalScrollVisibility);
 					break;
 			}
 		}
@@ -201,13 +198,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 			switch (Element.HorizontalScrollBarVisibility)
 			{
 				case (ScrollBarVisibility.Always):
-					ScrollViewer.SetHorizontalScrollBarVisibility(Control, AScrollBarVisibility.Visible);
+					ScrollViewer.SetHorizontalScrollBarVisibility(Control, global::Avalonia.Controls.Primitives.ScrollBarVisibility.Visible);
 					break;
 				case (ScrollBarVisibility.Never):
-					ScrollViewer.SetHorizontalScrollBarVisibility(Control, AScrollBarVisibility.Hidden);
+					ScrollViewer.SetHorizontalScrollBarVisibility(Control, global::Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden);
 					break;
 				case (ScrollBarVisibility.Default):
-					ScrollViewer.SetHorizontalScrollBarVisibility(Control, (AScrollBarVisibility)_defaultHorizontalScrollVisibility);
+					ScrollViewer.SetHorizontalScrollBarVisibility(Control, (global::Avalonia.Controls.Primitives.ScrollBarVisibility)_defaultHorizontalScrollVisibility);
 					break;
 			}
 		}
@@ -325,7 +322,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			//});
 		}
 
-		static void ScrollToPositionInView(AList control, ScrollViewer sv, object item, ScrollToPosition position, bool animated)
+		static void ScrollToPositionInView(ListBox control, ScrollViewer sv, object item, ScrollToPosition position, bool animated)
 		{
 			// Scroll immediately if possible
 			if (!TryScrollToPositionInView(control, sv, item, position, animated))

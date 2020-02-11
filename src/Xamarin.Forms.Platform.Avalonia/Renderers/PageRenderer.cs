@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
@@ -33,16 +35,23 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateContent()
 		{
-			ContentPage page = Element as ContentPage;
-			if (page != null)
+			try
 			{
-				if (_currentView != null)
+				ContentPage page = Element as ContentPage;
+				if (page != null)
 				{
-					_currentView.Cleanup(); // cleanup old view
-				}
+					if (_currentView != null)
+					{
+						_currentView.Cleanup(); // cleanup old view
+					}
 
-				_currentView = page.Content;
-				Control.Content = _currentView != null ? Platform.GetOrCreateRenderer(_currentView).GetNativeElement() : null;
+					_currentView = page.Content;
+					Control.Content = _currentView != null ? Platform.GetOrCreateRenderer(_currentView).GetNativeElement() : null;
+				}
+			}
+			catch(Exception ex)
+			{
+				Debug.WriteLine(ex);
 			}
 		}
 	}

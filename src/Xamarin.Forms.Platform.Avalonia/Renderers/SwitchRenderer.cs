@@ -5,11 +5,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ACheckBox = Avalonia.Controls.CheckBox;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class SwitchRenderer : ViewRenderer<Switch, ACheckBox>
+	public class SwitchRenderer : ViewRenderer<Switch, global::Avalonia.Controls.CheckBox>
 	{
 		protected override void OnElementChanged(ElementChangedEventArgs<Switch> e)
 		{
@@ -17,7 +16,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null) // construct and SetNativeControl and suscribe control event
 				{
-					SetNativeControl(new ACheckBox());
+					SetNativeControl(new global::Avalonia.Controls.CheckBox());
 					Control.Checked += OnNativeToggled;
 					Control.Unchecked += OnNativeToggled;
 				}
