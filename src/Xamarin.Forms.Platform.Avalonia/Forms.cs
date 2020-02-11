@@ -1,5 +1,6 @@
 ﻿using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
+using Avalonia.Media;
 using AvaloniaForms.Themes;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,12 @@ namespace Xamarin.Forms
         {
             if (IsInitialized)
                 return;
+
+            if (global::Avalonia.Application.Current.Resources.ContainsKey("SystemColorControlAccentBrush"))
+            {
+                var accent = (SolidColorBrush)global::Avalonia.Application.Current.Resources["SystemColorControlAccentBrush"];
+                Color.SetAccent(accent.ToFormsColor());
+            }
 
             Log.Listeners.Add(new DelegateLogListener((c, m) => Console.WriteLine("[{0}] {1}", m, c)));
             Registrar.ExtraAssemblies = rendererAssemblies?.ToArray();
