@@ -20,7 +20,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		public Task CreateDirectoryAsync(string path)
 		{
 			_isolatedStorageFile.CreateDirectory(path);
-			return Task.FromResult(true);
+			return Task.CompletedTask;
 		}
 
 		public Task<bool> GetDirectoryExistsAsync(string path)

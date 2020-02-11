@@ -61,8 +61,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public double GetNamedSize(NamedSize size, Type targetElementType, bool useOldSizes)
         {
-            // TODO:
-            return 20;
+            return size.GetFontSize();
         }
 
         public SizeRequest GetNativeSize(VisualElement view, double widthConstraint, double heightConstraint)

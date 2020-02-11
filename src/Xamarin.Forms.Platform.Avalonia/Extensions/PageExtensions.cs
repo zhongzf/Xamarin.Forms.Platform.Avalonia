@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using System;
 
-namespace Xamarin.Forms.Platform.Avalonia.Extensions
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	public static class PageExtensions
 	{
@@ -19,7 +19,7 @@ namespace Xamarin.Forms.Platform.Avalonia.Extensions
 
 				var formsApplicationPage = new FormsApplicationPage();
 				formsApplicationPage.LoadApplication(app);
-				var platform = new Platform(formsApplicationPage);
+				var platform = new AvaloniaPlatform(formsApplicationPage);
 				platform.SetPage(view);
 			}
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xamarin.Forms.Platform.Avalonia.Helpers
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	static class UiHelper
 	{

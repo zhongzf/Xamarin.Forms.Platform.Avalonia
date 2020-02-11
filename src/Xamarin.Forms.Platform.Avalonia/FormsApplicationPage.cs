@@ -15,8 +15,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 {
     public class FormsApplicationPage : ApplicationWindow
     {
-        protected Application Application { get; private set; }
-        protected Platform Platform { get; private set; }
+        public Application Application { get; private set; }
+        public Platform Platform { get; private set; }
 
         public FormsApplicationPage(Application application = null)
         {
@@ -73,7 +73,7 @@ namespace Xamarin.Forms.Platform.Avalonia
         {
             if (Platform == null)
             {
-                Platform = new Platform(this);
+                Platform = new AvaloniaPlatform(this);
             }
             if (Application == null)
             {

@@ -1,21 +1,18 @@
 ﻿using Avalonia.Layout;
 using Avalonia.Media;
+using AvaloniaForms.Controls;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AButton = Avalonia.Controls.Button;
-using AImage = Avalonia.Controls.Image;
-using AThickness = Avalonia.Thickness;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	public class ImageButtonRenderer : ViewRenderer<ImageButton, AButton>, IVisualElementRenderer
+	public class ImageButtonRenderer : ViewRenderer<ImageButton, RoundButton>, IVisualElementRenderer
 	{
 		bool _disposed;
-		AButton _button;
-		AImage _image;
+		RoundButton _button;
+		global::Avalonia.Controls.Image _image;
 
 		public ImageButtonRenderer() : base() { }
 
@@ -27,17 +24,17 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				if (Control == null)
 				{
-					_image = new AImage
+					_image = new global::Avalonia.Controls.Image
 					{
 						VerticalAlignment = VerticalAlignment.Center,
 						HorizontalAlignment = HorizontalAlignment.Center,
 						Stretch = Stretch.Uniform
 					};
 
-					_button = new AButton
+					_button = new AvaloniaForms.Controls.RoundButton
 					{
-						Padding = new AThickness(0),
-						BorderThickness = new AThickness(0),
+						Padding = new global::Avalonia.Thickness(0),
+						BorderThickness = new global::Avalonia.Thickness(0),
 						Background = null,
 
 						Content = _image
@@ -163,15 +160,15 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateBorderColor()
 		{
-			Control.UpdateDependencyColor(AButton.BorderBrushProperty, Element.BorderColor);
+			Control.UpdateDependencyColor(RoundButton.BorderBrushProperty, Element.BorderColor);
 		}
 
 		void UpdateBorderWidth()
 		{
 			Control.BorderThickness =
 				Element.BorderWidth <= 0d
-					? new AThickness(1)
-					: new AThickness(Element.BorderWidth);
+					? new global::Avalonia.Thickness(1)
+					: new global::Avalonia.Thickness(Element.BorderWidth);
 		}
 
 		void UpdateAspect()
@@ -191,7 +188,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdatePadding()
 		{
-			Control.Padding = new AThickness(
+			Control.Padding = new global::Avalonia.Thickness(
 				Element.Padding.Left,
 				Element.Padding.Top,
 				Element.Padding.Right,

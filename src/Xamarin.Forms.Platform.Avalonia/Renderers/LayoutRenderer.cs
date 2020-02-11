@@ -2,8 +2,6 @@
 using System;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Helpers;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
 using Avalonia.Media;
 using Avalonia;
 

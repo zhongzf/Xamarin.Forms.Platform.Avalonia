@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AImage = Avalonia.Controls.Image;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class ImageRenderer : ViewRenderer<Image, AImage>
+    public class ImageRenderer : ViewRenderer<Image, global::Avalonia.Controls.Image>
     {
         protected override async void OnElementChanged(ElementChangedEventArgs<Image> e)
         {
@@ -23,7 +21,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             {
                 if (Control == null) // construct and SetNativeControl and suscribe control event
                 {
-                    SetNativeControl(new AImage());
+                    SetNativeControl(new global::Avalonia.Controls.Image());
                 }
 
                 // Update control property 

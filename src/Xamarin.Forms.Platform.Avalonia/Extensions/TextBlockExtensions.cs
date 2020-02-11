@@ -5,7 +5,7 @@ using System.Linq;
 using Xamarin.Forms.Internals;
 using NativeSize = Avalonia.Size;
 
-namespace Xamarin.Forms.Platform.Avalonia.Extensions
+namespace Xamarin.Forms.Platform.Avalonia
 {
 	public class Inline : AvaloniaObject
 	{

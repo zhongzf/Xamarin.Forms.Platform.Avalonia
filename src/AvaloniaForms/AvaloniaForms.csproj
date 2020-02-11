@@ -25,31 +25,37 @@
     </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
-    <AvaloniaResource Remove="Themes\AppBar.xaml" />
     <AvaloniaResource Remove="Themes\AppBarButton.xaml" />
     <AvaloniaResource Remove="Themes\ApplicationWindow.xaml" />
     <AvaloniaResource Remove="Themes\CarouselPage.xaml" />
+    <AvaloniaResource Remove="Themes\CommandBar.xaml" />
     <AvaloniaResource Remove="Themes\ContentDialog.xaml" />
     <AvaloniaResource Remove="Themes\DefaultTheme.xaml" />
     <AvaloniaResource Remove="Themes\ElementIcon.xaml" />
+    <AvaloniaResource Remove="Themes\EllipsisButton.xaml" />
+    <AvaloniaResource Remove="Themes\Flyout.xaml" />
     <AvaloniaResource Remove="Themes\Global.xaml" />
     <AvaloniaResource Remove="Themes\MasterDetailPage.xaml" />
     <AvaloniaResource Remove="Themes\NavigationPage.xaml" />
+    <AvaloniaResource Remove="Themes\PageControl.xaml" />
     <AvaloniaResource Remove="Themes\TabbedPage.xaml" />
     <AvaloniaResource Remove="Themes\TransitioningContentControl.xaml" />
     <AvaloniaResource Remove="Themes\WindowButtons.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Themes\AppBar.xaml" />
     <None Remove="Themes\AppBarButton.xaml" />
     <None Remove="Themes\ApplicationWindow.xaml" />
     <None Remove="Themes\CarouselPage.xaml" />
+    <None Remove="Themes\CommandBar.xaml" />
     <None Remove="Themes\ContentDialog.xaml" />
     <None Remove="Themes\DefaultTheme.xaml" />
     <None Remove="Themes\ElementIcon.xaml" />
+    <None Remove="Themes\EllipsisButton.xaml" />
+    <None Remove="Themes\Flyout.xaml" />
     <None Remove="Themes\Global.xaml" />
     <None Remove="Themes\MasterDetailPage.xaml" />
     <None Remove="Themes\NavigationPage.xaml" />
+    <None Remove="Themes\PageControl.xaml" />
     <None Remove="Themes\TabbedPage.xaml" />
     <None Remove="Themes\TransitioningContentControl.xaml" />
     <None Remove="Themes\WindowButtons.xaml" />
@@ -59,6 +65,18 @@
     <PackageReference Include="ReactiveUI" Version="11.1.23" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Themes\EllipsisButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\Flyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Themes\PageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Themes\ContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -79,7 +97,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Themes\AppBar.xaml">
+    <EmbeddedResource Include="Themes\CommandBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

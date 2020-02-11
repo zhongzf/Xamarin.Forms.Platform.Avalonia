@@ -1,11 +1,11 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using AvaloniaForms.Interfaces;
+using AvaloniaForms;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
+
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -20,7 +20,9 @@ namespace Xamarin.Forms.Platform.Avalonia
             }
 
             if (!global::Avalonia.Application.Current.CheckAccess())
+            {
                 throw new InvalidOperationException("UIThreadRequired");
+            }
 
             var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
             return Task.Factory.StartNew(() => LoadContent(parent, newContent), cancellationToken, TaskCreationOptions.None, scheduler);

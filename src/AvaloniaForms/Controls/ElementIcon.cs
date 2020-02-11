@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using System;
@@ -8,6 +9,10 @@ using System.Text;
 
 namespace AvaloniaForms.Controls
 {
+    public class IconElement : Image
+    {
+    }
+
     public class ElementIcon : TemplatedControl
     {
     }

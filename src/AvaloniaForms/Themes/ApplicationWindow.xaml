@@ -30,7 +30,7 @@
                                  Foreground="{DynamicResource CommandBarTextColor}"/>
             </Grid>
 
-            <forms:AppBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
+            <forms:CommandBar Name="PART_TopAppBar" Grid.Row="1" Background="{Binding TitleBarBackgroundColor}"
                                   IsVisible="{Binding HasNavigationBar}"
                                   Foreground="{Binding TitleBarTextColor}">
 
@@ -51,7 +51,7 @@
                 <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentTitle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"  />
               </Grid>
 
-            </forms:AppBar>
+            </forms:CommandBar>
 
             <forms:DynamicContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />
 
@@ -61,7 +61,7 @@
               <ContentPresenter Name="PART_ContentDialog_ContentPresenter" VerticalAlignment="Center"/>
             </Grid>
 
-            <forms:AppBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomAppBar}"  Background="{Binding TitleBarBackgroundColor}" />
+            <forms:CommandBar Name="PART_BottomAppBar" Grid.Row="3" IsVisible="{Binding HasBottomAppBar}"  Background="{Binding TitleBarBackgroundColor}" />
 
           </Grid>
         </Border>
@@ -69,7 +69,7 @@
     </Setter>
   </Style>
 
-  <Style Selector="forms|ApplicationWindow /template/ Button, forms|AppBar /template/ Button:pointerover">
+  <Style Selector="forms|ApplicationWindow /template/ Button, forms|CommandBar /template/ Button:pointerover">
     <Setter Property="Background" Value="{DynamicResource CommandBarBackgroundColor}" />
     <Setter Property="BorderBrush" Value="{DynamicResource CommandBarBackgroundColor}" />
     <Setter Property="Foreground" Value="{DynamicResource CommandBarTextColor}" />

@@ -4,7 +4,8 @@
   <StyleInclude Source="resm:AvaloniaForms.Themes.Global.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.ElementIcon.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.AppBarButton.xaml?assembly=AvaloniaForms"/>
-  <StyleInclude Source="resm:AvaloniaForms.Themes.AppBar.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.EllipsisButton.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.CommandBar.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.WindowButtons.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.TransitioningContentControl.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.CarouselPage.xaml?assembly=AvaloniaForms"/>
@@ -12,5 +13,7 @@
   <StyleInclude Source="resm:AvaloniaForms.Themes.MasterDetailPage.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.NavigationPage.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.ContentDialog.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.PageControl.xaml?assembly=AvaloniaForms"/>
+  <StyleInclude Source="resm:AvaloniaForms.Themes.Flyout.xaml?assembly=AvaloniaForms"/>
   <StyleInclude Source="resm:AvaloniaForms.Themes.ApplicationWindow.xaml?assembly=AvaloniaForms"/>
 </Styles>

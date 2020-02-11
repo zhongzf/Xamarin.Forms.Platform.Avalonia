@@ -3,9 +3,6 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using System.ComponentModel;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using static System.String;
-using AControl = Avalonia.Controls.Control;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -95,7 +92,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Element.TextColor.IsDefault)
                 return;
 
-            if (!IsNullOrEmpty(Element.Text))
+            if (!string.IsNullOrEmpty(Element.Text))
                 Control.Foreground = Element.TextColor.ToBrush();
         }
 

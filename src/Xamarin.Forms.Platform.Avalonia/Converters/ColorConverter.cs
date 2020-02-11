@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,11 +9,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
+
 
 namespace Xamarin.Forms.Platform.Avalonia.Converters
 {
-	public sealed class ColorConverter : global::Avalonia.Data.Converters.IMultiValueConverter
+	public sealed class ColorMultiValueConverter : global::Avalonia.Data.Converters.IMultiValueConverter
 	{
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
@@ -36,4 +37,22 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 			throw new NotImplementedException();
 		}
 	}
+
+	public sealed class ColorConverter : global::Avalonia.Data.Converters.IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			var color = (Color)value;
+			var defaultColorKey = (string)parameter;
+
+			Brush defaultBrush = defaultColorKey != null && global::Avalonia.Application.Current.Resources.ContainsKey(defaultColorKey) ? (Brush)global::Avalonia.Application.Current.Resources[defaultColorKey] : new SolidColorBrush(Colors.Transparent);
+			return color == Color.Default ? defaultBrush : color.ToBrush();
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 }

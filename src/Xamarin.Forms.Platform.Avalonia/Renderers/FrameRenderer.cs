@@ -1,8 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
 using System.ComponentModel;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AThickness = Avalonia.Thickness;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -84,12 +82,12 @@ namespace Xamarin.Forms.Platform.Avalonia
 			if (Element.BorderColor != Color.Default)
 			{
 				Control.UpdateDependencyColor(Border.BorderBrushProperty, Element.BorderColor);
-				Control.BorderThickness = new AThickness(1);
+				Control.BorderThickness = new global::Avalonia.Thickness(1);
 			}
 			else
 			{
 				Control.UpdateDependencyColor(Border.BorderBrushProperty, Color.Transparent);
-				Control.BorderThickness = new AThickness(0);
+				Control.BorderThickness = new global::Avalonia.Thickness(0);
 			}
 		}
 
@@ -125,7 +123,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdatePadding()
 		{
-			Control.Padding = new AThickness(
+			Control.Padding = new global::Avalonia.Thickness(
 				Element.Padding.Left,
 				Element.Padding.Top,
 				Element.Padding.Right,

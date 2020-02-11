@@ -229,6 +229,25 @@ namespace Xamarin.Forms.Platform.Avalonia
         //
         // Summary:
         //     The text input pattern for Hanja characters.
-        Hanja = 47
+        Hanja = 47,
+
+        HangulHalfWidth = 48,
+        HangulFullWidth = 49,
+        Search = 50,
+        Formula = 51,
+        SearchIncremental = 52,
+        ChineseHalfWidth = 53,
+        ChineseFullWidth = 54,
+        NativeScript = 55,
+        Text = 57,
+        Chat = 58,
+        NameOrPhoneNumber = 59,
+        EmailNameOrAddress = 60,
+        Maps = 62,
+        NumericPassword = 63,
+        NumericPin = 64,
+        AlphanumericPin = 65,
+        FormulaNumber = 67,
+        ChatWithoutEmoji = 68
     }
 }

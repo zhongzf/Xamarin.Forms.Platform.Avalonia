@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AScrollBarVisibility = Avalonia.Controls.Primitives.ScrollBarVisibility;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -167,14 +165,14 @@ namespace Xamarin.Forms.Platform.Avalonia
 		{
 			var orientation = Element.Orientation;
 			if (orientation == ScrollOrientation.Horizontal || orientation == ScrollOrientation.Both)
-				Control.HorizontalScrollBarVisibility = AScrollBarVisibility.Auto;
+				Control.HorizontalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
 			else
-				Control.HorizontalScrollBarVisibility = AScrollBarVisibility.Disabled;
+				Control.HorizontalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled;
 
 			if (orientation == ScrollOrientation.Vertical || orientation == ScrollOrientation.Both)
-				Control.VerticalScrollBarVisibility = AScrollBarVisibility.Auto;
+				Control.VerticalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
 			else
-				Control.VerticalScrollBarVisibility = AScrollBarVisibility.Disabled;
+				Control.VerticalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled;
 		}
 
 		void UpdateScrollOffset(double x, double y)

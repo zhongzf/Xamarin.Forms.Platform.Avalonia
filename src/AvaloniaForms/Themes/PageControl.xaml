@@ -1,0 +1,58 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Style Selector="forms|PageControl">
+    <Setter Property="ContentMargin" Value="0" />
+    <Setter Property="TitleBrush" Value="{DynamicResource DefaultTextForegroundThemeBrush}" />
+    <Setter Property="Template">
+        <ControlTemplate>
+          <Grid Background="{TemplateBinding Background}">
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border x:Name="TopCommandBarArea" HorizontalAlignment="Stretch" Background="{TemplateBinding ToolbarBackground}">
+
+              <forms:CommandBar x:Name="CommandBar" Tag="{TemplateBinding}"  Background="{TemplateBinding ToolbarBackground}" MinHeight="{DynamicResource TitleBarHeight}" HorizontalAlignment="Stretch">
+                  <Border x:Name="TitleArea" TemplatedParent="{TemplateBinding Tag}" Height="{DynamicResource TitleBarHeight}" IsVisible="{TemplateBinding TitleVisibility}" HorizontalAlignment="Stretch">
+                    <Grid x:Name="TitleViewPresenter" VerticalAlignment="Center" Background="{TemplateBinding ToolbarBackground}" HorizontalAlignment="Stretch">
+
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
+
+                      <Image Grid.Column="0" Source="{TemplateBinding TitleIcon}" />
+
+                      <Border Grid.Column="1" Height="{DynamicResource TitleBarHeight}" IsVisible="{TemplateBinding TitleVisibility}">
+                        <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="{TemplateBinding TitleBrush}" />
+                      </Border>
+
+                      <ContentPresenter Grid.Column="2" Content="{Binding TitleViewContent}" IsVisible="{TemplateBinding TitleViewVisibility}" HorizontalAlignment="Stretch" />
+
+                    </Grid>
+                  </Border>
+              </forms:CommandBar>
+            </Border>
+
+            <forms:PageContentPresenter x:Name="presenter"
+											Grid.Row="1"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                  Content="{TemplateBinding Content}"
+                  Padding="{TemplateBinding Padding}"
+                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+            <Border x:Name="BottomCommandBarArea" Grid.Row="2" HorizontalAlignment="Stretch"></Border>
+          </Grid>
+        </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

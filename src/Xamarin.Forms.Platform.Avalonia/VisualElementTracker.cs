@@ -98,23 +98,23 @@ namespace Xamarin.Forms.Platform.Avalonia
 
                 if (_element != null)
                 {
-                    _element.BatchCommitted -= HandleRedrawNeeded;
-                    _element.PropertyChanged -= HandlePropertyChanged;
+                    _element.BatchCommitted -= OnRedrawNeeded;
+                    _element.PropertyChanged -= OnPropertyChanged;
                 }
 
                 _element = value;
 
                 if (_element != null)
                 {
-                    _element.BatchCommitted += HandleRedrawNeeded;
-                    _element.PropertyChanged += HandlePropertyChanged;
+                    _element.BatchCommitted += OnRedrawNeeded;
+                    _element.PropertyChanged += OnPropertyChanged;
                 }
 
                 UpdateNativeControl();
             }
         }
 
-        protected virtual void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (Element.Batched)
             {
@@ -122,7 +122,9 @@ namespace Xamarin.Forms.Platform.Avalonia
                     e.PropertyName == VisualElement.YProperty.PropertyName ||
                     e.PropertyName == VisualElement.WidthProperty.PropertyName ||
                     e.PropertyName == VisualElement.HeightProperty.PropertyName)
+                {
                     _invalidateArrangeNeeded = true;
+                }
                 return;
             }
 
@@ -145,11 +147,21 @@ namespace Xamarin.Forms.Platform.Avalonia
                 UpdateScaleAndTranslateAndRotation();
             }
             else if (e.PropertyName == VisualElement.IsVisibleProperty.PropertyName)
-                UpdateVisibility();
+            {
+                UpdateVisibility(Element, Container);
+            }
             else if (e.PropertyName == VisualElement.OpacityProperty.PropertyName)
-                UpdateOpacity();
+            {
+                UpdateOpacity(Element, Container);
+            }
             else if (e.PropertyName == VisualElement.InputTransparentProperty.PropertyName)
-                UpdateInputTransparent();
+            {
+                UpdateInputTransparent(Element, Container);
+            }
+            else if (e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
+            {
+                UpdateInputTransparent(Element, Container);
+            }
         }
 
         protected virtual void UpdateNativeControl()
@@ -157,10 +169,15 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Element == null || Control == null)
                 return;
 
-            UpdateOpacity();
+            if(_container == null)
+            {
+                _container = Control;
+            }
+
+            UpdateVisibility(Element, Container);
+            UpdateOpacity(Element, Container);
             UpdateScaleAndTranslateAndRotation();
-            UpdateInputTransparent();
-            UpdateVisibility();
+            UpdateInputTransparent(Element, Container);
 
             if (_invalidateArrangeNeeded)
             {
@@ -269,7 +286,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             _touchPoints = e.Pointer.Type == PointerType.Touch ? 1 : 0;
         }
 
-        void HandleRedrawNeeded(object sender, EventArgs e)
+        void OnRedrawNeeded(object sender, EventArgs e)
         {
             UpdateNativeControl();
         }
@@ -281,16 +298,6 @@ namespace Xamarin.Forms.Platform.Avalonia
             var parent = (Control)Control.Parent;
             parent?.InvalidateMeasure();
             Control.InvalidateMeasure();
-        }
-
-        void UpdateInputTransparent()
-        {
-            Control.IsHitTestVisible = !Element.InputTransparent;
-        }
-
-        void UpdateOpacity()
-        {
-            Control.Opacity = Element.Opacity;
         }
 
         void UpdateScaleAndTranslateAndRotation()
@@ -348,11 +355,26 @@ namespace Xamarin.Forms.Platform.Avalonia
             _touchFrameReportedEventSet = true;
         }
 
-        void UpdateVisibility()
+        static void UpdateInputTransparent(VisualElement view, Control frameworkElement)
         {
-            Control.IsVisible = Element.IsVisible;
+            if (view is Layout)
+            {
+                // Let VisualElementRenderer handle this
+            }
+
+            frameworkElement.IsHitTestVisible = view.IsEnabled && !view.InputTransparent;
         }
 
+        static void UpdateOpacity(VisualElement view, Control frameworkElement)
+        {
+            frameworkElement.Opacity = view.Opacity;
+        }
+
+        static void UpdateVisibility(VisualElement view, Control frameworkElement)
+        {
+            frameworkElement.IsVisible = view.IsVisible;
+        }
+        
         public Control Container
         {
             get { return _container; }
@@ -361,9 +383,23 @@ namespace Xamarin.Forms.Platform.Avalonia
                 if (_container == value)
                     return;
 
+                ClearContainerEventHandlers();
+
                 _container = value;
 
                 UpdateNativeControl();
+            }
+        }
+
+        void ClearContainerEventHandlers()
+        {
+            if (_container != null)
+            {
+                // TODO:
+                //_container.PointerReleased -= OnControl_PointerReleased;
+                //_container.PointerPressed -= OnControl_PointerPressed;
+                //_container.PointerCaptureLost -= OnControl_PointerCaptureLost;
+                //_container.PointerMoved -= OnControl_PointerMoved;
             }
         }
 
@@ -383,8 +419,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             if (_element != null)
             {
-                _element.BatchCommitted -= HandleRedrawNeeded;
-                _element.PropertyChanged -= HandlePropertyChanged;
+                _element.BatchCommitted -= OnRedrawNeeded;
+                _element.PropertyChanged -= OnPropertyChanged;
             }
 
             Element = null;

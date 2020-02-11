@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {

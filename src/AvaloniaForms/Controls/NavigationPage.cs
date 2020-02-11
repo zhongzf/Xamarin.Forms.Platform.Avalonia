@@ -2,8 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Styling;
-using AvaloniaForms.Extensions;
-using AvaloniaForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

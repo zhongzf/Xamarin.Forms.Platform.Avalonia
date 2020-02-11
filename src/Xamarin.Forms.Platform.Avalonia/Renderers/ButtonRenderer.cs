@@ -5,10 +5,6 @@ using System;
 using System.ComponentModel;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
-using Xamarin.Forms.Platform.Avalonia.Extensions;
-using AButton = Avalonia.Controls.Button;
-using AImage = Avalonia.Controls.Image;
-using AThickness = Avalonia.Thickness;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
@@ -80,12 +76,12 @@ namespace Xamarin.Forms.Platform.Avalonia
 		
 		void UpdateBorderColor()
 		{
-			Control.UpdateDependencyColor(AButton.BorderBrushProperty, Element.BorderColor);
+			Control.UpdateDependencyColor(FormsButton.BorderBrushProperty, Element.BorderColor);
 		}
 
 		void UpdateBorderWidth()
 		{
-			Control.BorderThickness = Element.BorderWidth <= 0d ? new AThickness(1) : new AThickness(Element.BorderWidth);
+			Control.BorderThickness = Element.BorderWidth <= 0d ? new global::Avalonia.Thickness(1) : new global::Avalonia.Thickness(Element.BorderWidth);
 		}
 
 		void UpdateCornerRadius()
@@ -106,7 +102,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				return;
 			}
 
-			var image = new AImage
+			var image = new global::Avalonia.Controls.Image
 			{
 				Source = elementImage,
 				Width = 30,
@@ -142,20 +138,20 @@ namespace Xamarin.Forms.Platform.Avalonia
 			{
 				case Button.ButtonContentLayout.ImagePosition.Top:
 					container.Orientation = Orientation.Vertical;
-					image.Margin = new AThickness(0, 0, 0, spacing);
+					image.Margin = new global::Avalonia.Thickness(0, 0, 0, spacing);
 					break;
 				case Button.ButtonContentLayout.ImagePosition.Bottom:
 					container.Orientation = Orientation.Vertical;
-					image.Margin = new AThickness(0, spacing, 0, 0);
+					image.Margin = new global::Avalonia.Thickness(0, spacing, 0, 0);
 					break;
 				case Button.ButtonContentLayout.ImagePosition.Right:
 					container.Orientation = Orientation.Horizontal;
-					image.Margin = new AThickness(spacing, 0, 0, 0);
+					image.Margin = new global::Avalonia.Thickness(spacing, 0, 0, 0);
 					break;
 				default:
 					// Defaults to image on the left
 					container.Orientation = Orientation.Horizontal;
-					image.Margin = new AThickness(0, 0, spacing, 0);
+					image.Margin = new global::Avalonia.Thickness(0, 0, spacing, 0);
 					break;
 			}
 
@@ -181,7 +177,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateTextColor()
 		{
-			Control.UpdateDependencyColor(AButton.ForegroundProperty, Element.TextColor);
+			Control.UpdateDependencyColor(FormsButton.ForegroundProperty, Element.TextColor);
 		}
 
 		bool _isDisposed;
@@ -205,7 +201,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdatePadding()
 		{
-			Control.Padding = new AThickness(
+			Control.Padding = new global::Avalonia.Thickness(
 				Element.Padding.Left,
 				Element.Padding.Top,
 				Element.Padding.Right,

@@ -11,7 +11,7 @@ using Xamarin.Forms.Internals;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-	internal sealed class Deserializer : IDeserializer
+	internal sealed class AvaloniaSerializer : IDeserializer
 	{
 		const string PropertyStoreFile = "PropertyStore.forms";
 

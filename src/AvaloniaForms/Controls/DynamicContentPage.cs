@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using AvaloniaForms.Helpers;
-using AvaloniaForms.Interfaces;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Styling;
 using System;
@@ -114,7 +113,7 @@ namespace AvaloniaForms.Controls
 			}
 		}
 
-		public ApplicationWindow ParentWindow => DefaultNavigation.ParentWindow;
+		public ApplicationWindow ParentWindow => this.GetParentWindow() as ApplicationWindow;
 
 		public DynamicContentPage()
 		{
@@ -123,25 +122,30 @@ namespace AvaloniaForms.Controls
 			this.SetValue(DynamicContentPage.PrimaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 			this.SetValue(DynamicContentPage.SecondaryBottomBarCommandsProperty, new ObservableCollection<Control>());
 
-			AttachedToVisualTree += (sender, e) => Appearing();
-			DetachedFromVisualTree += (sender, e) => Disappearing();
-
 			LayoutUpdated += OnLayoutUpdated;
 		}
 
-		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		#region Loaded & Unloaded
+		public event EventHandler<RoutedEventArgs> Loaded;
+		public event EventHandler<RoutedEventArgs> Unloaded;
+
+		protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
 		{
+			OnLoaded(new RoutedEventArgs());
+			Appearing();
 		}
 
-		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
 		{
-			base.OnPropertyChanged(e);
-			if (e.Property == TitleProperty || e.Property == HasBackButtonProperty || e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
-			{
-				ParentWindow?.SynchronizeAppBar();
-			}
+			OnUnloaded(new RoutedEventArgs());
+			Disappearing();
 		}
 
+		protected virtual void OnLoaded(RoutedEventArgs e) { Loaded?.Invoke(this, e); }
+		protected virtual void OnUnloaded(RoutedEventArgs e) { Unloaded?.Invoke(this, e); }
+		#endregion
+
+		#region Appearing & Disappearing
 		protected virtual void Appearing()
 		{
 			this.PrimaryTopBarCommands.CollectionChanged += Commands_CollectionChanged;
@@ -159,6 +163,27 @@ namespace AvaloniaForms.Controls
 			this.PrimaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
 			this.SecondaryBottomBarCommands.CollectionChanged -= Commands_CollectionChanged;
 		}
+		#endregion
+
+		#region LayoutUpdated & SizeChanged
+		public event EventHandler<EventArgs> SizeChanged;
+		protected virtual void OnSizeChanged(EventArgs e) { SizeChanged?.Invoke(this, e); }
+
+		protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+		{
+			OnSizeChanged(e);
+		}
+		#endregion
+
+		protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+			if (e.Property == TitleProperty || e.Property == HasBackButtonProperty || e.Property == HasNavigationBarProperty || e.Property == TitleBarBackgroundColorProperty || e.Property == TitleBarTextColorProperty)
+			{
+				ParentWindow?.SynchronizeAppBar();
+			}
+		}
+
 
 		private void Commands_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
