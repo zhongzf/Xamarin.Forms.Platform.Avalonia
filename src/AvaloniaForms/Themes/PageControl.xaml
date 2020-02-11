@@ -14,11 +14,11 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Border x:Name="TopCommandBarArea" HorizontalAlignment="Stretch" Background="{TemplateBinding ToolbarBackground}">
+            <Border Name="TopCommandBarArea" HorizontalAlignment="Stretch" Background="{TemplateBinding ToolbarBackground}">
 
-              <forms:CommandBar x:Name="CommandBar" Tag="{TemplateBinding}"  Background="{TemplateBinding ToolbarBackground}" MinHeight="{DynamicResource TitleBarHeight}" HorizontalAlignment="Stretch">
-                  <Border x:Name="TitleArea" TemplatedParent="{TemplateBinding Tag}" Height="{DynamicResource TitleBarHeight}" IsVisible="{TemplateBinding TitleVisibility}" HorizontalAlignment="Stretch">
-                    <Grid x:Name="TitleViewPresenter" VerticalAlignment="Center" Background="{TemplateBinding ToolbarBackground}" HorizontalAlignment="Stretch">
+              <forms:CommandBar Name="CommandBar" Tag="{TemplateBinding}"  Background="{TemplateBinding ToolbarBackground}" MinHeight="{DynamicResource TitleBarHeight}" HorizontalAlignment="Stretch">
+                  <Border Name="TitleArea" TemplatedParent="{TemplateBinding Tag}" Height="{DynamicResource TitleBarHeight}" IsVisible="{TemplateBinding TitleVisibility}" HorizontalAlignment="Stretch">
+                    <Grid Name="TitleViewPresenter" VerticalAlignment="Center" Background="{TemplateBinding ToolbarBackground}" HorizontalAlignment="Stretch">
 
                       <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -39,7 +39,7 @@
               </forms:CommandBar>
             </Border>
 
-            <forms:PageContentPresenter x:Name="presenter"
+            <forms:PageContentPresenter Name="presenter"
 											Grid.Row="1"
                   Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
@@ -50,7 +50,7 @@
                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
 
-            <Border x:Name="BottomCommandBarArea" Grid.Row="2" HorizontalAlignment="Stretch"></Border>
+            <Border Name="BottomCommandBarArea" Grid.Row="2" HorizontalAlignment="Stretch"></Border>
           </Grid>
         </ControlTemplate>
     </Setter>

@@ -83,7 +83,8 @@ namespace Xamarin.Forms.Platform.Avalonia
                 pageController.ContainerArea = actualRect;
             }
 
-            return renderer.GetNativeElement();
+            var nativeElement = renderer.GetNativeElement() != null ? renderer.GetNativeElement() : renderer.ContainerElement;
+            return nativeElement;
         }
     }
 }

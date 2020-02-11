@@ -168,6 +168,26 @@ namespace AvaloniaForms.Controls
             this.StartupPage = page;
         }
 
+        #region Loaded & Unloaded
+        public event EventHandler<RoutedEventArgs> Loaded;
+        public event EventHandler<RoutedEventArgs> Unloaded;
+
+        protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnLoaded(new RoutedEventArgs());
+            //Appearing();
+        }
+
+        protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnUnloaded(new RoutedEventArgs());
+            //Disappearing();
+        }
+
+        protected virtual void OnLoaded(RoutedEventArgs e) { Loaded?.Invoke(this, e); }
+        protected virtual void OnUnloaded(RoutedEventArgs e) { Unloaded?.Invoke(this, e); }
+        #endregion
+
         protected virtual void Appearing()
         {
         }
