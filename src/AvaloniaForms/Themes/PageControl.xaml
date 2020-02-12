@@ -15,7 +15,6 @@
             </Grid.RowDefinitions>
 
             <Border Name="TopCommandBarArea" HorizontalAlignment="Stretch" Background="{TemplateBinding ToolbarBackground}">
-
               <forms:CommandBar Name="CommandBar" Tag="{TemplateBinding}"  Background="{TemplateBinding ToolbarBackground}" MinHeight="{DynamicResource TitleBarHeight}" HorizontalAlignment="Stretch">
                   <Border Name="TitleArea" TemplatedParent="{TemplateBinding Tag}" Height="{DynamicResource TitleBarHeight}" IsVisible="{TemplateBinding TitleVisibility}" HorizontalAlignment="Stretch">
                     <Grid Name="TitleViewPresenter" VerticalAlignment="Center" Background="{TemplateBinding ToolbarBackground}" HorizontalAlignment="Stretch">

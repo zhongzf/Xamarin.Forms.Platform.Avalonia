@@ -53,7 +53,7 @@
 
             </forms:CommandBar>
 
-            <forms:DynamicContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Source="{Binding StartupPage}" IsVisible="{Binding !HasModalPage}" />
+            <forms:DynamicContentControl Name="PART_ContentControl" Grid.Row="2" ContentLoader="{Binding ContentLoader}" Content="{Binding StartupPage, Converter={StaticResource ViewToRenderer}}" IsVisible="{Binding !HasModalPage}" />
 
             <forms:TransitioningContentControl Name="PART_ModalContentControl"  Grid.Row="1" Grid.RowSpan="3" Transition="Up" ContentLoader="{Binding ContentLoader}" Source="{Binding CurrentModalPage}" IsVisible="{Binding HasModalPage}" />
 

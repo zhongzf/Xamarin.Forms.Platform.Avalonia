@@ -14,21 +14,37 @@ namespace Xamarin.Forms.Platform.Avalonia.Converters
 			VisualElement visualElement = value as VisualElement;
 			if (visualElement != null)
 			{
-				var frameworkElement = Platform.GetOrCreateRenderer(visualElement)?.GetNativeElement();
-
-				if(frameworkElement != null)
+				var renderer = Platform.GetOrCreateRenderer(visualElement);
+				var nativeElement = renderer?.GetNativeElement();
+				if(nativeElement != null)
 				{
-					frameworkElement.Initialized += (sender, args) =>
+					nativeElement.Initialized += (sender, args) =>
 					{
-						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
+						visualElement.Layout(new Rectangle(0, 0, nativeElement.Bounds.Width, nativeElement.Bounds.Height));
 					};
 
-					frameworkElement.LayoutUpdated += (sender, args) =>
+					nativeElement.LayoutUpdated += (sender, args) =>
 					{
-						visualElement.Layout(new Rectangle(0, 0, frameworkElement.Bounds.Width, frameworkElement.Bounds.Height));
+						visualElement.Layout(new Rectangle(0, 0, nativeElement.Bounds.Width, nativeElement.Bounds.Height));
 					};
 
-					return frameworkElement;
+					return nativeElement;
+				}
+
+				var containerElement = renderer?.ContainerElement;
+				if (containerElement != null)
+				{
+					containerElement.Initialized += (sender, args) =>
+					{
+						visualElement.Layout(new Rectangle(0, 0, containerElement.Bounds.Width, containerElement.Bounds.Height));
+					};
+
+					containerElement.LayoutUpdated += (sender, args) =>
+					{
+						visualElement.Layout(new Rectangle(0, 0, containerElement.Bounds.Width, containerElement.Bounds.Height));
+					};
+
+					return containerElement;
 				}
 			}
 			return null;
