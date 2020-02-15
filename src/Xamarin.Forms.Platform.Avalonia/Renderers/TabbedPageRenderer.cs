@@ -3,28 +3,25 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
     public class TabbedPageRenderer : IVisualElementRenderer
     {
-		public Control ContainerElement => Control;
+        public Control ContainerElement => Control;
 
         public FormsTabControl Control { get; private set; }
 
         public TabbedPage Element { get; private set; }
 
-		VisualElement IVisualElementRenderer.Element => Element;
+        VisualElement IVisualElementRenderer.Element => Element;
 
-		public event EventHandler<VisualElementChangedEventArgs> ElementChanged;
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public event EventHandler<VisualElementChangedEventArgs> ElementChanged;
 
         public SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
@@ -50,69 +47,143 @@ namespace Xamarin.Forms.Platform.Avalonia
             return Control;
         }
 
-		public void SetElement(VisualElement element)
-		{
-			if (element != null && !(element is TabbedPage))
-				throw new ArgumentException("Element must be a TabbedPage", "element");
+        public void SetElement(VisualElement element)
+        {
+            if (element != null && !(element is TabbedPage))
+                throw new ArgumentException("Element must be a TabbedPage", "element");
 
-			TabbedPage oldElement = Element;
-			Element = (TabbedPage)element;
+            TabbedPage oldElement = Element;
+            Element = (TabbedPage)element;
 
-			if (oldElement != null)
-			{
-				oldElement.PropertyChanged -= OnElementPropertyChanged;
-			}
+            if (oldElement != null)
+            {
+                oldElement.PropertyChanged -= OnElementPropertyChanged;
+                ((INotifyCollectionChanged)oldElement.Children).CollectionChanged -= OnPagesChanged;
+            }
 
-			if (element != null)
-			{
-				if (Control == null)
-				{
-					Control = new FormsTabControl();
+            if (element != null)
+            {
+                if (Control == null)
+                {
+                    Control = new FormsTabControl();
 
-					Control.SelectionChanged += OnSelectionChanged;
+                    Control.SelectionChanged += OnSelectionChanged;
 
-					Control.Loaded += OnLoaded;
-					Control.Unloaded += OnUnloaded;
-				}
+                    Control.Loaded += OnLoaded;
+                    Control.Unloaded += OnUnloaded;
+                }
 
-				Control.DataContext = Element;
-			}
+                Control.DataContext = Element;
+                OnPagesChanged(Element.Children, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
-			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
-		}
+                ((INotifyCollectionChanged)Element.Children).CollectionChanged += OnPagesChanged;
+                element.PropertyChanged += OnElementPropertyChanged;
+            }
 
-		protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
-		{
-			ElementChanged?.Invoke(this, e);
-		}
+            OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
+        }
 
-		void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-		}
+        public void Dispose()
+        {
+            Dispose(true);
+        }
 
-		void OnLoaded(object sender, RoutedEventArgs args)
-		{
-			Element?.SendAppearing();
-		}
+        bool _disposed;
 
-		void OnSelectionChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)
-		{
-			if (Element == null)
-				return;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing || _disposed)
+                return;
 
-			Page page = e.AddedItems.Count > 0 ? (Page)e.AddedItems[0] : null;
-			Page currentPage = Element.CurrentPage;
-			if (currentPage == page)
-				return;
-			currentPage?.SendDisappearing();
-			Element.CurrentPage = page;
+            _disposed = true;
+            Element?.SendDisappearing();
+            SetElement(null);
+        }
 
-			page?.SendAppearing();
-		}
+        protected virtual void OnElementChanged(VisualElementChangedEventArgs e)
+        {
+            ElementChanged?.Invoke(this, e);
+        }
 
-		void OnUnloaded(object sender, RoutedEventArgs args)
-		{
-			Element?.SendDisappearing();
-		}
-	}
+        void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TabbedPage.CurrentPage))
+            {
+                UpdateCurrentPage();
+            }
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            Element?.SendAppearing();
+        }
+
+        void OnPagesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var items = new List<object>();
+            e.Apply(Element.Children, items);
+            Control.Items = items;
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.NewItems != null)
+                        for (int i = 0; i < e.NewItems.Count; i++)
+                            ((Page)e.NewItems[i]).PropertyChanged += OnChildPagePropertyChanged;
+                    if (e.OldItems != null)
+                        for (int i = 0; i < e.OldItems.Count; i++)
+                            ((Page)e.OldItems[i]).PropertyChanged -= OnChildPagePropertyChanged;
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    foreach (var page in Element.Children)
+                        page.PropertyChanged += OnChildPagePropertyChanged;
+                    break;
+            }
+
+            Control.InvalidateArrange();
+        }
+
+        void OnChildPagePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var page = sender as Page;
+            if (page != null)
+            {
+                // If AccessKeys properties are updated on a child (tab) we want to
+                // update the access key on the native control.
+            }
+        }
+
+        void OnSelectionChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)
+        {
+            if (Element == null)
+                return;
+
+            Page page = e.AddedItems.Count > 0 ? (Page)e.AddedItems[0] : null;
+            Page currentPage = Element.CurrentPage;
+            if (currentPage == page)
+                return;
+            currentPage?.SendDisappearing();
+            Element.CurrentPage = page;
+
+            page?.SendAppearing();
+        }
+
+        void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            Element?.SendDisappearing();
+        }
+
+        void UpdateCurrentPage()
+        {
+            Page page = Element.CurrentPage;
+
+            if (page == null)
+                return;
+
+            Control.SelectedItem = page;
+        }
+
+    }
 }
