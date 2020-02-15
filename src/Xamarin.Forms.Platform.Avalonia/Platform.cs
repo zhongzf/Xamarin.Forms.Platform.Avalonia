@@ -62,8 +62,33 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		private void OnRendererSizeChanged(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			UpdateBounds();
+			UpdatePageSizes();
 		}
+
+		void UpdateBounds()
+		{
+			_bounds = new Rectangle(0, 0, _page.Width, _page.Height);
+			// TODO:
+		}
+
+		internal void UpdatePageSizes()
+		{
+			Rectangle bounds = ContainerBounds;
+			if (bounds.IsEmpty)
+				return;
+			foreach (Page root in _navModel.Roots)
+			{
+				root.Layout(bounds);
+				IVisualElementRenderer renderer = GetRenderer(root);
+				if (renderer != null)
+				{
+					renderer.ContainerElement.Width = _container.Width;
+					renderer.ContainerElement.Height = _container.Height;
+				}
+			}
+		}
+
 
 		internal void SetPage(Page newRoot)
 		{
@@ -133,14 +158,13 @@ namespace Xamarin.Forms.Platform.Avalonia
 			}
 		}
 
-		private Task UpdateToolbarItems()
-		{
-			throw new NotImplementedException();
-		}
-
 		private void UpdateToolbarTracker()
 		{
-			throw new NotImplementedException();
+		}
+
+		private Task UpdateToolbarItems()
+		{
+			return Task.CompletedTask;
 		}
 
 		public static void SetRenderer(VisualElement self, IVisualElementRenderer renderer)

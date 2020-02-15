@@ -40,7 +40,8 @@ namespace Xamarin.Forms.Platform.Avalonia
             remove { _controlChanged -= value; }
         }
 
-        public event EventHandler<VisualElementChangedEventArgs> ElementChanged
+
+        event EventHandler<VisualElementChangedEventArgs> IVisualElementRenderer.ElementChanged
         {
             add
             {
@@ -53,12 +54,20 @@ namespace Xamarin.Forms.Platform.Avalonia
                     _elementChangedHandlers = (EventHandler<VisualElementChangedEventArgs>)Delegate.Combine(_elementChangedHandlers, value);
                 }
             }
+
             remove
             {
                 _elementChangedHandlers = (EventHandler<VisualElementChangedEventArgs>)Delegate.Remove(_elementChangedHandlers, value);
             }
         }
+        public event EventHandler<ElementChangedEventArgs<TElement>> ElementChanged;
 
+        protected virtual void OnElementChanged(ElementChangedEventArgs<TElement> e)
+        {
+            var args = new VisualElementChangedEventArgs(e.OldElement, e.NewElement);
+            _elementChangedHandlers?.Invoke(this, args);
+            ElementChanged?.Invoke(this, e);
+        }
 
         public void Dispose()
         {
@@ -77,7 +86,28 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public void SetElement(VisualElement element)
         {
-            throw new NotImplementedException();
+            TElement oldElement = Element;
+            Element = (TElement)element;
+
+            if (oldElement != null)
+            {
+                oldElement.PropertyChanged -= OnElementPropertyChanged;
+            }
+
+            if (element != null)
+            {
+                Element.PropertyChanged += OnElementPropertyChanged;
+            }
+
+            OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, Element));
         }
+
+        protected virtual void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // TODO: 
+
+            _elementPropertyChanged?.Invoke(this, e);
+        }
+
     }
 }
