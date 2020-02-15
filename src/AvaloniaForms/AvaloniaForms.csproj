@@ -24,8 +24,21 @@
       <SubType>Designer</SubType>
     </AvaloniaResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Remove="Themes\DefaultTheme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Themes\DefaultTheme.xaml" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.2" />
     <PackageReference Include="ReactiveUI" Version="11.1.23" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\DefaultTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using AvaloniaForms;
 using Xamarin.Forms.Platform.Avalonia;
 
 namespace AvaloniaApplication.Sample
@@ -14,7 +15,6 @@ namespace AvaloniaApplication.Sample
             this.AttachDevTools();
 #endif
 
-            Xamarin.Forms.Forms.SetFlags("IndicatorView_Experimental");
             Xamarin.Forms.Forms.Init();
             LoadApplication(new FormsGallery.App());
         }
