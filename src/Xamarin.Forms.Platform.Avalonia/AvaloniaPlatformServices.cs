@@ -1,7 +1,9 @@
-﻿using Avalonia.Threading;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -59,7 +61,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public double GetNamedSize(NamedSize size, Type targetElementType, bool useOldSizes)
         {
-            throw new NotImplementedException();
+            return size.GetFontSize();
         }
 
         public SizeRequest GetNativeSize(VisualElement view, double widthConstraint, double heightConstraint)
@@ -103,17 +105,21 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public IIsolatedStorageFile GetUserStoreForApplication()
         {
-            throw new NotImplementedException();
+            return new AvaloniaIsolatedStorageFile(IsolatedStorageFile.GetUserStoreForAssembly());
         }
 
         public void OpenUriAction(Uri uri)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Process.Start(uri.AbsoluteUri);
         }
 
         public void QuitApplication()
         {
-            throw new NotImplementedException();
+            var application = global::Avalonia.Application.Current;
+            if (application.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.Shutdown();
+            }
         }
 
         public void StartTimer(TimeSpan interval, Func<bool> callback)

@@ -21,8 +21,12 @@ namespace Xamarin.Forms
 
             Device.SetTargetIdiom(TargetIdiom.Desktop);
             Device.PlatformServices = new AvaloniaPlatformServices();
+            Device.Info = new AvaloniaDeviceInfo();
+            ExpressionSearch.Default = new AvaloniaExpressionSearch();
 
-
+            Registrar.RegisterAll(new[] { typeof(ExportRendererAttribute), typeof(ExportCellAttribute), typeof(ExportImageSourceHandlerAttribute) });
+            
+            Ticker.SetDefault(new AvaloniaTicker());
             Device.SetIdiom(TargetIdiom.Desktop);
 
             IsInitialized = true;

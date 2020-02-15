@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using Xamarin.Forms;
-//using Xamarin.Forms.Platform.Avalonia;
+using Xamarin.Forms.Platform.Avalonia;
 
 //[assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
@@ -47,7 +47,7 @@ using Xamarin.Forms;
 
 
 // Form and subclasses
-//[assembly: ExportRenderer(typeof(Page), typeof(Xamarin.Forms.Platform.Avalonia.Experiments.PageRenderer))]
+[assembly: ExportRenderer(typeof(Page), typeof(PageRenderer))]
 //[assembly: ExportRenderer(typeof(TabbedPage), typeof(TabbedPageRenderer))]
 //[assembly: ExportRenderer(typeof(NavigationPage), typeof(Xamarin.Forms.Platform.Avalonia.Experiments.NavigationPageRenderer))]
 //[assembly: ExportRenderer(typeof(CarouselPage), typeof(CarouselPageRenderer))]
