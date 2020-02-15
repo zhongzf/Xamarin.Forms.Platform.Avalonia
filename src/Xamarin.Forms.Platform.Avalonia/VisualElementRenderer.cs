@@ -74,6 +74,10 @@ namespace Xamarin.Forms.Platform.Avalonia
         IElementController ElementController => Element as IElementController;
         Canvas _backgroundLayer;
 
+
+        protected bool AutoPackage { get; set; } = true;
+        VisualElementPackager Packager { get; set; }
+        
         public void Dispose()
         {
             Dispose(true);
@@ -125,6 +129,12 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (element != null)
             {
                 Element.PropertyChanged += OnElementPropertyChanged;
+
+                if (AutoPackage && Packager == null)
+                    Packager = new VisualElementPackager(this);
+
+                if (Packager != null)
+                    Packager.Load();
             }
 
             OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, Element));
