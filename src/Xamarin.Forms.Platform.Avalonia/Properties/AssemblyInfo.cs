@@ -54,11 +54,11 @@ using Xamarin.Forms.Platform.Avalonia;
 //[assembly: ExportRenderer(typeof(MasterDetailPage), typeof(MasterDetailPageRenderer))]
 
 // Cells
-//[assembly: ExportCell(typeof(Cell), typeof(TextCellRenderer))]
-//[assembly: ExportCell(typeof(ImageCell), typeof(ImageCellRenderer))]
-//[assembly: ExportCell(typeof(EntryCell), typeof(EntryCellRenderer))]
-//[assembly: ExportCell(typeof(SwitchCell), typeof(SwitchCellRenderer))]
-//[assembly: ExportCell(typeof(ViewCell), typeof(ViewCellRenderer))]
+[assembly: ExportCell(typeof(Cell), typeof(TextCellRenderer))]
+[assembly: ExportCell(typeof(ImageCell), typeof(ImageCellRenderer))]
+[assembly: ExportCell(typeof(EntryCell), typeof(EntryCellRenderer))]
+[assembly: ExportCell(typeof(SwitchCell), typeof(SwitchCellRenderer))]
+[assembly: ExportCell(typeof(ViewCell), typeof(ViewCellRenderer))]
 
 // Others
 [assembly: Xamarin.Forms.Dependency(typeof(AvaloniaResourcesProvider))]
