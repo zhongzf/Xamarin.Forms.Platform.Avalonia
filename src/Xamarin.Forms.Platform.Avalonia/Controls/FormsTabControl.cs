@@ -6,5 +6,10 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
 {
     public class FormsTabControl : AvaloniaForms.Controls.TabControl
     {
+        public FormsTabControl()
+        {
+            var containedPageTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ContainedPageTemplate"];
+            ContentTemplate = containedPageTemplate;
+        }
     }
 }
