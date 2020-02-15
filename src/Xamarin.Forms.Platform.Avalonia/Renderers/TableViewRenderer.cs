@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -32,6 +33,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 						ItemTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["CellTemplate"],
 					});
 
+					Control.Bind(AvaloniaForms.Controls.ListView.ItemsProperty, new global::Avalonia.Data.Binding { Path = "" });
 					Control.SelectionChanged += OnSelectionChanged;
 				}
 
