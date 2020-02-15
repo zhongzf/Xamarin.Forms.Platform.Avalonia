@@ -21,30 +21,30 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public event EventHandler<VisualElementChangedEventArgs> ElementChanged;
 
-		public void Dispose()
-		{
-			Dispose(true);
-		}
+        public void Dispose()
+        {
+            Dispose(true);
+        }
 
-		bool _disposed;
+        bool _disposed;
 
-		protected void Dispose(bool disposing)
-		{
-			if (_disposed || !disposing)
-			{
-				return;
-			}
+        protected void Dispose(bool disposing)
+        {
+            if (_disposed || !disposing)
+            {
+                return;
+            }
 
-			Element?.SendDisappearing();
-			_disposed = true;
+            Element?.SendDisappearing();
+            _disposed = true;
 
-			SetElement(null);
-			SetPage(null, false, true);
-			_previousPage = null;
-		}
+            SetElement(null);
+            SetPage(null, false, true);
+            _previousPage = null;
+        }
 
 
-		public NavigationPage Element { get; private set; }
+        public NavigationPage Element { get; private set; }
 
         public SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
         {
@@ -72,113 +72,113 @@ namespace Xamarin.Forms.Platform.Avalonia
             throw new NotImplementedException();
         }
 
-		public void SetElement(VisualElement element)
-		{
-			if (element != null && !(element is NavigationPage))
-				throw new ArgumentException("Element must be a Page", nameof(element));
+        public void SetElement(VisualElement element)
+        {
+            if (element != null && !(element is NavigationPage))
+                throw new ArgumentException("Element must be a Page", nameof(element));
 
-			NavigationPage oldElement = Element;
-			Element = (NavigationPage)element;
+            NavigationPage oldElement = Element;
+            Element = (NavigationPage)element;
 
-			if (Element != null && Element.CurrentPage is null)
-				throw new InvalidOperationException(
-					"NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.");
+            if (Element != null && Element.CurrentPage is null)
+                throw new InvalidOperationException(
+                    "NavigationPage must have a root Page before being used. Either call PushAsync with a valid Page, or pass a Page to the constructor before usage.");
 
-			if (oldElement != null)
-			{
-				// TODO:
-			}
+            if (oldElement != null)
+            {
+                // TODO:
+            }
 
-			if (element != null)
-			{
-				if (_container == null)
-				{
-					_container = new FormsPageControl();
-					_container.SizeChanged += OnNativeSizeChanged;
+            if (element != null)
+            {
+                if (_container == null)
+                {
+                    _container = new FormsPageControl();
+                    _container.SizeChanged += OnNativeSizeChanged;
 
-					SetPage(Element.CurrentPage, false, false);
+                    SetPage(Element.CurrentPage, false, false);
 
-					_container.Loaded += OnLoaded;
-					_container.Unloaded += OnUnloaded;
-				}
+                    _container.Loaded += OnLoaded;
+                    _container.Unloaded += OnUnloaded;
+                }
 
-				_container.DataContext = Element.CurrentPage;
+                _container.DataContext = Element.CurrentPage;
 
-				// TODO:
-
-
-				PushExistingNavigationStack();
-			}
-
-			OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
-		}
-
-		void PushExistingNavigationStack()
-		{
-			foreach (var page in Element.Pages)
-			{
-				SetPage(page, false, false);
-			}
-		}
-
-		void SetPage(Page page, bool isAnimated, bool isPopping)
-		{
-			if (_currentPage != null)
-			{
-				if (isPopping)
-					_currentPage.Cleanup();
-
-				_container.Content = null;
-				_currentPage.PropertyChanged -= OnCurrentPagePropertyChanged;
-			}
-
-			if (!isPopping)
-				_previousPage = _currentPage;
-
-			_currentPage = page;
-
-			if (page == null)
-				return;
+                // TODO:
 
 
-			page.PropertyChanged += OnCurrentPagePropertyChanged;
+                PushExistingNavigationStack();
+            }
 
-			IVisualElementRenderer renderer = page.GetOrCreateRenderer();
+            OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
+        }
 
-			_container.Content = renderer.ContainerElement;
-			_container.DataContext = page;
-		}
+        void PushExistingNavigationStack()
+        {
+            foreach (var page in Element.Pages)
+            {
+                SetPage(page, false, false);
+            }
+        }
 
-		void OnNativeSizeChanged(object sender, EventArgs e)
-		{
-			UpdateContainerArea();
-		}
+        void SetPage(Page page, bool isAnimated, bool isPopping)
+        {
+            if (_currentPage != null)
+            {
+                if (isPopping)
+                    _currentPage.Cleanup();
 
-		void UpdateContainerArea()
-		{
-			Element.ContainerArea = new Rectangle(0, 0, _container.ContentWidth, _container.ContentHeight);
-		}
+                _container.Content = null;
+                _currentPage.PropertyChanged -= OnCurrentPagePropertyChanged;
+            }
 
-		void OnLoaded(object sender, RoutedEventArgs args)
-		{
-			if (Element == null)
-				return;
+            if (!isPopping)
+                _previousPage = _currentPage;
 
-			Element.SendAppearing();
-		}
+            _currentPage = page;
 
-		void OnUnloaded(object sender, RoutedEventArgs args)
-		{
-			Element?.SendDisappearing();
-		}
+            if (page == null)
+                return;
 
-		void OnCurrentPagePropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-		}
 
-		protected void OnElementChanged(VisualElementChangedEventArgs e)
-		{
-			ElementChanged?.Invoke(this, e);
-		}
-	}
+            page.PropertyChanged += OnCurrentPagePropertyChanged;
+
+            IVisualElementRenderer renderer = page.GetOrCreateRenderer();
+
+            _container.Content = renderer.ContainerElement;
+            _container.DataContext = page;
+        }
+
+        void OnNativeSizeChanged(object sender, EventArgs e)
+        {
+            UpdateContainerArea();
+        }
+
+        void UpdateContainerArea()
+        {
+            Element.ContainerArea = new Rectangle(0, 0, double.IsNaN(_container.ContentWidth) ? 0 : _container.ContentWidth, double.IsNaN(_container.ContentHeight) ? 0 : _container.ContentHeight);
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (Element == null)
+                return;
+
+            Element.SendAppearing();
+        }
+
+        void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            Element?.SendDisappearing();
+        }
+
+        void OnCurrentPagePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        protected void OnElementChanged(VisualElementChangedEventArgs e)
+        {
+            ElementChanged?.Invoke(this, e);
+        }
+    }
 }

@@ -30,7 +30,6 @@
   
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Controls\" />
   </ItemGroup>
 
 </Project>

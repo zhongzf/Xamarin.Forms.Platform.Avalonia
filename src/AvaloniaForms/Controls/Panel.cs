@@ -56,8 +56,4 @@ namespace AvaloniaForms.Controls
         }
         #endregion
     }
-
-    internal interface IStyleale
-    {
-    }
 }
