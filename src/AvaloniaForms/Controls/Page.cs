@@ -1,4 +1,7 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Styling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,8 +44,10 @@ namespace AvaloniaForms.Controls
         AppBar TopAppBar { get; set; }
     }
 
-    public partial class Page : UserControl, IPage, IPageOverrides
+    public partial class Page : UserControl, IPage, IPageOverrides, IStyleable
     {
+        Type IStyleable.StyleKey => typeof(UserControl);
+
         public AppBar BottomAppBar { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Frame Frame => throw new NotImplementedException();
@@ -64,5 +69,50 @@ namespace AvaloniaForms.Controls
         {
             throw new NotImplementedException();
         }
+
+        public Page()
+        {
+            LayoutUpdated += OnLayoutUpdated;
+        }
+
+        #region Loaded & Unloaded
+        public event EventHandler<RoutedEventArgs> Loaded;
+        public event EventHandler<RoutedEventArgs> Unloaded;
+
+        protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnLoaded(new RoutedEventArgs());
+            Appearing();
+        }
+
+        protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+        {
+            OnUnloaded(new RoutedEventArgs());
+            Disappearing();
+        }
+
+        protected virtual void OnLoaded(RoutedEventArgs e) { Loaded?.Invoke(this, e); }
+        protected virtual void OnUnloaded(RoutedEventArgs e) { Unloaded?.Invoke(this, e); }
+        #endregion
+
+        #region Appearing & Disappearing
+        protected virtual void Appearing()
+        {
+        }
+
+        protected virtual void Disappearing()
+        {
+        }
+        #endregion
+
+        #region LayoutUpdated & SizeChanged
+        public event EventHandler<EventArgs> SizeChanged;
+        protected virtual void OnSizeChanged(EventArgs e) { SizeChanged?.Invoke(this, e); }
+
+        protected virtual void OnLayoutUpdated(object sender, EventArgs e)
+        {
+            OnSizeChanged(e);
+        }
+        #endregion
     }
 }

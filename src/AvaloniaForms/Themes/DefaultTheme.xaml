@@ -1,4 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AvaloniaForms.Themes.DefaultTheme">
+  <StyleInclude Source="resm:AvaloniaForms.Themes.PageControl.xaml?assembly=AvaloniaForms"/>
 </Styles>

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class VisualElementRenderer<TElement, TNativeElement> : Panel, IVisualNativeElementRenderer, IDisposable
+    public class VisualElementRenderer<TElement, TNativeElement> : AvaloniaForms.Controls.Panel, IVisualNativeElementRenderer, IDisposable
         where TElement : VisualElement
         where TNativeElement : Control
     {
@@ -109,7 +109,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         public InputElement GetNativeElement()
         {
-            throw new NotImplementedException();
+            return Control;
         }
 
         public void SetElement(VisualElement element)
@@ -245,6 +245,7 @@ namespace Xamarin.Forms.Platform.Avalonia
         protected void SetNativeControl(TNativeElement control)
         {
             _controlChanging?.Invoke(this, EventArgs.Empty);
+
             TNativeElement oldControl = Control;
             Control = control;
 
@@ -270,6 +271,5 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             _controlChanged?.Invoke(this, EventArgs.Empty);
         }
-
     }
 }
