@@ -61,8 +61,8 @@ using Xamarin.Forms.Platform.Avalonia;
 //[assembly: ExportCell(typeof(ViewCell), typeof(ViewCellRenderer))]
 
 // Others
-//[assembly: Xamarin.Forms.Dependency(typeof(AvaloniaResourcesProvider))]
-//[assembly: Xamarin.Forms.Dependency(typeof(AvaloniaSerializer))]
+[assembly: Xamarin.Forms.Dependency(typeof(AvaloniaResourcesProvider))]
+[assembly: Xamarin.Forms.Dependency(typeof(AvaloniaSerializer))]
 
 // Addtional
 //[assembly: ExportRenderer(typeof(IndicatorView), typeof(IndicatorViewRenderer))]

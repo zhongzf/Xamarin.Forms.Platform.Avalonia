@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class AvaloniaPage : AvaloniaBasePage
+    public class AvaloniaPlatform : Platform
     {
-        protected override Platform CreatePlatform()
+        public AvaloniaPlatform(AvaloniaForms.Controls.Page page)
+            : base(page)
         {
-            return new AvaloniaPlatform(this);
         }
     }
 }

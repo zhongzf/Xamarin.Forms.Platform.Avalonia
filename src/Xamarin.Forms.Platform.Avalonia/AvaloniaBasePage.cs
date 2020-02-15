@@ -8,6 +8,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 	{
 		Application _application;
 
+		internal Platform Platform { get; private set; }
+
 		public AvaloniaBasePage()
 		{
 		}
@@ -20,9 +22,23 @@ namespace Xamarin.Forms.Platform.Avalonia
 			_application = application;
 			Application.SetCurrentApplication(application);
 
-			// TODO: Resister MainPage.
+			if(_application.MainPage != null)
+			{
+				RegisterWindow(_application.MainPage);
+			}
 
 			_application.SendStart();
 		}	
+
+		protected abstract Platform CreatePlatform();
+
+		protected virtual void RegisterWindow(Page page)
+		{
+			if (page == null)
+				throw new ArgumentNullException("page");
+
+			Platform = CreatePlatform();
+			Platform.SetPage(page);
+		}
 	}
 }
