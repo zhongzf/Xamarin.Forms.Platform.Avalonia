@@ -7,5 +7,6 @@
     <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
     <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
     <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
+    <converters:SymbolToValueConverter x:Key="SymbolToValue" />
   </Styles.Resources>
 </Styles>

@@ -7,15 +7,14 @@ using Xamarin.Forms.Platform.Avalonia;
 //[assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 
 [assembly: ExportRenderer(typeof(Layout), typeof(LayoutRenderer))]
-//[assembly: ExportRenderer(typeof(Label), typeof(LabelRenderer))]
-//[assembly: ExportRenderer(typeof(Button), typeof(ButtonRenderer))]
+[assembly: ExportRenderer(typeof(Label), typeof(LabelRenderer))]
+[assembly: ExportRenderer(typeof(Button), typeof(ButtonRenderer))]
 //[assembly: ExportRenderer(typeof(BoxView), typeof(BoxViewRenderer))]
 //[assembly: ExportRenderer(typeof(Switch), typeof(SwitchRenderer))]
 //[assembly: ExportRenderer(typeof(DatePicker), typeof(DatePickerRenderer))]
 //[assembly: ExportRenderer(typeof(BoxView), typeof(BoxViewRenderer))]
 //[assembly: ExportRenderer(typeof(Entry), typeof(EntryRenderer))]
 //[assembly: ExportRenderer(typeof(Editor), typeof(EditorRenderer))]
-//[assembly: ExportRenderer(typeof(Label), typeof(LabelRenderer))]
 //[assembly: ExportRenderer(typeof(Image), typeof(ImageRenderer))]
 //[assembly: ExportRenderer(typeof(Button), typeof(ButtonRenderer))]
 //[assembly: ExportRenderer(typeof(Slider), typeof(SliderRenderer))]
@@ -40,10 +39,10 @@ using Xamarin.Forms.Platform.Avalonia;
 //**[assembly: ExportRenderer(typeof(NativeViewWrapper), typeof(NativeViewWrapperRenderer))]
 
 //ImageSources
-//[assembly: ExportImageSourceHandler(typeof(FileImageSource), typeof(FileImageSourceHandler))]
-//[assembly: ExportImageSourceHandler(typeof(StreamImageSource), typeof(StreamImageSourceHandler))]
-//[assembly: ExportImageSourceHandler(typeof(UriImageSource), typeof(UriImageSourceHandler))]
-//[assembly: ExportImageSourceHandler(typeof(FontImageSource), typeof(FontImageSourceHandler))]
+[assembly: ExportImageSourceHandler(typeof(FileImageSource), typeof(FileImageSourceHandler))]
+[assembly: ExportImageSourceHandler(typeof(StreamImageSource), typeof(StreamImageSourceHandler))]
+[assembly: ExportImageSourceHandler(typeof(UriImageSource), typeof(UriImageSourceHandler))]
+[assembly: ExportImageSourceHandler(typeof(FontImageSource), typeof(FontImageSourceHandler))]
 
 
 // Form and subclasses

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Xamarin.Forms.Internals;
 using Xamarin.Forms.Platform.Avalonia.Controls;
 
 namespace Xamarin.Forms.Platform.Avalonia
@@ -86,7 +87,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             if (oldElement != null)
             {
-                // TODO:
+                oldElement.PushRequested -= OnPushRequested;
+                oldElement.PopRequested -= OnPopRequested;
+                oldElement.PopToRootRequested -= OnPopToRootRequested;
             }
 
             if (element != null)
@@ -104,8 +107,9 @@ namespace Xamarin.Forms.Platform.Avalonia
 
                 _container.DataContext = Element.CurrentPage;
 
-                // TODO:
-
+                Element.PushRequested += OnPushRequested;
+                Element.PopRequested += OnPopRequested;
+                Element.PopToRootRequested += OnPopToRootRequested;
 
                 PushExistingNavigationStack();
             }
@@ -180,5 +184,23 @@ namespace Xamarin.Forms.Platform.Avalonia
         {
             ElementChanged?.Invoke(this, e);
         }
+
+        #region Navigation
+        void OnPopRequested(object sender, NavigationRequestedEventArgs e)
+        {
+            var newCurrent = Element.Peek(1);
+            SetPage(newCurrent, e.Animated, true);
+        }
+
+        void OnPopToRootRequested(object sender, NavigationRequestedEventArgs e)
+        {
+            SetPage(e.Page, e.Animated, true);
+        }
+
+        void OnPushRequested(object sender, NavigationRequestedEventArgs e)
+        {
+            SetPage(e.Page, e.Animated, false);
+        }
+        #endregion
     }
 }
