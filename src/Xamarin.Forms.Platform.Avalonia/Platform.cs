@@ -68,7 +68,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		void UpdateBounds()
 		{
-			_bounds = new Rectangle(0, 0, _page.Width, _page.Height);
+			_bounds = new Rectangle(0, 0, _page.Bounds.Width, _page.Bounds.Height);
 			// TODO:
 		}
 
@@ -83,8 +83,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				IVisualElementRenderer renderer = GetRenderer(root);
 				if (renderer != null)
 				{
-					renderer.ContainerElement.Width = _container.Width;
-					renderer.ContainerElement.Height = _container.Height;
+					renderer.ContainerElement.Width = _container.Bounds.Width;
+					renderer.ContainerElement.Height = _container.Bounds.Height;
 				}
 			}
 		}

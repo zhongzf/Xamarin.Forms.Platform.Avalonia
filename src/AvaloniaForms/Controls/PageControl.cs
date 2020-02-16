@@ -18,12 +18,12 @@ namespace AvaloniaForms.Controls
 
         public double ContentHeight
         {
-            get { return _presenter != null ? _presenter.Height : 0; }
+            get { return _presenter != null ? _presenter.Bounds.Height : 0; }
         }
 
         public double ContentWidth
         {
-            get { return _presenter != null ? _presenter.Width : 0; }
+            get { return _presenter != null ? _presenter.Bounds.Width : 0; }
         }
 
 
