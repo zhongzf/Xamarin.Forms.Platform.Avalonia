@@ -41,6 +41,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 		readonly AvaloniaForms.Controls.Page _page;
 
 		Page _currentPage;
+		public Page CurrentPage => _currentPage;
 
 		readonly NavigationModel _navModel = new NavigationModel();
 
