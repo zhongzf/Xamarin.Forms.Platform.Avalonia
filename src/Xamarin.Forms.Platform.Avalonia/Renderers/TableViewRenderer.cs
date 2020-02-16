@@ -1,11 +1,29 @@
 ﻿using Avalonia;
+using Avalonia.Collections;
+using Avalonia.Controls.Templates;
+using AvaloniaForms;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Xamarin.Forms.Platform.Avalonia
 {
-    public class TableViewRenderer : ViewRenderer<TableView, AvaloniaForms.Controls.ListView>
+	public class TableViewDataTemplateSelector : IDataTemplateSelector
+	{
+		public IDataTemplate SelectTemplate(object item, object container)
+		{
+			if (item is Cell)
+			{
+				return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["CellTemplate"];
+			}
+			else
+			{
+				return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["TableSection"];
+			}
+		}
+	}
+
+	public class TableViewRenderer : ViewRenderer<TableView, AvaloniaForms.Controls.ListView>
     {
 		bool _ignoreSelectionEvent;
 		bool _disposed;
@@ -30,7 +48,7 @@ namespace Xamarin.Forms.Platform.Avalonia
 				{
 					SetNativeControl(new AvaloniaForms.Controls.ListView
 					{
-						ItemTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["CellTemplate"],
+						ItemTemplateSelector = new TableViewDataTemplateSelector()
 					});
 
 					Control.Bind(AvaloniaForms.Controls.ListView.ItemsProperty, new global::Avalonia.Data.Binding { Path = "" });

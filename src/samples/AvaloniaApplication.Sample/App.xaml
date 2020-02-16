@@ -4,8 +4,9 @@
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 					   xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:Xamarin.Forms.Platform.Avalonia.Controls;assembly=Xamarin.Forms.Platform.Avalonia"
-             xmlns:converters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
+             xmlns:formsConverters="clr-namespace:Xamarin.Forms.Platform.Avalonia.Converters;assembly=Xamarin.Forms.Platform.Avalonia"
              xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+             xmlns:converters="clr-namespace:AvaloniaForms.Converters;assembly=AvaloniaForms"
              x:Class="AvaloniaApplication.Sample.App">
   <Application.Styles>
     <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
@@ -49,8 +50,13 @@
     <FontFamily x:Key="FontFamilyNormal">Segoe UI</FontFamily>
     <FontFamily x:Key="FontFamilySemiBold">Segoe UI</FontFamily>
 
-    <converters:PageToRenderedElementConverter x:Key="PageToRenderer" />
-    <converters:HeightConverter x:Key="HeightConverter" />
+    <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
+    <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
+    <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
+
+    <formsConverters:PageToRenderedElementConverter x:Key="PageToRenderer" />
+    <formsConverters:HeightConverter x:Key="HeightConverter" />
+    <formsConverters:ColorConverter x:Key="ColorConverter" />
 
     <DataTemplate x:Key="ContainedPageTemplate">
       <ContentPresenter Content="{Binding Converter={StaticResource PageToRenderer}}" />
@@ -58,6 +64,14 @@
 
     <DataTemplate x:Key="CellTemplate">
       <controls:CellControl HorizontalContentAlignment="Stretch" Height="{Binding Cell.RenderHeight,Converter={StaticResource HeightConverter}}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="TableRoot">
+      <TextBlock Margin="0,20,0,0" Text="{Binding Title,Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text,Converter={StaticResource CollapseWhenEmpty}}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="TableSection">
+      <TextBlock Margin="0,20,0,0" Text="{Binding Title,Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text,Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
     </DataTemplate>
 
   </Application.Resources>

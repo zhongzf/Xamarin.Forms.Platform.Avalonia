@@ -27,12 +27,14 @@
 
   <ItemGroup>
     <AvaloniaResource Remove="Themes\DefaultTheme.xaml" />
+    <AvaloniaResource Remove="Themes\Global.xaml" />
     <AvaloniaResource Remove="Themes\PageControl.xaml" />
     <AvaloniaResource Remove="Themes\TabControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Themes\DefaultTheme.xaml" />
+    <None Remove="Themes\Global.xaml" />
     <None Remove="Themes\PageControl.xaml" />
     <None Remove="Themes\TabControl.xaml" />
   </ItemGroup>
@@ -48,6 +50,11 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Themes\PageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Themes\Global.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

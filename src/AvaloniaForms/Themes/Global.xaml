@@ -1,0 +1,11 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:forms="clr-namespace:AvaloniaForms.Controls;assembly=AvaloniaForms"
+        xmlns:converters="clr-namespace:AvaloniaForms.Converters;assembly=AvaloniaForms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Styles.Resources>
+    <converters:CaseConverter x:Key="LowerConverter" ConvertToUpper="False" />
+    <converters:CaseConverter x:Key="UpperConverter" ConvertToUpper="True" />
+    <converters:CollapseWhenEmptyConverter x:Key="CollapseWhenEmpty" />
+  </Styles.Resources>
+</Styles>
