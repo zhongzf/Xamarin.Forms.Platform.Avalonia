@@ -19,11 +19,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 				{
 					return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ListViewHeaderTextCell"];
 				}
-
-				if (global::Avalonia.Application.Current.Resources.ContainsKey("ListViewTextCell"))
-				{
-					return (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ListViewTextCell"];
-				}
 			}
 
 			return textCell;

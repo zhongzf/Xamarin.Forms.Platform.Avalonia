@@ -91,9 +91,9 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
             if (template != _currentTemplate || Content == null)
             {
                 _currentTemplate = template;
-                Content = template.Content;
+                ContentTemplate = template;
+                Content = newCell;
             }
-            ((Control)Content).DataContext = newCell;
         }
 
         ListView GetListView()

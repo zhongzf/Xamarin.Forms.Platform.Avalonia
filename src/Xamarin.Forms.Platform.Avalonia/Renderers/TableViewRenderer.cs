@@ -80,8 +80,22 @@ namespace Xamarin.Forms.Platform.Avalonia
 			// This auto-selects the first item in the new DataContext, so we just null it and ignore the selection
 			// as this selection isn't driven by user input
 			_ignoreSelectionEvent = true;
-			Control.DataContext = Element.Root;
+			Control.DataContext = GetTableViewRow();
 			_ignoreSelectionEvent = false;
+		}
+
+		public IList<object> GetTableViewRow()
+		{
+			List<object> result = new List<object>();
+
+			foreach (var item in Element.Root)
+			{
+				if (!string.IsNullOrWhiteSpace(item.Title))
+					result.Add(item);
+
+				result.AddRange(item);
+			}
+			return result;
 		}
 
 		void OnSelectionChanged(object sender, global::Avalonia.Controls.SelectionChangedEventArgs e)

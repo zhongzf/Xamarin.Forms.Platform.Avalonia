@@ -67,12 +67,43 @@
     </DataTemplate>
 
     <DataTemplate x:Key="TableRoot">
-      <TextBlock Margin="0,20,0,0" Text="{Binding Title,Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text,Converter={StaticResource CollapseWhenEmpty}}" />
+      <TextBlock Margin="0,20,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" />
     </DataTemplate>
 
     <DataTemplate x:Key="TableSection">
-      <TextBlock Margin="0,20,0,0" Text="{Binding Title,Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text,Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
+      <TextBlock Margin="0,20,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
     </DataTemplate>
 
+
+    <DataTemplate x:Key="TextCell">
+      <StackPanel>
+        <TextBlock
+          Text="{Binding Text}"
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
+          Foreground="{Binding TextColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}" />
+
+        <TextBlock
+          Text="{Binding Detail}"
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
+          Foreground="{Binding DetailColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}"
+          x:Name="detail"/>
+      </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ListViewHeaderTextCell">
+      <StackPanel>
+        <TextBlock
+          Text="{Binding Text}"
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
+          Foreground="{Binding TextColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}" />
+
+        <TextBlock
+          Text="{Binding Detail}"
+          IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
+          Foreground="{Binding DetailColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}"
+          x:Name="detail" />
+      </StackPanel>
+    </DataTemplate>
+   
   </Application.Resources>
 </Application>
