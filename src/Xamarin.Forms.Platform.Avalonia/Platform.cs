@@ -50,14 +50,23 @@ namespace Xamarin.Forms.Platform.Avalonia
 
 		internal Platform(AvaloniaForms.Controls.Page page)
 		{
+			if (page == null)
+				throw new ArgumentNullException(nameof(page));
+
 			_page = page;
+			_page.LayoutUpdated += OnPageLayoutUpdated;
 
 			var current = global::Avalonia.Application.Current;
 			// TODO: resources
 
 			_container = new Canvas();
 			_page.Content = _container;
-			_container.LayoutUpdated += OnRendererSizeChanged;
+			//_container.LayoutUpdated += OnRendererSizeChanged;
+		}
+
+		private void OnPageLayoutUpdated(object sender, EventArgs e)
+		{
+			OnRendererSizeChanged(sender, e);
 		}
 
 		private void OnRendererSizeChanged(object sender, EventArgs e)
@@ -69,7 +78,6 @@ namespace Xamarin.Forms.Platform.Avalonia
 		void UpdateBounds()
 		{
 			_bounds = new Rectangle(0, 0, _page.Bounds.Width, _page.Bounds.Height);
-			// TODO:
 		}
 
 		internal void UpdatePageSizes()
@@ -135,8 +143,8 @@ namespace Xamarin.Forms.Platform.Avalonia
 				IVisualElementRenderer pageRenderer = newPage.GetOrCreateRenderer();
 				_container.Children.Add(pageRenderer.ContainerElement);
 
-				pageRenderer.ContainerElement.Width = _container.Width;
-				pageRenderer.ContainerElement.Height = _container.Height;
+				pageRenderer.ContainerElement.Width = _container.Bounds.Width;
+				pageRenderer.ContainerElement.Height = _container.Bounds.Height;
 
 				completedCallback?.Invoke();
 
