@@ -13,5 +13,8 @@ namespace Xamarin.Forms.Platform.Avalonia
         where TElement : View
         where TNativeElement : Control
     {
+        protected virtual void UpdateBackground()
+        {
+        }
     }
 }

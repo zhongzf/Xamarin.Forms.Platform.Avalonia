@@ -355,7 +355,7 @@ namespace Xamarin.Forms.Platform.Avalonia
             _tracker.Container = ContainerElement;
         }
 
-        void UpdateEnabled()
+        protected virtual void UpdateEnabled()
         {
             if (_control != null)
                 _control.IsEnabled = Element.IsEnabled;
