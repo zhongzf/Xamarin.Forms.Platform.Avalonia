@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,8 +74,7 @@ namespace Xamarin.Forms.Platform.Avalonia
         protected bool ArrangeNativeChildren { get; set; }
         IElementController ElementController => Element as IElementController;
         Canvas _backgroundLayer;
-
-
+        
         protected bool AutoPackage { get; set; } = true;
         VisualElementPackager Packager { get; set; }
 
@@ -103,6 +103,8 @@ namespace Xamarin.Forms.Platform.Avalonia
                 }
             }
         }
+
+        Control _control => Control as Control;
 
         public void Dispose()
         {
@@ -172,8 +174,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                     Tracker = new VisualElementTracker<TElement, TNativeElement>();
                 }
 
-                if (Packager != null)
-                    Packager.Load();
+                Packager?.Load();
             }
 
             OnElementChanged(new ElementChangedEventArgs<TElement>(oldElement, Element));
@@ -181,7 +182,10 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         protected virtual void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            // TODO: 
+            if (e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
+                UpdateEnabled();
+            else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+                UpdateBackgroundColor();
 
             _elementPropertyChanged?.Invoke(this, e);
         }
@@ -316,9 +320,20 @@ namespace Xamarin.Forms.Platform.Avalonia
 
             Element.IsNativeStateConsistent = false;
 
+            control.AttachedToVisualTree += Control_AttachedToVisualTree;
             Children.Add(control);
 
             _controlChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Control_AttachedToVisualTree(object sender, VisualTreeAttachmentEventArgs e)
+        {
+            OnControlLoaded(sender, new RoutedEventArgs());
+        }
+
+        void OnControlLoaded(object sender, RoutedEventArgs args)
+        {
+            Element.IsNativeStateConsistent = true;
         }
 
         protected virtual void UpdateNativeControl()
@@ -338,6 +353,49 @@ namespace Xamarin.Forms.Platform.Avalonia
             _tracker.Control = Control;
             _tracker.Element = Element;
             _tracker.Container = ContainerElement;
+        }
+
+        void UpdateEnabled()
+        {
+            if (_control != null)
+                _control.IsEnabled = Element.IsEnabled;
+            else
+                IsHitTestVisible = Element.IsEnabled && !Element.InputTransparent;
+        }
+
+        protected virtual void UpdateBackgroundColor()
+        {
+            Color backgroundColor = Element.BackgroundColor;
+
+            var backgroundLayer = (Panel)this;
+            if (_backgroundLayer != null)
+            {
+                backgroundLayer = _backgroundLayer;
+                Background = null; // Make the container effectively hit test invisible
+            }
+
+            if (_control != null)
+            {
+                //if (!backgroundColor.IsDefault)
+                //{
+                //    _control.Background = backgroundColor.ToBrush();
+                //}
+                //else
+                //{
+                //    _control.ClearValue(Control.BackgroundProperty);
+                //}
+            }
+            else
+            {
+                if (!backgroundColor.IsDefault)
+                {
+                    backgroundLayer.Background = backgroundColor.ToBrush();
+                }
+                else
+                {
+                    backgroundLayer.ClearValue(BackgroundProperty);
+                }
+            }
         }
     }
 }
