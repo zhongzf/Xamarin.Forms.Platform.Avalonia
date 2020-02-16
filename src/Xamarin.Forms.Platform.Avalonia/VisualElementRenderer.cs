@@ -77,7 +77,33 @@ namespace Xamarin.Forms.Platform.Avalonia
 
         protected bool AutoPackage { get; set; } = true;
         VisualElementPackager Packager { get; set; }
-        
+
+        protected bool AutoTrack { get; set; } = true;
+        VisualElementTracker<TElement, TNativeElement> _tracker;
+        protected VisualElementTracker<TElement, TNativeElement> Tracker
+        {
+            get { return _tracker; }
+            set
+            {
+                if (_tracker == value)
+                    return;
+
+                if (_tracker != null)
+                {
+                    _tracker.Dispose();
+                    _tracker.Updated -= OnTrackerUpdated;
+                }
+
+                _tracker = value;
+
+                if (_tracker != null)
+                {
+                    _tracker.Updated += OnTrackerUpdated;
+                    UpdateTracker();
+                }
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -92,6 +118,12 @@ namespace Xamarin.Forms.Platform.Avalonia
                 return;
 
             _disposed = true;
+
+            Tracker?.Dispose();
+            Tracker = null;
+
+            Packager?.Dispose();
+            Packager = null;
 
             SetNativeControl(null);
             SetElement(null);
@@ -131,7 +163,14 @@ namespace Xamarin.Forms.Platform.Avalonia
                 Element.PropertyChanged += OnElementPropertyChanged;
 
                 if (AutoPackage && Packager == null)
+                {
                     Packager = new VisualElementPackager(this);
+                }
+
+                if (AutoTrack && Tracker == null)
+                {
+                    Tracker = new VisualElementTracker<TElement, TNativeElement>();
+                }
 
                 if (Packager != null)
                     Packager.Load();
@@ -280,6 +319,25 @@ namespace Xamarin.Forms.Platform.Avalonia
             Children.Add(control);
 
             _controlChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void UpdateNativeControl()
+        {
+        }
+
+        void OnTrackerUpdated(object sender, EventArgs e)
+        {
+            UpdateNativeControl();
+        }
+
+        void UpdateTracker()
+        {
+            if (_tracker == null)
+                return;
+
+            _tracker.Control = Control;
+            _tracker.Element = Element;
+            _tracker.Container = ContainerElement;
         }
     }
 }
