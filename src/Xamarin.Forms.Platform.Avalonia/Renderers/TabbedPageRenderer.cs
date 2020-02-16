@@ -160,13 +160,15 @@ namespace Xamarin.Forms.Platform.Avalonia
             if (Element == null)
                 return;
 
-            Page page = e.AddedItems.Count > 0 ? (Page)e.AddedItems[0] : null;
-            Page currentPage = Element.CurrentPage;
-            if (currentPage == page)
-                return;
-            currentPage?.SendDisappearing();
-            Element.CurrentPage = page;
-
+            Page page = e.AddedItems.Count > 0 ? e.AddedItems[0] as Page : null;
+            if (page != null)
+            {
+                Page currentPage = Element.CurrentPage;
+                if (currentPage == page)
+                    return;
+                currentPage?.SendDisappearing();
+                Element.CurrentPage = page;
+            }
             page?.SendAppearing();
         }
 
