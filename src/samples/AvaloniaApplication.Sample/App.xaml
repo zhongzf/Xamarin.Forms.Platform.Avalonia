@@ -17,6 +17,7 @@
     <!-- Default Global Color -->
     <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
     <SolidColorBrush x:Key="AccentColor" Color="#3498db" />
+    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrush" Color="Black" />
 
     <!-- Default Command Bar Color -->
     <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
