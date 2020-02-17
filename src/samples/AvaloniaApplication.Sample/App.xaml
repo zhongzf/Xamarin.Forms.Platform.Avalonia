@@ -58,6 +58,7 @@
     <formsConverters:PageToRenderedElementConverter x:Key="PageToRenderer" />
     <formsConverters:HeightConverter x:Key="HeightConverter" />
     <formsConverters:ColorConverter x:Key="ColorConverter" />
+    <formsConverters:ImageConverter x:Key="ImageConverter" />
 
     <DataTemplate x:Key="ContainedPageTemplate">
       <ContentPresenter Content="{Binding Converter={StaticResource PageToRenderer}}" />
@@ -105,6 +106,13 @@
           x:Name="detail" />
       </StackPanel>
     </DataTemplate>
-   
+
+    <DataTemplate x:Key="TabbedPageHeaderTemplate">
+      <StackPanel Orientation="Vertical" Name="TabbedPageHeaderStackPanel">
+        <Image Name="TabbedPageHeaderImage" DataContext="{Binding IconImageSource, Converter={StaticResource ImageConverter}}" Source="{Binding Value}" Width="16" Height="16" IsVisible="False" Margin="0,12,0,0"/>
+        <TextBlock Name="TabbedPageHeaderTextBlock" Text="{Binding Title}"/>
+      </StackPanel>
+    </DataTemplate>
+
   </Application.Resources>
 </Application>

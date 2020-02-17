@@ -10,6 +10,9 @@ namespace Xamarin.Forms.Platform.Avalonia.Controls
         {
             var containedPageTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["ContainedPageTemplate"];
             ContentTemplate = containedPageTemplate;
+
+            var tabbedPageHeaderTemplate = (global::Avalonia.Markup.Xaml.Templates.DataTemplate)global::Avalonia.Application.Current.Resources["TabbedPageHeaderTemplate"];
+            ItemTemplate = tabbedPageHeaderTemplate;
         }
     }
 }
