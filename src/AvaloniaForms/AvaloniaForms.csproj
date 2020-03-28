@@ -53,8 +53,8 @@
     <None Remove="Themes\WindowButtons.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.2" />
-    <PackageReference Include="ReactiveUI" Version="11.1.23" />
+    <PackageReference Include="Avalonia" Version="0.9.6" />
+    <PackageReference Include="ReactiveUI" Version="11.2.3" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Themes\DefaultTheme.xaml">

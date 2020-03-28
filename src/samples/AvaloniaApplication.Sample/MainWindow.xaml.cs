@@ -17,6 +17,8 @@ namespace AvaloniaApplication.Sample
 
             Xamarin.Forms.Forms.Init();
             LoadApplication(new FormsGallery.App());
+            //LoadApplication(new RpnCalculator.App());
+            //LoadApplication(new XamlSamples.App());
         }
 
         private void InitializeComponent()

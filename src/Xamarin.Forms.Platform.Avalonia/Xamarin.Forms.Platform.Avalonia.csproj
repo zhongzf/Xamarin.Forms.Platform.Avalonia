@@ -18,10 +18,10 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.2" />
-    <PackageReference Include="ReactiveUI" Version="11.1.23" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.282-pre4" />
+    <PackageReference Include="Avalonia" Version="0.9.6" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.6" />
+    <PackageReference Include="ReactiveUI" Version="11.2.3" />
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.495" />
   </ItemGroup>
   
   <ItemGroup>

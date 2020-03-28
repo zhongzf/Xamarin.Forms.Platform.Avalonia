@@ -90,7 +90,7 @@ namespace FormsGallery.CodeExamples
                 SelectedIndicatorColor = Color.DarkGray,
                 HorizontalOptions = LayoutOptions.Center
             };
-            IndicatorView.SetItemsSourceBy(indicatorView, carouselView);
+            //IndicatorView.SetItemsSourceBy(indicatorView, carouselView);
             
             // Build the page.
             Title = "IndicatorView Demo";
