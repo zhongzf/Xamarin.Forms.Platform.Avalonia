@@ -40,5 +40,7 @@ namespace AvaloniaForms.Controls.Generators
             }
             return result;
         }
+
+        public override bool TryRecycle(int oldIndex, int newIndex, object item) => false;
     }
 }
