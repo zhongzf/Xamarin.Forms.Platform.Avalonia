@@ -74,18 +74,19 @@
     </DataTemplate>
 
     <DataTemplate x:Key="TableSection">
-      <TextBlock Margin="0,0,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
+      <TextBlock FontSize="{StaticResource FontSizeLarge}"
+		  Margin="0,0,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
     </DataTemplate>
 
 
     <DataTemplate x:Key="TextCell">
       <StackPanel>
-        <TextBlock
+        <TextBlock FontSize="{StaticResource FontSizeNormal}"			
           Text="{Binding Text}"
           IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
           Foreground="{Binding TextColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}" />
 
-        <TextBlock
+        <TextBlock FontSize="{StaticResource FontSizeExtraExtraSmall}"
           Text="{Binding Detail}"
           IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}"
           Foreground="{Binding DetailColor, Converter={StaticResource ColorConverter}, ConverterParameter=DefaultTextForegroundThemeBrush}"
