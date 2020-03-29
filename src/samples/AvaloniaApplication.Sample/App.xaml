@@ -17,7 +17,8 @@
     <!-- Default Global Color -->
     <SolidColorBrush x:Key="WindowBackgroundColor" Color="White" />
     <SolidColorBrush x:Key="AccentColor" Color="#3498db" />
-    <SolidColorBrush x:Key="DefaultTextForegroundThemeBrush" Color="Black" />
+	<SolidColorBrush x:Key="SystemColorControlAccentBrush" Color="#3498db" />
+	<SolidColorBrush x:Key="DefaultTextForegroundThemeBrush" Color="Black" />
 
     <!-- Default Command Bar Color -->
     <SolidColorBrush x:Key="CommandBarBackgroundColor" Color="#3498db" />
@@ -73,7 +74,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="TableSection">
-      <TextBlock Margin="0,20,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
+      <TextBlock Margin="0,0,0,0" Text="{Binding Title, Converter={StaticResource LowerConverter}}" IsVisible="{Binding Text, Converter={StaticResource CollapseWhenEmpty}}" Foreground="{Binding TextColor,Converter={StaticResource ColorConverter},ConverterParameter=DefaultTextForegroundThemeBrush}" />
     </DataTemplate>
 
 
