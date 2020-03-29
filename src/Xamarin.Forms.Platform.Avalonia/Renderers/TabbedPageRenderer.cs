@@ -66,6 +66,7 @@ namespace Xamarin.Forms.Platform.Avalonia
                 if (Control == null)
                 {
                     Control = new FormsTabControl();
+                    Control.SizeChanged += Control_SizeChanged;
 
                     Control.SelectionChanged += OnSelectionChanged;
 
@@ -81,6 +82,17 @@ namespace Xamarin.Forms.Platform.Avalonia
             }
 
             OnElementChanged(new VisualElementChangedEventArgs(oldElement, element));
+        }
+
+        private void Control_SizeChanged(object sender, EventArgs e)
+        {
+            UpdateContainerArea();
+        }
+
+        void UpdateContainerArea()
+        {
+            var _container = Control;
+            Element.ContainerArea = new Rectangle(0, 0, double.IsNaN(_container.ContentWidth) ? 0 : _container.ContentWidth, double.IsNaN(_container.ContentHeight) ? 0 : _container.ContentHeight);
         }
 
         public void Dispose()

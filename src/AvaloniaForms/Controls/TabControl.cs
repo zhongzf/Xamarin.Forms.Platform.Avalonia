@@ -183,9 +183,9 @@ namespace AvaloniaForms.Controls
         }
         #endregion
 
-        internal ItemsPresenter ItemsPresenterPart { get; private set; }
+        public ItemsPresenter ItemsPresenterPart { get; private set; }
 
-        internal IContentPresenter ContentPart { get; private set; }
+        public IContentPresenter ContentPart { get; private set; }
 
         /// <inheritdoc/>
         IAvaloniaList<ILogical> IContentPresenterHost.LogicalChildren => LogicalChildren;

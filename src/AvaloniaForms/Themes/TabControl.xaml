@@ -5,7 +5,6 @@
     <Setter Property="Template">
       <ControlTemplate>
         <Border
-            Margin="{TemplateBinding Margin}"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
             Background="{TemplateBinding Background}"
@@ -18,9 +17,9 @@
                 ItemsPanel="{TemplateBinding ItemsPanel}"
                 ItemTemplate="{TemplateBinding ItemTemplate}">
             </ItemsPresenter>
+              
             <ContentPresenter
                 Name="PART_SelectedContentHost"
-                Margin="{TemplateBinding Padding}"
                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{TemplateBinding SelectedContent}"
@@ -31,8 +30,9 @@
       </ControlTemplate>
     </Setter>
   </Style>
+    
   <Style Selector="forms|TabControl[TabStripPlacement=Top]">
-    <Setter Property="Padding" Value="0 4 0 0"/>
+    <Setter Property="Padding" Value="0 0 0 0"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
     <Setter Property="DockPanel.Dock" Value="Top"/>
@@ -41,7 +41,7 @@
     <Setter Property="DockPanel.Dock" Value="Bottom"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Bottom]">
-    <Setter Property="Padding" Value="0 0 0 4"/>
+    <Setter Property="Padding" Value="0 0 0 0"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Left] /template/ ItemsPresenter#PART_ItemsPresenter">
     <Setter Property="DockPanel.Dock" Value="Left"/>
@@ -50,7 +50,7 @@
     <Setter Property="Orientation" Value="Vertical"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Left]">
-    <Setter Property="Padding" Value="4 0 0 0"/>
+    <Setter Property="Padding" Value="0 0 0 0"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Right] /template/ ItemsPresenter#PART_ItemsPresenter">
     <Setter Property="DockPanel.Dock" Value="Right"/>
@@ -59,7 +59,7 @@
     <Setter Property="Orientation" Value="Vertical"/>
   </Style>
   <Style Selector="forms|TabControl[TabStripPlacement=Right]">
-    <Setter Property="Padding" Value="0 0 0 4"/>
+    <Setter Property="Padding" Value="0 0 0 0"/>
   </Style>
 
 </Styles>
